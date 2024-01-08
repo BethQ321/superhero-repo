@@ -12,7 +12,7 @@
 - [ ] as a user I should see that a product has prices
 - [ ] as a user I should see a description for a product
 - [ ] as a user I should see the total amount in my cart as well as my orders
-- [ ] as a user I should be able to increment and decrement items in my cart
+- [ ] as a user I should be able to increment and decrement items in my car
 - [ ] as a user if I decrement a quantity to zero, the line_item should be deleted
 - [ ] as a user I should see an error message if my credentials are not correct
 - [ ] as a user I should be able to create an account.
@@ -31,5 +31,5 @@
 - [ ] as an administrator adminstrator I should be able to mark a product as vip_only, which can only be purchased by vip users.
 - [ ] as an administrator I should be able to see all orders
 
-
+- test commit 
 
