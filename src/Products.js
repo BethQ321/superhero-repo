@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
+  // format price 
+  const formatPrice = (price) => {
+    return `$${(price / 100).toFixed(2)}`;
+  };
   return (
     <div>
       <h2>Products</h2>
@@ -11,7 +15,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
               <li key={ product.id }>
-                { product.name }
+                { product.name } - { formatPrice(product.price) }
                 {
                   auth.id ? (
                     cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add</button>
