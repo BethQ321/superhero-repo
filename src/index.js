@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Link, HashRouter, Routes, Route } from 'react-router-dom';
+import {  HashRouter, Routes, Route } from 'react-router-dom';
 import Products from './Products';
 import Orders from './Orders';
 import Cart from './Cart';
 import Login from './Login';
 import api from './api';
+import WishList from './wishList';
+import Profile from './Profile'
+
+import Nav from './Nav' //added for nav file 
 
 
 const App = ()=> {
@@ -93,7 +97,26 @@ const App = ()=> {
 
   return (
     <div>
-      {
+
+      <Nav 
+        auth={auth} 
+        products={products} 
+        orders={orders} 
+        cartCount={cartCount} 
+        logout={logout} 
+      />
+      <main>
+        <Routes>
+          <Route path="/products" element={<Products auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
+          <Route path="/orders" element={<Orders orders={orders} products={products} lineItems={lineItems} />} />
+          <Route path="/cart" element={<Cart cart={cart} lineItems={lineItems} products={products} updateOrder={updateOrder} removeFromCart={removeFromCart} />} />
+          <Route path="/login" element={<Login login={login} />} />
+          <Route path="/wishList" element={<WishList />} />
+          <Route path="/Profile" element={<Profile />} />
+        </Routes>
+      </main>
+
+      {/*
         auth.id ? (
           <>
             <nav>
@@ -142,10 +165,17 @@ const App = ()=> {
             />
           </div>
         )
-      }
+      */}
+
     </div>
   );
+  
 };
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
-root.render(<HashRouter><App /></HashRouter>);
+root.render(
+  <HashRouter>
+    <App />
+  </HashRouter>
+);
+

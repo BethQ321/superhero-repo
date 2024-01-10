@@ -10,3 +10,11 @@ form {
 form > * {
   margin: 0.5rem;
 }
+
+
+nav {
+  display: flex;
+ justify-content: space-evenly;
+ background-color: rgb(167, 166, 166);
+ color: white;
+}
