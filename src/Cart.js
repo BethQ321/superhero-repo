@@ -6,12 +6,15 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
     return `$${(price / 100).toFixed(2)}`;
   };
 
+  // Filter line items to consider only the items in the current cart
+  const cartLineItems = lineItems.filter(lineItem => lineItem.order_id === cart.id);
+
   return (
     <div>
       <h2>Cart</h2>
       <ul>
         {
-          lineItems.filter(lineItem => lineItem.order_id === cart.id).map(lineItem => {
+          cartLineItems.map(lineItem => {
             const product = products.find(product => product.id === lineItem.product_id) || {};
             const totalPrice = lineItem.quantity * lineItem.product_price; // Calculate total price
             return (
@@ -26,16 +29,18 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
         }
       </ul>
       {
-        lineItems.filter(lineItem => lineItem.order_id === cart.id).length ? (
+        cartLineItems.length ? (
           <div>
             <button onClick={() => {
               updateOrder({ ...cart, is_cart: false });
             }}>Create Order</button>
             <p>Total Price: {formatPrice(
-              lineItems.reduce((total, lineItem) => total + lineItem.quantity * lineItem.product_price, 0)
+              cartLineItems.reduce((total, lineItem) => total + lineItem.quantity * lineItem.product_price, 0)
             )}</p>
           </div>
-        ) : null
+        ) : (
+          <p>Cart is empty.</p>
+        )
       }
     </div>
   );
