@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom'; //added to fix login form issue
 
 const Login = ({ login })=> {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); //add to fix login form issue
 
   const _login = async(ev)=> {
     ev.preventDefault();
     try {
       await login({ username, password });
+      navigate('/')
     }
     catch(ex){
       console.log(ex.response.data);

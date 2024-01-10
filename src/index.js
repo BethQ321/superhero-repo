@@ -7,8 +7,9 @@ import Cart from './Cart';
 import Login from './Login';
 import api from './api';
 import WishList from './wishList';
-import Profile from './Profile'
-
+import Profile from './Profile';
+import Register from './Register';
+import Home from './Home';
 import Nav from './Nav' //added for nav file 
 
 
@@ -107,6 +108,7 @@ const App = ()=> {
       />
       <main>
         <Routes>
+          <Route path="/" element={<Home auth={auth}/>} />
           <Route path="/products" element={<Products auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
           <Route path="/orders" element={<Orders orders={orders} products={products} lineItems={lineItems} />} />
           <Route path="/cart" element={<Cart 
@@ -120,6 +122,7 @@ const App = ()=> {
            />
           } />
           <Route path="/login" element={<Login login={login} />} />
+          <Route path="register" element={<Register />} />
           <Route path="/wishList" element={<WishList />} />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
