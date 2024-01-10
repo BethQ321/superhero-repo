@@ -11,9 +11,19 @@ form > * {
   margin: 0.5rem;
 }
 
+nav {
+  display: flex;
+ justify-content: space-evenly;
+ background-color: rgb(167, 166, 166);
+ color: white;
+
+}
+
 /* Products styling */
 
 .productImage {
   width: 100px;
   height: 150;
 }
+
+
