@@ -111,7 +111,7 @@ const App = ()=> {
         <Routes>
           <Route path="/" element={<Home auth={auth}/>} />
           <Route path="/products" element={<Products auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
-          <Route path="/orders" element={<Orders orders={orders} products={products} lineItems={lineItems} />} />
+          <Route path="/orders" element={<Orders auth={auth} orders={orders} products={products} lineItems={lineItems} />} />
           <Route path="/cart" element={<Cart 
            cart={cart} 
            lineItems={lineItems} 
