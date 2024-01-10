@@ -27,3 +27,11 @@ nav {
 }
 
 
+.flash-effect {
+  animation: flashAnimation 3s;
+}
+
+@keyframes flashAnimation {
+  0%, 100% {background-color:transparent;}
+  50% {background-color: red;}
+}
