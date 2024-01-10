@@ -51,7 +51,7 @@ const handleShowAllClick = () => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
               <li key={ product.id }>
-                { product.name } - { formatPrice(product.price) }
+                { product.name } <img className='productImage' src={ product.image } /> : {product.description} - { formatPrice(product.price) }
                 {
                   auth.id ? (
                     cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add</button>

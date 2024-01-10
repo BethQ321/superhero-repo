@@ -10,3 +10,10 @@ form {
 form > * {
   margin: 0.5rem;
 }
+
+/* Products styling */
+
+.productImage {
+  width: 100px;
+  height: 150;
+}
