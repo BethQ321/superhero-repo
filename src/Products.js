@@ -11,10 +11,10 @@ useEffect(() => {
 }, [products]);
 
   // format price 
-  const formatPrice = (price) => {
+const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
-
+  
 //search feature 
 
 const handleSearchChange = (event) => {
