@@ -11,6 +11,7 @@ import Profile from './Profile'
 
 import Nav from './Nav' //added for nav file 
 
+
 const App = ()=> {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -67,6 +68,17 @@ const App = ()=> {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
 
+  const handleDecrement = async (lineItem) => {
+    if (lineItem.quantity > 1) {
+      const updatedQuantity = lineItem.quantity - 2;
+      const updatedLineItem = { ...lineItem, quantity: updatedQuantity };
+      updateLineItem(updatedLineItem);
+    } else {
+      await api.removeFromCart({ lineItem, lineItems, setLineItems });
+    }
+  };
+  
+
   const cart = orders.find(order => order.is_cart) || {};
 
   const cartItems = lineItems.filter(lineItem => lineItem.order_id === cart.id);
@@ -85,6 +97,7 @@ const App = ()=> {
 
   return (
     <div>
+
       <Nav 
         auth={auth} 
         products={products} 
@@ -102,6 +115,58 @@ const App = ()=> {
           <Route path="/Profile" element={<Profile />} />
         </Routes>
       </main>
+
+      {/*
+        auth.id ? (
+          <>
+            <nav>
+              <Link to='/products'>Products ({ products.length })</Link>
+              <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
+              <Link to='/cart'>Cart ({ cartCount })</Link>
+              <span>
+                Welcome { auth.username }!
+                <button onClick={ logout }>Logout</button>
+              </span>
+            </nav>
+            <main>
+              <Products
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+              />
+              <Cart
+                handleDecrement={handleDecrement}
+                createLineItem = { createLineItem }
+                updateLineItem={updateLineItem}
+                cart = { cart }
+                lineItems = { lineItems }
+                products = { products }
+                updateOrder = { updateOrder }
+                removeFromCart = { removeFromCart }
+              />
+              <Orders
+                orders = { orders }
+                products = { products }
+                lineItems = { lineItems }
+              />
+            </main>
+            </>
+        ):(
+          <div>
+            <Login login={ login }/>
+            <Products
+              products={ products }
+              cartItems = { cartItems }
+              createLineItem = { createLineItem }
+              updateLineItem = { updateLineItem }
+              auth = { auth }
+            />
+          </div>
+        )
+      */}
+
     </div>
   );
   
