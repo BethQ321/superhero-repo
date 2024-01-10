@@ -28,7 +28,7 @@ nav {
 
 
 .flash-effect {
-  animation: flashAnimation 3s;
+  animation: flashAnimation 1.5s linear infinite;
 }
 
 @keyframes flashAnimation {
