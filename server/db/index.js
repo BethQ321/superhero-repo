@@ -65,10 +65,14 @@ const seed = async()=> {
   `;
   await client.query(SQL);
 
-  const [moe, lucy, ethyl] = await Promise.all([
+  const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({ username: 'moe', password: 'm_password', is_admin: false}),
     createUser({ username: 'lucy', password: 'l_password', is_admin: false}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true})
+    createUser({ username: 'ethyl', password: '1234', is_admin: true}),
+    createUser({ username: 'jonas', password: 'j123', is_admin: true}),
+    createUser({ username: 'matthew', password: 'm123', is_admin: true}),
+    createUser({ username: 'billy', password: 'b123', is_admin: true}),
+    createUser({ username: 'devin', password: 'd123', is_admin: true}),
   ]);
   const [Mjolnir, Umbrella_Shotgun, Freezer_Ray, Shark_laser, Lightsaber, Spartan_Power_Armor, BatRang, Webshooter, Jet_Pack, Gravity_Boots, Stealth_Cloak, Holographic_Projectors, Kryptonite_SprayON,] = await Promise.all([
     createProduct({ name: 'Mjolnir',  price: 100, image:'https://m.media-amazon.com/images/I/715bjLVC4fL._AC_SY550_.jpg', description:'Enchanted hammer that grants the wielder (if worthy, no refunds!) control over lightning, flight and superhuman' }),
