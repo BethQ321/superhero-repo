@@ -30,7 +30,7 @@ useEffect(() => {
   if (flash) {
     const timer = setTimeout(() => {
       setFlash(false);
-    }, 5000);
+    }, 4000);
     return () => clearTimeout((timer))
   }
 }, [flash]);
