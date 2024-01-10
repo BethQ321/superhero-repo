@@ -109,7 +109,16 @@ const App = ()=> {
         <Routes>
           <Route path="/products" element={<Products auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
           <Route path="/orders" element={<Orders orders={orders} products={products} lineItems={lineItems} />} />
-          <Route path="/cart" element={<Cart cart={cart} lineItems={lineItems} products={products} updateOrder={updateOrder} removeFromCart={removeFromCart} />} />
+          <Route path="/cart" element={<Cart 
+           cart={cart} 
+           lineItems={lineItems} 
+           products={products} 
+           updateOrder={updateOrder} 
+           removeFromCart={removeFromCart} 
+          handleDecrement={handleDecrement}
+          updateLineItem={updateLineItem} 
+           />
+          } />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="/wishList" element={<WishList />} />
           <Route path="/Profile" element={<Profile />} />
