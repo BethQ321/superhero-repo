@@ -23,6 +23,7 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
         </>
       ) : (
         <>
+        {/*Not Logged in */}
           <NavLink to="/login">Login</NavLink>
           <NavLink to='/register'>Register</NavLink>
         </>
