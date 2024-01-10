@@ -7,6 +7,7 @@ import Cart from './Cart';
 import Login from './Login';
 import api from './api';
 
+
 const App = ()=> {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -63,6 +64,17 @@ const App = ()=> {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
 
+  const handleDecrement = async (lineItem) => {
+    if (lineItem.quantity > 1) {
+      const updatedQuantity = lineItem.quantity - 2;
+      const updatedLineItem = { ...lineItem, quantity: updatedQuantity };
+      updateLineItem(updatedLineItem);
+    } else {
+      await api.removeFromCart({ lineItem, lineItems, setLineItems });
+    }
+  };
+  
+
   const cart = orders.find(order => order.is_cart) || {};
 
   const cartItems = lineItems.filter(lineItem => lineItem.order_id === cart.id);
@@ -102,6 +114,9 @@ const App = ()=> {
                 updateLineItem = { updateLineItem }
               />
               <Cart
+                handleDecrement={handleDecrement}
+                createLineItem = { createLineItem }
+                updateLineItem={updateLineItem}
                 cart = { cart }
                 lineItems = { lineItems }
                 products = { products }

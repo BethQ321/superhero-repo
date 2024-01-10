@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products })=> {
+const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem, handleDecrement })=> {
+
+
+ 
+
+
   return (
     <div>
       <h2>Cart</h2>
@@ -12,6 +17,8 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products })=> {
               <li key={ lineItem.id }>
                 { product.name }
                 ({ lineItem.quantity })
+                <button onClick={() => updateLineItem(lineItem)}>+</button>
+                <button onClick={() => handleDecrement(lineItem)}>-</button>
                 <button onClick={ ()=> removeFromCart(lineItem)}>Remove From Cart</button>
               </li>
             );
