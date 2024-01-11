@@ -33,6 +33,10 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       username VARCHAR(100) UNIQUE NOT NULL,
       password VARCHAR(100) NOT NULL,
+      Fname VARCHAR (100) NOT NULL, 
+      Lname VARCHAR (100) NOT NULL, 
+      email VARCHAR(100) UNIQUE NOT NULL,
+      phone VARCHAR (20) NOT NULL,
       is_admin BOOLEAN DEFAULT false NOT NULL,
       is_vip BOOLEAN DEFAULT false
     );
@@ -68,13 +72,14 @@ const seed = async()=> {
   await client.query(SQL);
 
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
-    createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false}),
-    createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: false}),
-    createUser({ username: 'jonas', password: 'j123', is_admin: true, is_vip: false}),
-    createUser({ username: 'matthew', password: 'm123', is_admin: true, is_vip: false}),
-    createUser({ username: 'billy', password: 'b123', is_admin: true, is_vip: false}),
-    createUser({ username: 'devin', password: 'd123', is_admin: true, is_vip: true}),
+    createUser({ username: 'moe', password: 'm_password', Fname: 'FirstName', Lname: 'LastName', phone: '555-555-5555', email: 'email1@email.com', is_admin: false, is_vip: false}),
+    createUser({ username: 'lucy', password: 'l_password', Fname: 'FirstName', Lname: 'LastName', phone: '555-555-5555', email: 'emai2l@email.com', is_admin: false, is_vip: false}),
+    createUser({ username: 'ethyl', password: '1234', Fname: 'FirstName', Lname: 'LastName', phone: '555-555-5555', email: 'email3@email.com', is_admin: true, is_vip: false}),
+    createUser({ username: 'jonas', password: 'j123', Fname: 'FirstName', Lname: 'LastName', phone: '555-555-5555', email: 'emai4l@email.com', is_admin: true, is_vip: false}),
+    createUser({ username: 'matthew', password: 'm123', Fname: 'FirstName', Lname: 'LastName', phone: '555-555-5555', email: 'email5@email.com', is_admin: true, is_vip: false}),
+    createUser({ username: 'billy', password: 'b123', Fname: 'FirstName', Lname: 'LastName', phone: '555-555-5555', email: 'email6@email.com', is_admin: true, is_vip: false}),
+    createUser({ username: 'devin', password: 'd123', Fname: 'FirstName', Lname: 'LastName', phone: '555-555-5555', email: 'email7@email.com', is_admin: true, is_vip: true}),
+
   ]);
   const [Mjolnir, Umbrella_Shotgun, Freezer_Ray, Shark_laser, Lightsaber, Spartan_Power_Armor, BatRang, Webshooter, Jet_Pack, Gravity_Boots, Stealth_Cloak, Holographic_Projectors, Kryptonite_SprayON,] = await Promise.all([
     createProduct({ name: 'Mjolnir',  price: 100, image:'https://m.media-amazon.com/images/I/715bjLVC4fL._AC_SY550_.jpg', description:'Enchanted hammer that grants the wielder (if worthy, no refunds!) control over lightning, flight and superhuman' }),

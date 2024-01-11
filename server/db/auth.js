@@ -54,13 +54,26 @@ const authenticate = async(credentials)=> {
 const createUser = async(user)=> {
   if(!user.username.trim() || !user.password.trim()){
     throw Error('must have username and password');
-  }
+  } try {
+
   user.password = await bcrypt.hash(user.password, 5);
   const SQL = `
-    INSERT INTO users (id, username, password, is_admin, is_vip) VALUES($1, $2, $3, $4, $5) RETURNING *
+    INSERT INTO users (id, username, password, Fname, Lname, email, phone, is_admin, is_vip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
   `;
-  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.is_admin, is_vip ]);
+  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.Fname, user.Lname, user.email, user.phone, false ]);
+
   return response.rows[0];
+} catch (error) {
+  if (error.code === '23505') {
+    if (error.detail.includes("username")) {
+      throw Error('Username already exsists')
+    }
+    if (error.detail.includes("email")) {
+      throw Error('Email already exsists');
+    }
+  }
+  throw error;
+  }
 };
 
 module.exports = {

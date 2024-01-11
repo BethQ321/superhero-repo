@@ -10,6 +10,7 @@ import WishList from './wishList';
 import Profile from './Profile';
 import Register from './Register';
 import Home from './Home';
+import RegistrationComplete from './RegistrationComplete';
 import Nav from './Nav' //added for nav file 
 
 
@@ -111,7 +112,7 @@ const App = ()=> {
         <Routes>
           <Route path="/" element={<Home auth={auth}/>} />
           <Route path="/products" element={<Products auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
-          <Route path="/orders" element={<Orders orders={orders} products={products} lineItems={lineItems} />} />
+          <Route path="/orders" element={<Orders auth={auth} orders={orders} products={products} lineItems={lineItems} />} />
           <Route path="/cart" element={<Cart 
            cart={cart} 
            lineItems={lineItems} 
@@ -124,6 +125,7 @@ const App = ()=> {
           } />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
+          <Route path='/RegistrationComplete' element={<RegistrationComplete />} />
           <Route path="/wishList" element={<WishList />} />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
