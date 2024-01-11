@@ -6,7 +6,7 @@
 - npm run start:dev
 - npm run start:dev:sync (builds tables and syncs data)
 - npm run build:dev
-
+jonas
 # features
 
 - [x] ~~as a user I should see that a product has prices~~
