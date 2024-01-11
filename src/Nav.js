@@ -4,10 +4,14 @@ import { NavLink } from 'react-router-dom';
 const Navigations = ({ auth, products, orders, cartCount, logout }) => {
   const isLoggedIn = auth && auth.id;
 
+  const vipProductsCount = auth.is_vip
+  ? products.length
+  : products.filter(product => !product.vip_only).length;
+
   return (
     <nav>
       {/* Everyone can see */}
-      <NavLink to='/products'>Products ({products.length})</NavLink>
+      <NavLink to='/products'>Products ({vipProductsCount})</NavLink>
 
       {/* Logged-in user links */}
       {isLoggedIn ? (

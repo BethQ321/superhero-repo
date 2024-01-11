@@ -20,7 +20,12 @@ const App = ()=> {
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
-
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [vipProducts, setVipProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  
+  
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
   }
@@ -55,6 +60,7 @@ const App = ()=> {
   }, [auth]);
 
 
+  
   const createLineItem = async(product)=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
   };
@@ -81,6 +87,49 @@ const App = ()=> {
     }
   };
   
+   // format price
+   const formatPrice = (price) => {
+    return `$${(price / 100).toFixed(2)}`;
+  };
+
+  // search feature
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchClick = () => {
+    const filtered = products.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
+  // show all button
+  const handleShowAllClick = () => {
+    if (auth.is_vip) {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(product => !product.vip_only));
+    }
+    setSearchQuery('');
+  };
+
+  useEffect(() => {
+    // Filter products based on user's is_vip status and search query
+    const filtered = products.filter(product => {
+      if (!auth.is_vip && product.vip_only) {
+        return false;
+      }
+
+      if (searchQuery) {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+      }
+
+      return true;
+    });
+    setFilteredProducts(filtered);
+  }, [products, auth, searchQuery]);
+
 
   const cart = orders.find(order => order.is_cart) || {};
 
@@ -111,7 +160,21 @@ const App = ()=> {
       <main>
         <Routes>
           <Route path="/" element={<Home auth={auth}/>} />
-          <Route path="/products" element={<Products auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
+          <Route path="/products" element={<Products
+           auth={auth} 
+           products={products} 
+           cartItems={cartItems} 
+           createLineItem={createLineItem} 
+           updateLineItem={updateLineItem}
+           filteredProducts={filteredProducts}
+           setFilteredProducts={setFilteredProducts}
+           searchQuery={searchQuery}
+           vipProducts={vipProducts}
+           handleSearchChange={handleSearchChange}
+           handleSearchClick={handleSearchClick}
+           handleShowAllClick={handleShowAllClick}
+           formatPrice={formatPrice}
+           />} />
           <Route path="/orders" element={<Orders auth={auth} orders={orders} products={products} lineItems={lineItems} />} />
           <Route path="/cart" element={<Cart 
            cart={cart} 
@@ -119,8 +182,9 @@ const App = ()=> {
            products={products} 
            updateOrder={updateOrder} 
            removeFromCart={removeFromCart} 
-          handleDecrement={handleDecrement}
-          updateLineItem={updateLineItem} 
+           handleDecrement={handleDecrement}
+           updateLineItem={updateLineItem} 
+
            />
           } />
           <Route path="/login" element={<Login login={login} />} />
