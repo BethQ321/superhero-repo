@@ -10,6 +10,7 @@ import WishList from './wishList';
 import Profile from './Profile';
 import Register from './Register';
 import Home from './Home';
+import RegistrationComplete from './RegistrationComplete';
 import Nav from './Nav' //added for nav file 
 
 
@@ -124,6 +125,7 @@ const App = ()=> {
           } />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
+          <Route path='/RegistrationComplete' element={<RegistrationComplete />} />
           <Route path="/wishList" element={<WishList />} />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
