@@ -58,9 +58,10 @@ const createUser = async(user)=> {
 
   user.password = await bcrypt.hash(user.password, 5);
   const SQL = `
-    INSERT INTO users (id, username, password, Fname, Lname, email, phone, is_admin) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
+    INSERT INTO users (id, username, password, Fname, Lname, email, phone, is_admin, is_vip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
   `;
   const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.Fname, user.Lname, user.email, user.phone, false ]);
+
   return response.rows[0];
 } catch (error) {
   if (error.code === '23505') {

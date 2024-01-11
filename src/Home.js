@@ -10,7 +10,7 @@ const Home = ({auth}) => {
         <div>
             {isLoggedIn ? (
             <>
-            <h1>Welcome, {username}! </h1>
+            <h1>Welcome, {username} {user.is_vip ? 'VIP User' : ''}! </h1>
             <img src="https://i.pinimg.com/originals/60/23/ab/6023abd8e8c340bca6f0968bcdac2c4a.jpg"></img>
             </>
             ) : (

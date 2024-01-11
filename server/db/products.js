@@ -17,6 +17,7 @@ const createProduct = async(product)=> {
     VALUES($1, $2, $3, $4, $5) 
     RETURNING *
   `;
+  
   const response = await client.query(SQL, [ uuidv4(), product.name, product.price, product.image, product.description]);
   return response.rows[0];
 };
