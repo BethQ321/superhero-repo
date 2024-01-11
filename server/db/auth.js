@@ -66,15 +66,14 @@ const createUser = async(user)=> {
 } catch (error) {
   if (error.code === '23505') {
     if (error.detail.includes("username")) {
-      throw Error('Username already exsists')
-    }
-    if (error.detail.includes("email")) {
-      throw Error('Email already exsists');
+      throw new Error('Holy Duplicate Username, Batman! Use a different one.');
+    } else if (error.detail.includes("email")) {
+      throw new Error('Holy already registered email, Batman! Use a different one.');
     }
   }
-  throw error;
-  }
-};
+  throw error; 
+}
+}
 
 module.exports = {
   createUser,
