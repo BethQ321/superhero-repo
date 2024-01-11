@@ -8,7 +8,7 @@ const findUserByToken = async(token) => {
   try {
     const payload = await jwt.verify(token, process.env.JWT);
     const SQL = `
-      SELECT id, username, is_admin
+      SELECT id, username, is_admin, is_vip
       FROM users
       WHERE id = $1
     `;
@@ -60,7 +60,7 @@ const createUser = async(user)=> {
   const SQL = `
     INSERT INTO users (id, username, password, Fname, Lname, email, phone, is_admin, is_vip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
   `;
-  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.Fname, user.Lname, user.email, user.phone, false, false ]);
+  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.Fname, user.Lname, user.email, user.phone, user.is_admin, user.is_vip ]);
 
   return response.rows[0];
 } catch (error) {
