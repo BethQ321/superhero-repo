@@ -38,7 +38,7 @@ const seed = async()=> {
       email VARCHAR(100) UNIQUE NOT NULL,
       phone VARCHAR (20) NOT NULL,
       is_admin BOOLEAN DEFAULT false NOT NULL,
-      is_vip BOOLEAN DEFAULT false
+      is_vip BOOLEAN DEFAULT false NOT NULL
     );
 
     CREATE TABLE products(
