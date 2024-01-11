@@ -19,10 +19,12 @@ const Register = () => {
       const response = await axios.post('/api/register', { username, password, Fname, Lname, email, phone });
       console.log(response.data);
       navigate('/RegistrationComplete');
-    } catch(error) {
-      setError(error.response.data.message || 'Registration failed');
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error);
+      setError(error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Registration failed');
     }
-  };
+    };
+    
 
   return (
     <div>
