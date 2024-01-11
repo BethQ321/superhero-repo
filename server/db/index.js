@@ -63,10 +63,10 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       product_id UUID REFERENCES products(id) NOT NULL,
       order_id UUID REFERENCES orders(id) NOT NULL,
-      price INTEGER REFERENCES products(price) NOT NULL,
       quantity INTEGER DEFAULT 1,
+      product_price INTEGER,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
-    );
+      );
 
   `;
   await client.query(SQL);
