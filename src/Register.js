@@ -20,12 +20,11 @@ const Register = () => {
       console.log(response.data);
       navigate('/RegistrationComplete');
     } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error);
+      // console.error('Error:', error.response ? error.response.data : error);
       setError(error.response && error.response.data && error.response.data.message ? error.response.data.message : 'Registration failed');
     }
     };
     
-
   return (
     <div>
       <h2>Register</h2>
