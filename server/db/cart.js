@@ -4,15 +4,13 @@ const uuidv4 = v4;
 
 const fetchLineItems = async(userId)=> {
   const SQL = `
-    SELECT line_items.* 
-    FROM
-    line_items
-    JOIN orders
-    ON orders.id = line_items.order_id
-    JOIN users
-    ON users.id = orders.user_id
-    WHERE users.id = $1
-    ORDER BY product_id
+  SELECT line_items.*, products.price AS product_price
+  FROM line_items
+  JOIN orders ON orders.id = line_items.order_id
+  JOIN users ON users.id = orders.user_id
+  JOIN products ON products.id = line_items.product_id
+  WHERE users.id = $1
+  ORDER BY product_id
   `;
 
   const response = await client.query(SQL, [ userId ]);
@@ -62,10 +60,16 @@ const updateLineItem = async(lineItem)=> {
 const createLineItem = async(lineItem)=> {
   await ensureCart(lineItem);
   const SQL = `
-  INSERT INTO line_items (product_id, order_id, id) VALUES($1, $2, $3) RETURNING *
+  INSERT INTO line_items (product_id, order_id, product_price, id)
+  VALUES ($1, $2, (SELECT price FROM products WHERE id = $1), $3)
+  RETURNING *
 `;
- response = await client.query(SQL, [ lineItem.product_id, lineItem.order_id, uuidv4()]);
-  return response.rows[0];
+const response = await client.query(SQL, [
+  lineItem.product_id,
+  lineItem.order_id,
+  uuidv4(),
+]);
+return response.rows[0];
 };
 
 const deleteLineItem = async(lineItem)=> {
