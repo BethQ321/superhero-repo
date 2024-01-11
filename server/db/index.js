@@ -33,7 +33,8 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       username VARCHAR(100) UNIQUE NOT NULL,
       password VARCHAR(100) NOT NULL,
-      is_admin BOOLEAN DEFAULT false NOT NULL
+      is_admin BOOLEAN DEFAULT false NOT NULL,
+      is_vip BOOLEAN DEFAULT false
     );
 
     CREATE TABLE products(
@@ -52,31 +53,28 @@ const seed = async()=> {
       is_cart BOOLEAN NOT NULL DEFAULT true,
       user_id UUID REFERENCES users(id) NOT NULL
     );
-    
-    
-    
+
     CREATE TABLE line_items(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       product_id UUID REFERENCES products(id) NOT NULL,
       order_id UUID REFERENCES orders(id) NOT NULL,
+      price INTEGER REFERENCES products(price) NOT NULL,
       quantity INTEGER DEFAULT 1,
-      product_price INTEGER,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
-      );
-      
-    
+    );
+
   `;
   await client.query(SQL);
 
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
-    createUser({ username: 'moe', password: 'm_password', is_admin: false}),
-    createUser({ username: 'lucy', password: 'l_password', is_admin: false}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true}),
-    createUser({ username: 'jonas', password: 'j123', is_admin: true}),
-    createUser({ username: 'matthew', password: 'm123', is_admin: true}),
-    createUser({ username: 'billy', password: 'b123', is_admin: true}),
-    createUser({ username: 'devin', password: 'd123', is_admin: true}),
+    createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false}),
+    createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
+    createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: false}),
+    createUser({ username: 'jonas', password: 'j123', is_admin: true, is_vip: false}),
+    createUser({ username: 'matthew', password: 'm123', is_admin: true, is_vip: false}),
+    createUser({ username: 'billy', password: 'b123', is_admin: true, is_vip: false}),
+    createUser({ username: 'devin', password: 'd123', is_admin: true, is_vip: true}),
   ]);
   const [Mjolnir, Umbrella_Shotgun, Freezer_Ray, Shark_laser, Lightsaber, Spartan_Power_Armor, BatRang, Webshooter, Jet_Pack, Gravity_Boots, Stealth_Cloak, Holographic_Projectors, Kryptonite_SprayON,] = await Promise.all([
     createProduct({ name: 'Mjolnir',  price: 100, image:'https://m.media-amazon.com/images/I/715bjLVC4fL._AC_SY550_.jpg', description:'Enchanted hammer that grants the wielder (if worthy, no refunds!) control over lightning, flight and superhuman' }),
