@@ -10,12 +10,12 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
 
   return (
     <nav>
-      {/* Everyone can see */}
-      <NavLink to='/products'>Products ({vipProductsCount})</NavLink>
+    
 
       {/* Logged-in user links */}
       {isLoggedIn ? (
-        <>
+        <><NavLink to='/'>Home</NavLink>
+        <NavLink to='/products'>Products ({vipProductsCount})</NavLink>
           <NavLink to='/orders'>Orders ({orders.filter(order => !order.is_cart).length})</NavLink>
           <NavLink to='/cart'>Cart ({cartCount})</NavLink>
           <NavLink to='/profile'>Profile Settings</NavLink>
@@ -30,6 +30,7 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
         {/*Not Logged in */}
           <NavLink to="/login">Login</NavLink>
           <NavLink to='/register'>Register</NavLink>
+        <NavLink to='/products'>Products ({vipProductsCount})</NavLink>
         </>
       )}
     </nav>

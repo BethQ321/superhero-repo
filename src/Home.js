@@ -11,7 +11,7 @@ const Home = ({auth}) => {
             {isLoggedIn ? (
             <>
             <h1>Welcome, {username} ! </h1>
-            {/* {user.is_vip ? 'VIP User' : ''} working on this for vip user - jonas*/}
+           <h2> {auth.is_vip ? 'VIP User' : ''}</h2>
             <img src="https://i.pinimg.com/originals/60/23/ab/6023abd8e8c340bca6f0968bcdac2c4a.jpg"></img>
             </>
             ) : (
