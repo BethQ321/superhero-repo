@@ -1,79 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
-import {  HashRouter, Routes, Route } from 'react-router-dom';
-import Products from './Products';
-import Orders from './Orders';
-import Cart from './Cart';
-import Login from './Login';
-import api from './api';
-import WishList from './wishList';
-import Profile from './Profile';
-import Register from './Register';
-import Home from './Home';
-import RegistrationComplete from './RegistrationComplete';
-import Nav from './Nav' //added for nav file 
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import Products from "./Products";
+import Orders from "./Orders";
+import Cart from "./Cart";
+import Login from "./Login";
+import api from "./api";
+import WishList from "./wishList";
+import Profile from "./Profile";
+import Register from "./Register";
+import Home from "./Home";
+import RegistrationComplete from "./RegistrationComplete";
+import Nav from "./Nav"; //added for nav file
 
-
-
-const App = ()=> {
+const App = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [vipProducts, setVipProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  
-  
-  const attemptLoginWithToken = async()=> {
-    await api.attemptLoginWithToken(setAuth);
-  }
+  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(()=> {
+  const attemptLoginWithToken = async () => {
+    await api.attemptLoginWithToken(setAuth);
+  };
+
+  useEffect(() => {
     attemptLoginWithToken();
   }, []);
 
-  useEffect(()=> {
-    const fetchData = async()=> {
+  useEffect(() => {
+    const fetchData = async () => {
       await api.fetchProducts(setProducts);
     };
     fetchData();
   }, []);
 
-  useEffect(()=> {
-    if(auth.id){
-      const fetchData = async()=> {
+  useEffect(() => {
+    if (auth.id) {
+      const fetchData = async () => {
         await api.fetchOrders(setOrders);
       };
       fetchData();
     }
   }, [auth]);
 
-  useEffect(()=> {
-    if(auth.id){
-      const fetchData = async()=> {
+  useEffect(() => {
+    if (auth.id) {
+      const fetchData = async () => {
         await api.fetchLineItems(setLineItems);
       };
       fetchData();
     }
   }, [auth]);
 
-
-  
-  const createLineItem = async(product)=> {
-    await api.createLineItem({ product, cart, lineItems, setLineItems});
+  const createLineItem = async (product) => {
+    await api.createLineItem({ product, cart, lineItems, setLineItems });
   };
 
-  const updateLineItem = async(lineItem)=> {
+  const updateLineItem = async (lineItem) => {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
 
-  const updateOrder = async(order)=> {
+  const updateOrder = async (order) => {
     await api.updateOrder({ order, setOrders });
   };
 
-  const removeFromCart = async(lineItem)=> {
+  const removeFromCart = async (lineItem) => {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
 
@@ -86,9 +80,9 @@ const App = ()=> {
       await api.removeFromCart({ lineItem, lineItems, setLineItems });
     }
   };
-  
-   // format price
-   const formatPrice = (price) => {
+
+  // format price
+  const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
 
@@ -98,7 +92,7 @@ const App = ()=> {
   };
 
   const handleSearchClick = () => {
-    const filtered = products.filter(product =>
+    const filtered = products.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredProducts(filtered);
@@ -109,14 +103,14 @@ const App = ()=> {
     if (auth.is_vip) {
       setFilteredProducts(products);
     } else {
-      setFilteredProducts(products.filter(product => !product.vip_only));
+      setFilteredProducts(products.filter((product) => !product.vip_only));
     }
-    setSearchQuery('');
+    setSearchQuery("");
   };
 
   useEffect(() => {
     // Filter products based on user's is_vip status and search query
-    const filtered = products.filter(product => {
+    const filtered = products.filter((product) => {
       if (!auth.is_vip && product.vip_only) {
         return false;
       }
@@ -130,66 +124,87 @@ const App = ()=> {
     setFilteredProducts(filtered);
   }, [products, auth, searchQuery]);
 
+  const cart = orders.find((order) => order.is_cart) || {};
 
-  const cart = orders.find(order => order.is_cart) || {};
+  const cartItems = lineItems.filter(
+    (lineItem) => lineItem.order_id === cart.id
+  );
 
-  const cartItems = lineItems.filter(lineItem => lineItem.order_id === cart.id);
-
-  const cartCount = cartItems.reduce((acc, item)=> {
-    return acc += item.quantity;
+  const cartCount = cartItems.reduce((acc, item) => {
+    return (acc += item.quantity);
   }, 0);
 
-  const login = async(credentials)=> {
+  const login = async (credentials) => {
     await api.login({ credentials, setAuth });
-  }
+  };
 
-  const logout = ()=> {
+  const logout = () => {
     api.logout(setAuth);
-  }
+  };
 
   return (
     <div>
-
-      <Nav 
-        auth={auth} 
-        products={products} 
-        orders={orders} 
-        cartCount={cartCount} 
-        logout={logout} 
+      <Nav
+        auth={auth}
+        products={products}
+        orders={orders}
+        cartCount={cartCount}
+        logout={logout}
       />
       <main>
         <Routes>
-          <Route path="/" element={<Home auth={auth}/>} />
-          <Route path="/products" element={<Products
-           auth={auth} 
-           products={products} 
-           cartItems={cartItems} 
-           createLineItem={createLineItem} 
-           updateLineItem={updateLineItem}
-           filteredProducts={filteredProducts}
-           setFilteredProducts={setFilteredProducts}
-           searchQuery={searchQuery}
-           vipProducts={vipProducts}
-           handleSearchChange={handleSearchChange}
-           handleSearchClick={handleSearchClick}
-           handleShowAllClick={handleShowAllClick}
-           formatPrice={formatPrice}
-           />} />
-          <Route path="/orders" element={<Orders auth={auth} orders={orders} products={products} lineItems={lineItems} />} />
-          <Route path="/cart" element={<Cart 
-           cart={cart} 
-           lineItems={lineItems} 
-           products={products} 
-           updateOrder={updateOrder} 
-           removeFromCart={removeFromCart} 
-           handleDecrement={handleDecrement}
-           updateLineItem={updateLineItem} 
-
-           />
-          } />
+          <Route path="/" element={<Home auth={auth} />} />
+          <Route
+            path="/products"
+            element={
+              <Products
+                auth={auth}
+                products={products}
+                cartItems={cartItems}
+                createLineItem={createLineItem}
+                updateLineItem={updateLineItem}
+                filteredProducts={filteredProducts}
+                setFilteredProducts={setFilteredProducts}
+                searchQuery={searchQuery}
+                vipProducts={vipProducts}
+                handleSearchChange={handleSearchChange}
+                handleSearchClick={handleSearchClick}
+                handleShowAllClick={handleShowAllClick}
+                formatPrice={formatPrice}
+              />
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <Orders
+                auth={auth}
+                orders={orders}
+                products={products}
+                lineItems={lineItems}
+              />
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cart={cart}
+                lineItems={lineItems}
+                products={products}
+                updateOrder={updateOrder}
+                removeFromCart={removeFromCart}
+                handleDecrement={handleDecrement}
+                updateLineItem={updateLineItem}
+              />
+            }
+          />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
-          <Route path='/RegistrationComplete' element={<RegistrationComplete />} />
+          <Route
+            path="/RegistrationComplete"
+            element={<RegistrationComplete />}
+          />
           <Route path="/wishList" element={<WishList />} />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
@@ -245,16 +260,13 @@ const App = ()=> {
           </div>
         )
       */}
-
     </div>
   );
-  
 };
 
-const root = ReactDOM.createRoot(document.querySelector('#root'));
+const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
   <HashRouter>
     <App />
   </HashRouter>
 );
-

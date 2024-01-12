@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const app = express.Router();
-const { isLoggedIn, isAdmin } = require('./middleware');
+const { isLoggedIn, isAdmin } = require("./middleware");
 
-app.use('/products', require('./products'));
-app.use('/', require('./auth'));
-app.use('/orders', require('./orders'));
-app.use('/lineItems', require('./lineItems'));
+app.use("/products", require("./products"));
+app.use("/", require("./auth"));
+app.use("/orders", require("./orders"));
+app.use("/lineItems", require("./lineItems"));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -13,7 +13,7 @@ app.use((err, req, res, next) => {
   const status = err.status || 500;
 
   // If the error object has a message, use it, otherwise use a generic message
-  const message = err.message || 'Internal Server Error';
+  const message = err.message || "Internal Server Error";
 
   // Send the error as a JSON response
   res.status(status).json({ message });
