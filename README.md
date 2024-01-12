@@ -31,5 +31,5 @@
 - [ ] as an administrator adminstrator I should be able to mark a product as vip_only, which can only be purchased by vip users.
 - [ ] as an administrator I should be able to see all orders
 
-- test commit 
+
 
