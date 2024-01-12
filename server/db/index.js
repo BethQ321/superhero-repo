@@ -29,7 +29,8 @@ const seed = async () => {
       name VARCHAR(100) UNIQUE NOT NULL,
       price INTEGER,
       image VARCHAR(1000) NOT NULL,
-      description VARCHAR(1000)
+      description VARCHAR(1000),
+      vip_only BOOLEAN DEFAULT false NOT NULL
 
     );
 
@@ -48,14 +49,7 @@ const seed = async () => {
 
     CREATE TABLE review(
       id UUID PRIMARY KEY,
-      created_at TIMESTAMP DEFAULT now(),
-      name VARCHAR(100) UNIQUE NOT NULL,
-      price INTEGER,
-      image VARCHAR(1000) NOT NULL,
-      description VARCHAR(1000),
-      vip_only BOOLEAN DEFAULT false NOT NULL
-
-      product_id UUID REFERENCES products(id) NOT NULL,
+      productR_id UUID REFERENCES products(id) NOT NULL,
       review VARCHAR(1000),
       user_id UUID REFERENCES users(id) NOT NULL
       

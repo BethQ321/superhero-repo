@@ -11,36 +11,30 @@ import Profile from "./Profile";
 import Register from "./Register";
 import Home from "./Home";
 import RegistrationComplete from "./RegistrationComplete";
-import Nav from "./Nav"; //added for nav fileimport SingleProduct from './SingleProduct';
+import Nav from "./Nav"; //added for nav file
+import SingleProduct from "./SingleProduct";
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
-  
-  //review
-  //const [reviews, setReview] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
-
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
-
   useEffect(() => {
     attemptLoginWithToken();
   }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       await api.fetchProducts(setProducts);
     };
     fetchData().then(() => console.log(products));
   }, []);
-  
   useEffect(() => {
     if (auth.id) {
       const fetchData = async () => {
@@ -49,7 +43,6 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
-
   useEffect(() => {
     if (auth.id) {
       const fetchData = async () => {
@@ -58,23 +51,18 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
-
   const createLineItem = async (product) => {
     await api.createLineItem({ product, cart, lineItems, setLineItems });
   };
-
   const updateLineItem = async (lineItem) => {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
-
   const updateOrder = async (order) => {
     await api.updateOrder({ order, setOrders });
   };
-
   const removeFromCart = async (lineItem) => {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
-
   const handleDecrement = async (lineItem) => {
     if (lineItem.quantity > 1) {
       const updatedQuantity = lineItem.quantity - 2;
@@ -84,45 +72,62 @@ const App = () => {
       await api.removeFromCart({ lineItem, lineItems, setLineItems });
     }
   };
-  
-  
-
-  //const handleReviewSubmit = async (review) => {
-    
-    //await api.createReview({review})
-
-  //}
-
-
-
-
-  const cart = orders.find(order => order.is_cart) || {};
-
+  // format price
+  const formatPrice = (price) => {
+    return `$${(price / 100).toFixed(2)}`;
+  };
+  // search feature
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+  const handleSearchClick = () => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+  // show all button
+  const handleShowAllClick = () => {
+    if (auth.is_vip) {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter((product) => !product.vip_only));
+    }
+    setSearchQuery("");
+  };
+  useEffect(() => {
+    // Filter products based on user's is_vip status and search query
+    const filtered = products.filter((product) => {
+      if (!auth.is_vip && product.vip_only) {
+        return false;
+      }
+      if (searchQuery) {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+      }
+      return true;
+    });
+    setFilteredProducts(filtered);
+  }, [products, auth, searchQuery]);
+  const cart = orders.find((order) => order.is_cart) || {};
   const cartItems = lineItems.filter(
     (lineItem) => lineItem.order_id === cart.id
   );
-
   const cartCount = cartItems.reduce((acc, item) => {
     return (acc += item.quantity);
   }, 0);
-
   const login = async (credentials) => {
     await api.login({ credentials, setAuth });
   };
-
   const logout = () => {
     api.logout(setAuth);
   };
-
-//wishlist
-const removeFromList = (itemId) => {
-  setWishList(currentWishList => currentWishList.filter(item => item.id !== itemId));
-};
-
-const addToWishList = (product) => {
-  setWishList((currentWishList) => [...currentWishList, product]);
-};
-
+  //wishlist
+  const removeFromList = (itemId) => {
+    setWishList(currentWishList => currentWishList.filter(item => item.id !== itemId));
+  };
+  const addToWishList = (product) => {
+    setWishList((currentWishList) => [...currentWishList, product]);
+  };
   return (
     <div>
       <Nav
@@ -156,7 +161,7 @@ const addToWishList = (product) => {
               />
             }
           />
-          <Route path="/products/:id" element={<SingleProduct  auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
+          <Route path="/products/:id" element={<SingleProduct auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
           <Route
             path="/orders"
             element={
@@ -188,17 +193,16 @@ const addToWishList = (product) => {
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
-            <Route path="/wishList" element={<WishList 
+          <Route path="/wishList" element={<WishList
             wishList={wishList}
             removeFromWishList={removeFromList}
             products={products}
             updateOrder={updateOrder}
             cart={cart}
-            />}/>
+          />} />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
       </main>
-
       {/*
         auth.id ? (
           <>
@@ -252,7 +256,6 @@ const addToWishList = (product) => {
     </div>
   );
 };
-
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
   <HashRouter>

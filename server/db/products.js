@@ -21,16 +21,6 @@ const fetchReviews = async()=> {
 };
 
 
-const fetchReviews = async()=> {
-  const SQL = `
-    SELECT *
-    FROM review
-  `;
-  const response = await client.query(SQL);
-  return response.rows;
-};
-
-
 const createProduct = async (product) => {
   const SQL = `
     INSERT INTO products (id, name, price, image, description, vip_only) 
