@@ -35,9 +35,9 @@ const App = () => {
     const fetchData = async () => {
       await api.fetchProducts(setProducts);
     };
-    fetchData();
+    fetchData().then(() => console.log(products));
   }, []);
-
+  
   useEffect(() => {
     if (auth.id) {
       const fetchData = async () => {
@@ -143,10 +143,14 @@ const App = () => {
     api.logout(setAuth);
   };
 
-//remove from wishlist function
+//wishlist
 const removeFromList = (itemId) => {
-  setWishList(currentWishList => currentWishList.filter(item => item.id !== itemId))
-}
+  setWishList(currentWishList => currentWishList.filter(item => item.id !== itemId));
+};
+
+const addToWishList = (product) => {
+  setWishList((currentWishList) => [...currentWishList, product]);
+};
 
   return (
     <div>
@@ -177,6 +181,7 @@ const removeFromList = (itemId) => {
                 handleSearchClick={handleSearchClick}
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
+                addToWishList={addToWishList}
               />
             }
           />
@@ -213,7 +218,7 @@ const removeFromList = (itemId) => {
           />
             <Route path="/wishList" element={<WishList 
             wishList={wishList}
-            removeFromList={removeFromList}
+            removeFromWishList={removeFromList}
             products={products}
             updateOrder={updateOrder}
             cart={cart}
