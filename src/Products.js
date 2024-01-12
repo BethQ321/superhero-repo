@@ -15,14 +15,12 @@ const Products = ({
   vipProducts,
   searchQuery,
   formatPrice,
-  addToWishList, // Make sure this function is defined correctly
+  addToWishList,
 }) => {
-  // Function to add a product to the wishlist
+  
   const addProductToWishlist = (product) => {
-    // Assuming 'product' is an object with the necessary information
+    
     console.log("Adding to Wishlist:", product);
-
-    // Call the 'addToWishList' function to add the product to the wishlist
     addToWishList(product);
   };
 
@@ -52,9 +50,6 @@ const Products = ({
                   <>
                     <button onClick={() => updateLineItem(cartItem)}>
                       Add Another
-                    </button>
-                    <button onClick={() => addProductToWishlist(product)}>
-                      Add to Wishlist
                     </button>
                   </>
                 ) : (
