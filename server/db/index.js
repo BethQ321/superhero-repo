@@ -1,6 +1,7 @@
 const client = require("./client");
 
-const { fetchProducts, createProduct } = require("./products");
+const { fetchProducts, createProduct,
+  createReview } = require("./products");
 
 const { createUser, authenticate, findUserByToken } = require("./auth");
 
@@ -13,12 +14,25 @@ const {
   fetchOrders,
 } = require("./cart");
 
+
 const seed = async () => {
   const SQL = `
     DROP TABLE IF EXISTS line_items;
+    DROP TABLE IF EXISTS review;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
+    
+    CREATE TABLE products(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      name VARCHAR(100) UNIQUE NOT NULL,
+      price INTEGER,
+      image VARCHAR(1000) NOT NULL,
+      description VARCHAR(1000),
+      vip_only BOOLEAN DEFAULT false NOT NULL
+
+    );
 
     CREATE TABLE users(
       id UUID PRIMARY KEY,
@@ -33,16 +47,15 @@ const seed = async () => {
       is_vip BOOLEAN DEFAULT false NOT NULL
     );
 
-    CREATE TABLE products(
+    CREATE TABLE review(
       id UUID PRIMARY KEY,
-      created_at TIMESTAMP DEFAULT now(),
-      name VARCHAR(100) UNIQUE NOT NULL,
-      price INTEGER,
-      image VARCHAR(1000) NOT NULL,
-      description VARCHAR(1000),
-      vip_only BOOLEAN DEFAULT false NOT NULL
-
+      productR_id UUID REFERENCES products(id) NOT NULL,
+      review VARCHAR(1000),
+      user_id UUID REFERENCES users(id) NOT NULL
+      
     );
+    
+   
 
     CREATE TABLE orders(
       id UUID PRIMARY KEY,
@@ -60,6 +73,11 @@ const seed = async () => {
       product_price INTEGER,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
       );
+
+    
+  
+  
+
 
   `;
   await client.query(SQL);

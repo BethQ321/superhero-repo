@@ -44,12 +44,14 @@ const Products = ({
           );
           return (
             <li key={product.id}>
-              {auth.is_vip ? `${product.name} VIP Item!` : product.name}{" "}
+              {auth.is_vip ?   <Link to={`/products/${product.id}`}>{`${product.name} VIP Item`}</Link> :  <Link to={`/products/${product.id}`}>{product.name} </Link>}{" "}
+              
               <img className="productImage" src={product.image} alt={product.name} /> :{" "}
               {product.description} - {formatPrice(product.price)}
               {auth.id ? (
                 cartItem ? (
                   <>
+                  <Link to={`/products/${product.id}`}>{product.name} </Link>
                     <button onClick={() => updateLineItem(cartItem)}>
                       Add Another
                     </button>
