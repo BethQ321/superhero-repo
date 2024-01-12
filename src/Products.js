@@ -15,6 +15,8 @@ const Products = ({
   vipProducts,
   searchQuery,
   formatPrice,
+  addToWishList
+
 }) => {
   return (
     <div>

@@ -19,8 +19,8 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
             Orders ({orders.filter((order) => !order.is_cart).length})
           </NavLink>
           <NavLink to="/cart">Cart ({cartCount})</NavLink>
-          <NavLink to="/profile">Profile Settings</NavLink>
           <NavLink to="/wishList">Wishlist</NavLink>
+          <NavLink to="/profile">Profile Settings</NavLink>
           <span>
             Welcome {auth.username}!<button onClick={logout}>Logout</button>
           </span>

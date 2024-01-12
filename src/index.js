@@ -21,6 +21,7 @@ const App = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [wishList, setWishList] = useState([]); //wishlist state
 
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
@@ -142,6 +143,11 @@ const App = () => {
     api.logout(setAuth);
   };
 
+//remove from wishlist function
+const removeFromList = (itemId) => {
+  setWishList(currentWishList => currentWishList.filter(item => item.id !== itemId))
+}
+
   return (
     <div>
       <Nav
@@ -205,7 +211,13 @@ const App = () => {
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
-          <Route path="/wishList" element={<WishList />} />
+            <Route path="/wishList" element={<WishList 
+            wishList={wishList}
+            removeFromList={removeFromList}
+            products={products}
+            updateOrder={updateOrder}
+            cart={cart}
+            />}/>
           <Route path="/Profile" element={<Profile />} />
         </Routes>
       </main>
