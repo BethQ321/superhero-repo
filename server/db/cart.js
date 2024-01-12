@@ -1,8 +1,8 @@
-const client = require('./client');
-const { v4 } = require('uuid');
+const client = require("./client");
+const { v4 } = require("uuid");
 const uuidv4 = v4;
 
-const fetchLineItems = async(userId)=> {
+const fetchLineItems = async (userId) => {
   const SQL = `
   SELECT line_items.*, products.price AS product_price
   FROM line_items
@@ -13,13 +13,13 @@ const fetchLineItems = async(userId)=> {
   ORDER BY product_id
   `;
 
-  const response = await client.query(SQL, [ userId ]);
+  const response = await client.query(SQL, [userId]);
   return response.rows;
 };
 
-const ensureCart = async(lineItem)=> {
+const ensureCart = async (lineItem) => {
   let orderId = lineItem.order_id;
-  if(!orderId){
+  if (!orderId) {
     const SQL = `
       SELECT order_id 
       FROM line_items 
@@ -34,11 +34,11 @@ const ensureCart = async(lineItem)=> {
     WHERE id = $1 and is_cart=true
   `;
   const response = await client.query(SQL, [orderId]);
-  if(!response.rows.length){
+  if (!response.rows.length) {
     throw Error("An order which has been placed can not be changed");
   }
 };
-const updateLineItem = async(lineItem)=> {
+const updateLineItem = async (lineItem) => {
   await ensureCart(lineItem);
   SQL = `
     UPDATE line_items
@@ -46,33 +46,32 @@ const updateLineItem = async(lineItem)=> {
     WHERE id = $2
     RETURNING *
   `;
-  if(lineItem.quantity <= 0){
-    throw Error('a line item quantity must be greater than 0');
+  if (lineItem.quantity <= 0) {
+    throw Error("a line item quantity must be greater than 0");
   }
   const response = await client.query(SQL, [lineItem.quantity, lineItem.id]);
   return response.rows[0];
 };
 
-
 // if(lineItem.price.id === lineItem.id)
 // return {price.id}
 
-const createLineItem = async(lineItem)=> {
+const createLineItem = async (lineItem) => {
   await ensureCart(lineItem);
   const SQL = `
   INSERT INTO line_items (product_id, order_id, product_price, id)
   VALUES ($1, $2, (SELECT price FROM products WHERE id = $1), $3)
   RETURNING *
 `;
-const response = await client.query(SQL, [
-  lineItem.product_id,
-  lineItem.order_id,
-  uuidv4(),
-]);
-return response.rows[0];
+  const response = await client.query(SQL, [
+    lineItem.product_id,
+    lineItem.order_id,
+    uuidv4(),
+  ]);
+  return response.rows[0];
 };
 
-const deleteLineItem = async(lineItem)=> {
+const deleteLineItem = async (lineItem) => {
   await ensureCart(lineItem);
   const SQL = `
     DELETE from line_items
@@ -81,7 +80,7 @@ const deleteLineItem = async(lineItem)=> {
   await client.query(SQL, [lineItem.id]);
 };
 
-const updateOrder = async(order)=> {
+const updateOrder = async (order) => {
   const SQL = `
     UPDATE orders SET is_cart = $1 WHERE id = $2 RETURNING *
   `;
@@ -89,20 +88,21 @@ const updateOrder = async(order)=> {
   return response.rows[0];
 };
 
-const fetchOrders = async(userId)=> {
+const fetchOrders = async (userId) => {
   const SQL = `
     SELECT * FROM orders
     WHERE user_id = $1
   `;
-  let response = await client.query(SQL, [ userId ]);
-  const cart = response.rows.find(row => row.is_cart);
-  if(!cart){
-    await client.query(`
+  let response = await client.query(SQL, [userId]);
+  const cart = response.rows.find((row) => row.is_cart);
+  if (!cart) {
+    await client.query(
+      `
       INSERT INTO orders(is_cart, id, user_id) VALUES(true, $1, $2)
       `,
       [uuidv4(), userId]
-    ); 
-    response = await client.query(SQL, [ userId ]);
+    );
+    response = await client.query(SQL, [userId]);
     return response.rows;
     //return fetchOrders(userId);
   }
@@ -115,5 +115,5 @@ module.exports = {
   updateLineItem,
   deleteLineItem,
   updateOrder,
-  fetchOrders
+  fetchOrders,
 };
