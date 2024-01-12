@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
+const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, addtoWsihList})=> {
 //Needed for search feature 
 const [searchQuery, setSearchQuery] = useState('')
 const [filteredProducts, setFilteredProducts] = useState(products)
