@@ -15,9 +15,17 @@ const Products = ({
   vipProducts,
   searchQuery,
   formatPrice,
-  addToWishList
-
+  addToWishList, // Make sure this function is defined correctly
 }) => {
+  // Function to add a product to the wishlist
+  const addProductToWishlist = (product) => {
+    // Assuming 'product' is an object with the necessary information
+    console.log("Adding to Wishlist:", product);
+
+    // Call the 'addToWishList' function to add the product to the wishlist
+    addToWishList(product);
+  };
+
   return (
     <div>
       <h2>Products</h2>
@@ -37,15 +45,27 @@ const Products = ({
           return (
             <li key={product.id}>
               {auth.is_vip ? `${product.name} VIP Item!` : product.name}{" "}
-              <img className="productImage" src={product.image} /> :{" "}
+              <img className="productImage" src={product.image} alt={product.name} /> :{" "}
               {product.description} - {formatPrice(product.price)}
               {auth.id ? (
                 cartItem ? (
-                  <button onClick={() => updateLineItem(cartItem)}>
-                    Add Another
-                  </button>
+                  <>
+                    <button onClick={() => updateLineItem(cartItem)}>
+                      Add Another
+                    </button>
+                    <button onClick={() => addProductToWishlist(product)}>
+                      Add to Wishlist
+                    </button>
+                  </>
                 ) : (
-                  <button onClick={() => createLineItem(product)}>Add</button>
+                  <>
+                    <button onClick={() => createLineItem(product)}>
+                      Add to Cart
+                    </button>
+                    <button onClick={() => addProductToWishlist(product)}>
+                      Add to Wishlist
+                    </button>
+                  </>
                 )
               ) : null}
               {auth.is_admin ? (
