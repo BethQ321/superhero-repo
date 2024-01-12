@@ -13,13 +13,16 @@ import Home from './Home';
 import RegistrationComplete from './RegistrationComplete';
 import Nav from './Nav' //added for nav file 
 
-
+import SingleProduct from './SingleProduct';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
+  
+  //review
+  //const [reviews, setReview] = useState([]);
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -81,6 +84,16 @@ const App = ()=> {
     }
   };
   
+  
+
+  //const handleReviewSubmit = async (review) => {
+    
+    //await api.createReview({review})
+
+  //}
+
+
+
 
   const cart = orders.find(order => order.is_cart) || {};
 
@@ -112,6 +125,7 @@ const App = ()=> {
         <Routes>
           <Route path="/" element={<Home auth={auth}/>} />
           <Route path="/products" element={<Products auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
+          <Route path="/products/:id" element={<SingleProduct  auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
           <Route path="/orders" element={<Orders auth={auth} orders={orders} products={products} lineItems={lineItems} />} />
           <Route path="/cart" element={<Cart 
            cart={cart} 

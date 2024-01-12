@@ -51,6 +51,7 @@ const handleShowAllClick = () => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
               <li key={ product.id }>
+                <Link to={`/products/${product.id}`}>{product.name}</Link>
                 { product.name } <img className='productImage' src={ product.image } /> : {product.description} - { formatPrice(product.price) }
                 {
                   auth.id ? (
