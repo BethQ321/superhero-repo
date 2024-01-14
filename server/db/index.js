@@ -49,15 +49,12 @@ const seed = async () => {
 
     CREATE TABLE review(
       id UUID PRIMARY KEY,
-      productR_id UUID REFERENCES products(id) NOT NULL,
+      product_id UUID REFERENCES products(id),
       review VARCHAR(1000),
-      user_id UUID REFERENCES users(id) NOT NULL
-      
-    );
+      rating INTEGER DEFAULT 1
+      );
     
-   
-
-    CREATE TABLE orders(
+      CREATE TABLE orders(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       is_cart BOOLEAN NOT NULL DEFAULT true,
@@ -81,6 +78,9 @@ const seed = async () => {
 
   `;
   await client.query(SQL);
+
+  
+  
 
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
@@ -180,17 +180,14 @@ const seed = async () => {
     createProduct({
       name: "Vortex Vial:",
       price: 100,
-      image:
-        "https://previews.dropbox.com/p/thumb/ACKfk1NsmijTmZEpcfl67vCYNvBdyHL3lCPAmCIvtex7DXg-HIVYswczUp35DXBzz0bfpx8e_R5tFLXWKzKgb9YAifULuIJOFprjFunEspecJJPUhERttgN71mrLGnsQArj9B3YBNNxSqR8xyXJA33DynVV5RpuQ7z_l8ZCy0PaZCpNixpEc2V6fNlgf1jGvb2N28PqO82db6w0fNvYIY2Y5L5kF7KnFh4TUkvyAHkq5cKTl02t9Y9HjAzifWHmC6PRKe-p7xj6zRXrG5EJOlFwtj7bUWwxEGainmi0Whg7cewVzownhuy7FtpiM4rZ7gBOUtaoAJtKCgLd5FkzJAoTZ/p.png",
-      description:
-        "A small vial containing a miniature tornado that can be released to create localized storms or tornadoes.",
+      image: "https://i.imgur.com/Ml3KgVM.png",      
+      description: "A small vial containing a miniature tornado that can be released to create localized storms or tornadoes.",
       vip_only: false,
     }),
     createProduct({
       name: "Probability Manipulator Dice:",
       price: 100,
-      image:
-        "https://previews.dropbox.com/p/thumb/ACKD-D6s9NSUlJPPh1SmOkuHzCJQrfucDkBBuzerrYAJ_XCBSmRkVnetLkU3pcUm8OW6_ZIrT2Fv07izphWer_TVaSbhiiD3ldRGgeSqWNYSBs0X-QB4ZhLHT9z3Cn1YgaDHG_Wv53Pfo3UToBgm3onB1WQHQ1NZnZoFmLWfjjs2jtDFJiv0NQ0iqpz3X1-RPU6At_dp0gsL0TFH_D1dtB_IXza-6DmEaIohCcCb5BfNAOREhLiQEDEDTPvDis8At7OaTTzicMv5knvYAk9dgWnFEeuvTdNrMC5ZbSf-IGLXdGHVE9aiKUh1x6YBYubjSrUOYlThdpd_pZXAZAuC7LR6/p.png",
+      image: "https://i.imgur.com/GWTCsuy.png",
       description:
         "A set of enchanted dice that can alter the probability of events, allowing the hero to influence luck and outcomes.",
       vip_only: false,
@@ -272,7 +269,7 @@ const seed = async () => {
     createProduct({
       name: "Kryptonite_SprayON",
       price: 100,
-      image: "https://previews.dropbox.com/p/thumb/ACIck_ImjvY9WRtmOOcJvolcEFE-_YXhNN36a8M4NG3RiC7xBiUaCzEbvEsQZ28EyRsY59ri8M3dctibJRxcCeDhyIlrXW21_thtq1Mt-31Y_gicSBVs2ghxh783q11yxh1yBPjdRLlDDZAKrFWP5r5OGJ_cfUCYLJOAVGGJKVkEFiAsJ9VjhEBwaqkVsQi-ykhMxtISYcputi11-zcym9DKaj8JoqbcGfxA_S0itB-PRh8C2gGotF_21aKiyWDq4Sy-IrGiV-2CN9LJgXrvseRItqIluIflm1KBG8-X0yq9-39aussU7H0zPTj1tyL8-9B8CJJ2Md9fXTpAdx0Mcdq1/p.png",
+      image: "https://i.imgur.com/p5XGoXb.png",
       description:
         "Harmless and biodegradable for most, but for that special someone will put them on even then playing field. Just spray any item and let dry for 2 hours before use, Not recomended for direct use due to short range",
       vip_only: false,
@@ -280,7 +277,7 @@ const seed = async () => {
     createProduct({
       name: "Gravitational Singularity Sphere",
       price: 100,
-      image: "https://previews.dropbox.com/p/thumb/ACIgL6gMf9SPS7YeldVDAuoN55DSx9beBZm4S34wN-VGjI7fFlhJajxhCiIpsavYQ6sdu9LjYN1W-Hv-4eCubKiq7Tj2k10B4bEBjWrLqcoB0EjZsoP_Cwq9GPysPJBiOoZIrrnkaGYBvkUFw4-WkXuXmgo9WcrF2Boji-wjMdqKnrfrurVgqQf7_D75GAC-1DCWeCCoHEHT9jj8chjxB2Olpe8va1UJTkVy_AZK6SPW0JUzjXYfYug1Ik2n1PbZ-Opyf2aHrIkgwFohnkNJqfJn4ct19iRFIzp1kgqN-kPMN_MDoO089ywdcTKjQ2SBLG_3fUaxKKoXtOyf3RtHEbrW/p.png",
+      image: "https://i.imgur.com/LTC503R.png",
       description:
         "A handheld orb that can create miniature black holes, capable of absorbing or repelling matter in a localized area.",
       vip_only: false,
@@ -288,7 +285,7 @@ const seed = async () => {
     createProduct({
       name: "Elemental Fusion Crystal:",
       price: 100,
-      image: "https://previews.dropbox.com/p/thumb/ACKmamNJZiszjXeNTIJi7pPeb6p8eHK5RXmH8Lhc8VYCUvZny4JVRrEjhTlKdKvTTtr6VzW8uMJHDrf7fEzO6Uws46UH8h2ZtB1KecYUGaYiZ6919Rn2llLxhPUPLyShsaBlXZx98opPoDuERzBDK6M6EADrhKsJvm608mvW7WMg2MT9p64VyjjeIOR3mo3xzqzaW95oCKeXc058P1N_TxxZAC417nGu-qtfs9wZ1y91ZwqV0E3-caAlUBxtfGn_L1rCKmWOyqPche5IBPwFBKwe44nbw0lzPv0tMNqsURAoz00yH-07Uy5Ig4XhDAQCPg6wbwkRsTU_xpF2XPjTsPP1/p.png",
+      image: "https://i.imgur.com/tO4PWc0.png",
       description:
         "A gemstone that, when activated, can combine two elements (e.g., fire, water, earth, and air) to create a unique elemental power.",
       vip_only: false,
