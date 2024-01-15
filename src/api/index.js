@@ -13,6 +13,8 @@ const fetchProducts = async (setProducts) => {
   setProducts(response.data);
 };
 
+
+
 const fetchOrders = async (setOrders) => {
   const response = await axios.get("/api/orders", getHeaders());
   setOrders(response.data);
@@ -35,6 +37,17 @@ const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
   setLineItems([...lineItems, response.data]);
 };
 
+
+const createReview = async (productId, review, setReview) => {
+    const response = await axios.post("/api/reviews", {
+      product_id: productId,
+      reviewText: review.reviewText, 
+      rating: review.rating, 
+    }, getHeaders()
+    );
+    setReview(response.data);
+  };
+
 const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
   const response = await axios.put(
     `/api/lineItems/${lineItem.id}`,
@@ -50,6 +63,7 @@ const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
     )
   );
 };
+
 
 const updateOrder = async ({ order, setOrders }) => {
   await axios.put(`/api/orders/${order.id}`, order, getHeaders());
@@ -102,6 +116,7 @@ const api = {
   updateOrder,
   removeFromCart,
   attemptLoginWithToken,
+  createReview
 };
 
 export default api;

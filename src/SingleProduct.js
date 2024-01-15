@@ -1,52 +1,69 @@
-//import React from 'react';
-import axios from 'axios';
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom'
+import React, { useState } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import api from "./api";
 
-const SingleProduct = ({ products, users,  cartItems, createLineItem, updateLineItem, auth }) => {
-    const [review, setReview] = useState("");
-    const [rating, setRating] = useState(0);
-    const [error, setError] = useState(null);
-    const params = useParams()
-    const id = params.id
+const SingleProduct = ({ auth }) => {
+  const productId = useParams(); 
+  const [review, setReview] = useState({
+    product_id: productId,
+    reviewText: "",
+    rating: "",
+  });
+console.log(productId)
+  const [error, setError] = useState(null);
 
-    const handleReview = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await axios.post(`/api/products/${id}`, {
-                review,
-                rating,
-            });
-        } catch (error) {
-            setError(error.message)
-        }
-    };
-        
-    return (
-        <div>
-          <form onSubmit={handleReview}>
-            <input
-              type="text"
-              value={review}
-                onChange={(event) => setReview(event.target.value)}
-              placeholder="Place review here"
-            /> 
-            <input
-            type="number"
-            value={rating}
-            onChange={(event) => setRating(event.target.value)}
-            placeholder="Rating (0-5)"
-            min={0}
-            max={5}
-        />
-            <button type="submit">Add review</button>
-          </form>
-          
-          <br />
-          
-          <Link to='/products'><button>Back to Products</button></Link>
-        </div>
-      );
+  const handleReviewSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await api.createReview(productId, review);
+      console.log("Review created:", response);
+    setReview({
+        reviewText: "",
+        rating: "",
+      });
+    } catch (error) {
+      setError(error.message);
     }
-    
-    export default SingleProduct;
+  };
+
+  return (
+    <div>
+      <h2>Product Review</h2>
+      <form onSubmit={handleReviewSubmit}>
+        <div>
+          <label htmlFor="reviewText">Review:</label>
+          <textarea
+            id="reviewText"
+            name="reviewText"
+            value={review.reviewText}
+            onChange={(e) =>
+              setReview({ ...review, reviewText: e.target.value })
+            }
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="rating">Rating (0-5):</label>
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            value={review.rating}
+            onChange={(e) =>
+              setReview({ ...review, rating: parseInt(e.target.value) })
+            }
+            min="0"
+            max="5"
+            required
+          />
+        </div>
+        <button type="submit">Submit Review</button>
+      </form>
+      <br />
+      <Link to="/products">Back to Products</Link>
+    </div>
+  );
+};
+
+export default SingleProduct;
