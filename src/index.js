@@ -13,6 +13,8 @@ import Home from "./Home";
 import RegistrationComplete from "./RegistrationComplete";
 import Nav from "./Nav"; //added for nav file
 import SingleProduct from "./SingleProduct";
+import Admin from "./Admin";
+import AddProduct from "./AddProductForm";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -201,6 +203,8 @@ const App = () => {
             cart={cart}
           />} />
           <Route path="/Profile" element={<Profile />} />
+          <Route path="/Admin" element={<Admin />} />
+          <Route path="/addproduct" element={<AddProduct />} />
         </Routes>
       </main>
       {/*

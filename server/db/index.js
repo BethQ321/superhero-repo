@@ -47,8 +47,8 @@ const seed = async () => {
 
     CREATE TABLE review(
       id UUID PRIMARY KEY,
-      product_id UUID REFERENCES products(id),
-      review VARCHAR(1000),
+      product_id VARCHAR(500) NOT NULL,
+      reviewText VARCHAR(1000),
       rating INTEGER DEFAULT 1
       );
     
@@ -105,7 +105,7 @@ const seed = async () => {
       Lname: "LastName",
       phone: "555-555-5555",
       email: "email3@email.com",
-      is_admin: true,
+      is_admin: false,
       is_vip: false,
     }),
     createUser({

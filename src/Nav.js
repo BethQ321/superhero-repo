@@ -21,6 +21,8 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
           <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <NavLink to="/wishList">Wishlist</NavLink>
           <NavLink to="/profile">Profile Settings</NavLink>
+         {auth.is_admin ? ( <NavLink to="/admin">Admin</NavLink>)  :
+         (null) }
           <span className="user-greeting">
             Welcome {auth.username}!<button onClick={logout}>Logout</button>
           </span>
