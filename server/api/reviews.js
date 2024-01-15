@@ -1,7 +1,17 @@
 const express = require("express");
 const app = express.Router();
 const { isLoggedIn, isAdmin } = require("./middleware");
-const { createReview } = require("../db/products");
+const { createReview, fetchReviews } = require("../db/products");
+
+app.get("/", async (req, res, next) => {
+    try {
+      res.send(await fetchReviews());
+    } catch (ex) {
+      next(ex);
+    }
+  });
+
+
 
 
 // route for creating reviews for a specific product

@@ -25,6 +25,11 @@ const fetchLineItems = async (setLineItems) => {
   setLineItems(response.data);
 };
 
+const fetchReviews = async (setReviews) => {
+  const response = await axios.get("/api/reviews");
+  setReviews(response.data);
+};
+
 const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
   const response = await axios.post(
     "/api/lineItems",
@@ -41,6 +46,7 @@ const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
 const createReview = async (productId, review, setReview) => {
     const response = await axios.post("/api/reviews", {
       product_id: productId,
+      review_title: review.review_title,
       reviewText: review.reviewText, 
       rating: review.rating, 
     }, getHeaders()
@@ -116,7 +122,8 @@ const api = {
   updateOrder,
   removeFromCart,
   attemptLoginWithToken,
-  createReview
+  createReview,
+  fetchReviews
 };
 
 export default api;
