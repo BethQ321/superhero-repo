@@ -92,20 +92,24 @@ const SingleProduct = ({ auth }) => {
         <button type="submit">Submit Review</button>
       </form>
       <div>
-        <h3>Reviews</h3>
-        <ul className="reviews-list">
-          {reviews.map((review) => (
-            <li key={review.id} className="review-box">
-              <div className="review-text">
-                <p>{review.reviewtext}</p>
-              </div>
-              <div className="review-rating">
-                <p>Rating: {review.rating}/5</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+  <h3>Reviews</h3>
+  <ul className="reviews-list">
+    {reviews.map((review) => (
+      <li key={review.id} className="review-box">
+        <div className="review-title">
+          <h4>{review.review_title}</h4>
+        </div>
+        <div className="review-text">
+          <p>{review.reviewtext}</p>
+        </div>
+        <div className="review-rating">
+          <p>Rating: {review.rating}/5</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
+
 
       <br />
       <Link to="/products">Back to Products</Link>
