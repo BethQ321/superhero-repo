@@ -1,24 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import api from "./api";
 
 const SingleProduct = ({ auth }) => {
-  const productId = useParams(); 
+  const params = useParams();
+  const productId = params.id;
   const [review, setReview] = useState({
     product_id: productId,
+    review_title: "",
     reviewText: "",
     rating: "",
   });
-console.log(productId)
+  const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Function to fetch reviews for the current product
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`/api/reviews?productId=${productId}`);
+        setReviews(response.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    // Call the fetchReviews function when the component mounts
+    fetchReviews();
+  }, [productId]);
 
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await api.createReview(productId, review);
       console.log("Review created:", response);
-    setReview({
+      setReview({
+        review_title: "",
         reviewText: "",
         rating: "",
       });
@@ -31,6 +49,19 @@ console.log(productId)
     <div>
       <h2>Product Review</h2>
       <form onSubmit={handleReviewSubmit}>
+        <div>
+          <label htmlFor="reviewTitle">Review Title:</label>
+          <input
+            type="text"
+            id="reviewTitle"
+            name="reviewTitle"
+            value={review.review_title}
+            onChange={(e) =>
+              setReview({ ...review, review_title: e.target.value })
+            }
+            required
+          />
+        </div>
         <div>
           <label htmlFor="reviewText">Review:</label>
           <textarea
@@ -60,6 +91,22 @@ console.log(productId)
         </div>
         <button type="submit">Submit Review</button>
       </form>
+      <div>
+        <h3>Reviews</h3>
+        <ul className="reviews-list">
+          {reviews.map((review) => (
+            <li key={review.id} className="review-box">
+              <div className="review-text">
+                <p>{review.reviewtext}</p>
+              </div>
+              <div className="review-rating">
+                <p>Rating: {review.rating}/5</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <br />
       <Link to="/products">Back to Products</Link>
     </div>

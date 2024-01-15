@@ -6,7 +6,7 @@ app.use("/products", require("./products"));
 app.use("/", require("./auth"));
 app.use("/orders", require("./orders"));
 app.use("/lineItems", require("./lineItems"));
-app.use("/reviews", require("./reviews")); // Use dot (.) instead of a comma (,) here
+app.use("/reviews", require("./reviews")); 
 
 // Error handling middleware
 app.use((err, req, res, next) => {
