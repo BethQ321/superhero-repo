@@ -17,39 +17,57 @@ const Products = ({
   formatPrice,
   addToWishList,
 }) => {
-  
   const addProductToWishlist = (product) => {
-    
     console.log("Adding to Wishlist:", product);
     addToWishList(product);
   };
 
   return (
-    <div>
+    <div className="product-container">
       <h2>Products</h2>
-      <input
-        type="text"
-        placeholder="Search Products"
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-      <button onClick={handleSearchClick}>Search</button>
-      <button onClick={handleShowAllClick}>Show All</button>
-      <ul>
+      <div className="product-search">
+        <input
+          type="text"
+          placeholder="Search Products"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+        <button onClick={handleSearchClick}>Search</button>
+        <button onClick={handleShowAllClick}>Show All</button>
+      </div>
+      <ul className="product-list">
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
             (lineItem) => lineItem.product_id === product.id
           );
           return (
             <li key={product.id}>
-              {auth.is_vip ?   <Link to={`/products/${product.id}`}>{`${product.name} VIP Item`}</Link> :  <Link to={`/products/${product.id}`}>{product.name} </Link>}{" "}
-              
-              <img className="productImage" src={product.image} alt={product.name} /> :{" "}
-              {product.description} - {formatPrice(product.price)}
+              {product.vip_only ? (
+                <Link to={`/products/${product.id}`}>
+                  {product.vip_only ? `${product.name} VIP Item` : product.name}
+                  <br></br>
+                  <img
+                    className="productImage"
+                    src={product.image}
+                    alt={product.name}
+                  />
+                </Link>
+              ) : (
+                <Link to={`/products/${product.id}`}>
+                  {product.vip_only ? `${product.name}` : product.name}
+                  <br></br>
+                  <img
+                    className="productImage"
+                    src={product.image}
+                    alt={product.name}
+                  />
+                </Link>
+              )}
+              : {product.description} - {formatPrice(product.price)}
               {auth.id ? (
                 cartItem ? (
                   <>
-                  <Link to={`/products/${product.id}`}>{product.name} </Link>
+                    <Link to={`/products/${product.id}`}>{product.name}</Link>
                     <button onClick={() => updateLineItem(cartItem)}>
                       Add Another
                     </button>

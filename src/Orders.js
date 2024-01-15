@@ -26,16 +26,22 @@ const Orders = ({ orders, products, lineItems }) => {
   };
 
   return (
-    <div>
+    <div className="orders-container">
       <h2>Orders</h2>
-      <ul>
+      <ul className="orders-list">
         {orders
           .filter((order) => !order.is_cart)
           .map((order) => (
-            <li key={order.id}>
-              ({new Date(order.created_at).toLocaleString()}) Total Price:{" "}
-              {calculateOrderTotal(order)}
-              <ul>
+            <li key={order.id} className="order-item">
+              <div className="order-details">
+                <div className="order-date">
+                  ({new Date(order.created_at).toLocaleString()})
+                </div>
+                <div className="order-total">
+                  Total Price: {calculateOrderTotal(order)}
+                </div>
+              </div>
+              <ul className="order-items-list">
                 {lineItems
                   .filter((lineItem) => lineItem.order_id === order.id)
                   .map((lineItem) => {
@@ -43,8 +49,17 @@ const Orders = ({ orders, products, lineItems }) => {
                       (product) => product.id === lineItem.product_id
                     );
                     return (
-                      <li key={lineItem.id}>
-                        {product ? `${lineItem.quantity} ${product.name}` : ""}
+                      <li key={lineItem.id} className="order-item">
+                        <div className="order-item-name">
+                          {product
+                            ? `${lineItem.quantity} ` + `${product.name}: `
+                            : ""}
+                        </div>
+                        <div className="order-item-price">
+                          {product
+                            ? formatPrice(lineItem.quantity * product.price)
+                            : ""}
+                        </div>
                       </li>
                     );
                   })}
