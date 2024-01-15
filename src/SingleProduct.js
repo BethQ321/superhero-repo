@@ -100,7 +100,7 @@ const SingleProduct = ({ auth }) => {
             <h4>{review.review_title}</h4> 
           </div>
           <div className="review-text">
-            <p>{review.review_text}</p> 
+            <p>{review.reviewtext}</p> 
           </div>
           <div className="review-rating">
             <p>Rating: {review.rating}/5</p>
