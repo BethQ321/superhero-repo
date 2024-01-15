@@ -1,7 +1,6 @@
 const client = require("./client");
 
-const { fetchProducts, createProduct,
-  createReview } = require("./products");
+const { fetchProducts, createProduct, createReview } = require("./products");
 
 const { createUser, authenticate, findUserByToken } = require("./auth");
 
@@ -13,7 +12,6 @@ const {
   updateOrder,
   fetchOrders,
 } = require("./cart");
-
 
 const seed = async () => {
   const SQL = `
@@ -78,9 +76,6 @@ const seed = async () => {
 
   `;
   await client.query(SQL);
-
-  
-  
 
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
@@ -172,20 +167,21 @@ const seed = async () => {
     createProduct({
       name: "Mjolnir",
       price: 100,
-      image: "https://m.media-amazon.com/images/I/715bjLVC4fL._AC_SY550_.jpg",
+      image: "https://i.imgur.com/OCMJFCK.png",
       description:
         "Enchanted hammer that grants the wielder (if worthy, no refunds!) control over lightning, flight and superhuman",
       vip_only: true,
     }),
     createProduct({
-      name: "Vortex Vial:",
+      name: "Vortex Vial",
       price: 100,
-      image: "https://i.imgur.com/Ml3KgVM.png",      
-      description: "A small vial containing a miniature tornado that can be released to create localized storms or tornadoes.",
+      image: "https://i.imgur.com/Ml3KgVM.png",
+      description:
+        "A small vial containing a miniature tornado that can be released to create localized storms or tornadoes.",
       vip_only: false,
     }),
     createProduct({
-      name: "Probability Manipulator Dice:",
+      name: "Probability Manipulator Dice",
       price: 100,
       image: "https://i.imgur.com/GWTCsuy.png",
       description:
@@ -267,7 +263,7 @@ const seed = async () => {
       vip_only: false,
     }),
     createProduct({
-      name: "Kryptonite_SprayON",
+      name: "Spray on Kryptonite",
       price: 100,
       image: "https://i.imgur.com/p5XGoXb.png",
       description:
@@ -283,7 +279,7 @@ const seed = async () => {
       vip_only: false,
     }),
     createProduct({
-      name: "Elemental Fusion Crystal:",
+      name: "Elemental Fusion Crystal",
       price: 100,
       image: "https://i.imgur.com/tO4PWc0.png",
       description:
@@ -291,11 +287,90 @@ const seed = async () => {
       vip_only: false,
     }),
     createProduct({
+      name: "Dimensional Anchor Gloves",
+      price: 100,
+      image: "https://i.imgur.com/0EcMpsj.png",
+      description:
+        "Gloves that can create stable dimensional anchors, preventing teleportation or interdimensional movement in a specific area.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Bio-Nano Hive Armor (Men)",
+      price: 100,
+      image: "https://i.imgur.com/83NB7MB.png",
+      description:
+        "A suit made of nanobots that can rapidly adapt to incoming threats, forming protective shields or augmenting the hero's abilities.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Bio-Nano Hive Armor (Women)",
+      price: 100,
+      image: "https://i.imgur.com/XI1Z4XY.png",
+      description:
+        "A suit made of nanobots that can rapidly adapt to incoming threats, forming protective shields or augmenting the hero's abilities.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Mind Shielding Helmet",
+      price: 100,
+      image: "https://i.imgur.com/nEr4lpb.png",
+      description:
+        "A helmet that provides protection against mental attacks, such as telepathy or mind control.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Healing Serum",
+      price: 100,
+      image: "https://i.imgur.com/tfCU69G.png",
+      description:
+        " A special serum that accelerates the hero's healing process, aiding in recovery from injuries.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Utility Belt",
+      price: 100,
+      image: "https://i.imgur.com/bkdnGNq.png",
+      description:
+        "A versatile belt with compartments to store various gadgets, tools, and weapons.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Morphing Liquid Chain",
+      price: 100,
+      image: "https://i.imgur.com/Q8cL8Uf.png",
+      description:
+        "A chain made of shape-shifting liquid metal that can transform into various weapons or tools on command.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Dreamscape Goggles",
+      price: 100,
+      image: "https://i.imgur.com/nOFjF8c.png",
+      description:
+        "Goggles that allow the hero to enter and interact with the dream world, influencing the subconscious minds of others.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Reality-Warping Kaleidoscope",
+      price: 100,
+      image: "https://i.imgur.com/qfPO5LP.png",
+      description:
+        "A kaleidoscope that can twist and distort reality, creating mesmerizing visual effects and illusions.",
+      vip_only: false,
+    }),
+    createProduct({
+      name: "Dimensional Resonance Whistle",
+      price: 100,
+      image: "https://i.imgur.com/gFJmLV2.png",
+      description:
+        "A whistle that can resonate with alternate dimensions, summoning creatures or allies from parallel worlds.",
+      vip_only: false,
+    }),
+    createProduct({
       name: "",
       price: 100,
       image: "",
-      description:
-        "",
+      description: "",
       vip_only: false,
     }),
   ]);

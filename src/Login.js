@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; //added to fix login form issue
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ login }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); //add to fix login form issue
-  const [error, setError] = useState(""); //added for login error
-
-  const [flash, setFlash] = useState(false); //make screen flash
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [flash, setFlash] = useState(false);
 
   const _login = async (ev) => {
     ev.preventDefault();
@@ -35,22 +34,28 @@ const Login = ({ login }) => {
   }, [flash]);
 
   return (
-    <div className={flash ? "flash-effect" : ""}>
-      <form onSubmit={_login}>
+    <div className={`login-container ${flash ? "flash-effect" : ""}`}>
+      <form className="login-form" onSubmit={_login}>
         <input
-          placeholder="username"
+          className="login-input"
+          placeholder="Username"
           value={username}
           onChange={(ev) => setUsername(ev.target.value)}
         />
         <input
+          className="login-input"
           type="password"
-          placeholder="password"
+          placeholder="Password"
           value={password}
           onChange={(ev) => setPassword(ev.target.value)}
         />
-        {error && <div className="error">{error}</div>}{" "}
-        {/*Displays error on front end*/}
-        <button disabled={!username || !password}>Login</button>
+        {error && <div className="login-error">{error}</div>}
+        <button
+          className="login-button"
+          disabled={!username || !password}
+        >
+          Login
+        </button>
       </form>
     </div>
   );
