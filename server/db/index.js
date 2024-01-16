@@ -52,10 +52,12 @@ const seed = async () => {
 
     CREATE TABLE review(
       id UUID PRIMARY KEY,
+      name VARCHAR(20),
       product_id VARCHAR(500) NOT NULL,
       review_title VARCHAR(30),
       reviewText VARCHAR(1000),
       rating INTEGER DEFAULT 1
+      
       );
     
       CREATE TABLE orders(

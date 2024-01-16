@@ -43,9 +43,10 @@ const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
     setLineItems([...lineItems, response.data]);
   };
   
-  
-  const createReview = async (productId, review, setReview) => {
+  // second add user
+  const createReview = async (productId, review, setReview ) => {
     const response = await axios.post("/api/reviews", {
+      name:review.name,
       product_id: productId,
       review_title: review.review_title,
       reviewText: review.reviewText, 

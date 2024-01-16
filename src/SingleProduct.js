@@ -3,14 +3,16 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import api from "./api";
 
-const SingleProduct = ({ auth }) => {
+const SingleProduct = ({ auth,  }) => {
   const params = useParams();
   const productId = params.id;
   const [review, setReview] = useState({
+    name:"",
     product_id: productId,
     review_title: "",
     reviewText: "",
     rating: "",
+    
   });
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
@@ -28,12 +30,16 @@ const SingleProduct = ({ auth }) => {
     fetchReviews();
   }, [productId]);
 
+
+  //first add user
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await api.createReview(productId, review);
+      console.log(review);
       console.log("Review created:", response);
       setReview({
+        name:"",
         review_title: "",
         reviewText: "",
         rating: "",
@@ -46,7 +52,22 @@ const SingleProduct = ({ auth }) => {
   return (
     <div>
       <h2>Product Review</h2>
+
       <form onSubmit={handleReviewSubmit}>
+      <div>
+          <label htmlFor="name">Reviewer:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={review.name}
+            onChange={(e) =>
+              setReview({ ...review, name: e.target.value })
+            }
+            required
+          />
+        </div>
+        
         <div>
           <label htmlFor="reviewTitle">Review Title:</label>
           <input
@@ -104,6 +125,9 @@ const SingleProduct = ({ auth }) => {
           </div>
           <div className="review-rating">
             <p>Rating: {review.rating}/5</p>
+          </div>
+          <div className="name">
+            <p>Rating: {review.name}</p>
           </div>
         </li>
       ))}
