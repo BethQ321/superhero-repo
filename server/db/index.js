@@ -13,6 +13,10 @@ const {
   fetchOrders,
 } = require("./cart");
 
+const {
+  fetchUsers,
+} = require("./users")
+
 const seed = async () => {
   const SQL = `
     DROP TABLE IF EXISTS line_items;

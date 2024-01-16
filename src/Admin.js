@@ -6,6 +6,7 @@ const Admin = () =>{
         <>
         <h1>Administrator</h1>
         <NavLink to="/addproduct">Add Product</NavLink>
+        <NavLink to="/allusers">Users</NavLink>
         </>
     )
 }
