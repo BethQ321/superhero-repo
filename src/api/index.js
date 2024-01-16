@@ -100,6 +100,14 @@ const attemptLoginWithToken = async (setAuth) => {
     }
   }
 };
+const deleteProduct = async (productId) => {
+  try {
+    await axios.delete(`/api/products/${productId}`, getHeaders());
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
+  }
+};
 
 
 const login = async ({ credentials, setAuth }) => {
@@ -127,6 +135,7 @@ const api = {
   attemptLoginWithToken,
   createReview,
   fetchReviews,
+  deleteProduct,
 };
 
 export default api;
