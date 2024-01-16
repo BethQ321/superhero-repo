@@ -33,7 +33,7 @@ const seed = async () => {
       image VARCHAR(1000) NOT NULL,
       description VARCHAR(1000),
       vip_only BOOLEAN DEFAULT false NOT NULL,
-      class VARCHAR (100) NOT NULL
+      class VARCHAR (100)
 
     );
 
