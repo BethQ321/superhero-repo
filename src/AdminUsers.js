@@ -18,22 +18,19 @@ const AdminUsers = ({ auth }) => {
     fetchUsers();
   }, []);
 
-  const toggleVIPStatus = async (userId, isVIP) => {
+  const toggleVIPStatus = async (userId, isVip) => {
     try {
-      // Make an Axios PUT request to update the VIP status
-      await axios.put(`/api/users/${userId}/toggleVIP`, { isVIP });
-      
-      // Update the users state with the updated VIP status
+      await axios.put(`/api/users/${userId}/toggleVIP`, { isVip: !isVip });
+
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
-          user.id === userId ? { ...user, is_vip: !isVIP } : user
+          user.id === userId ? { ...user, is_vip: !isVip } : user
         )
       );
     } catch (error) {
       setError(error.message);
     }
   };
-  
 
   return (
     <div>
