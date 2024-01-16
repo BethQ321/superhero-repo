@@ -9,7 +9,6 @@ const AdminUsers = ({ auth }) => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/api/users");
-        console.log(response)
         setUsers(response.data); 
       } catch (error) {
         setError(error.message);
@@ -18,6 +17,23 @@ const AdminUsers = ({ auth }) => {
 
     fetchUsers();
   }, []);
+
+  const toggleVIPStatus = async (userId, isVIP) => {
+    try {
+      // Make an Axios PUT request to update the VIP status
+      await axios.put(`/api/users/${userId}/toggleVIP`, { isVIP });
+      
+      // Update the users state with the updated VIP status
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId ? { ...user, is_vip: !isVIP } : user
+        )
+      );
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  
 
   return (
     <div>
@@ -44,6 +60,11 @@ const AdminUsers = ({ auth }) => {
               <td>{user.phone}</td>
               <td>{user.is_admin ? "Yes" : "No"}</td>
               <td>{user.is_vip ? "Yes" : "No"}</td>
+              <td> <button
+                  onClick={() => toggleVIPStatus(user.id, user.is_vip)}
+                >
+                  Toggle VIP
+                </button></td>
             </tr>
           ))}
         </tbody>
