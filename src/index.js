@@ -15,6 +15,7 @@ import Nav from "./Nav"; //added for nav file
 import SingleProduct from "./SingleProduct";
 import Admin from "./Admin";
 import AddProduct from "./AddProductForm";
+import AdminUsers from "./AdminUsers";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -25,6 +26,8 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
+  //const [users, setUsers] = useState([]);
+  //const [error, setError] = useState(null);
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
@@ -53,6 +56,18 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
+  /*useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await api.fetchUsers();
+        setUsers(response); // Set users state with the fetched data
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchUsers();
+  }, []);*/
   const createLineItem = async (product) => {
     await api.createLineItem({ product, cart, lineItems, setLineItems });
   };
@@ -205,6 +220,7 @@ const App = () => {
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="allusers" element={<AdminUsers  auth={auth} />} />
         </Routes>
       </main>
       {/*
