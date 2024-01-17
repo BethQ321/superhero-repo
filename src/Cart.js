@@ -18,6 +18,7 @@ const Cart = ({
     ? lineItems.filter((lineItem) => lineItem.order_id === cart.id)
     : [];
 
+
   return (
     <div className="cart-container">
       <h2 className="cart-title">Cart</h2>
