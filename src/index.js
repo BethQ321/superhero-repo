@@ -250,7 +250,7 @@ const App = () => {
  cart={cart}
  auth={auth}
  lineItems={lineItems}
- updateLineItem={updateLineItem}
+setLineItems={setLineItems}
 />
 }/>
 
