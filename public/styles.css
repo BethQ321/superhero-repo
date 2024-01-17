@@ -364,3 +364,49 @@ nav button:hover {
   background-color: #f9f9f9;
 }
 
+
+
+.sproduct-container {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.Sproduct-image {
+  width: 500px; /* Set the width of the product image box */
+  height: 500px; /* Set the height of the product image box */
+  background-color: #ddd; /* Placeholder background color for the image box */
+  border: 1px solid #ccc; /* Border for the image box */
+  margin-right: 20px; /* Adjust the margin between image and description boxes */
+  margin-left: 5%;
+  overflow: hidden; /* Hide overflow content */
+  background-color: red; /* Placeholder background color for the image square */
+}
+
+.Sproduct-image img {
+  width: 100%; /* Make the image fill its container */
+  height: 100%; /* Maintain aspect ratio of the image */
+  object-fit: cover; /* Cover the entire container with the image */
+}
+
+.Sproduct-description {
+  flex: 1; /* Take up remaining space in the container */
+  background-color: #eee; /* Placeholder background color for the description box */
+  padding: 20px; /* Padding for the description box */
+  background-color: lightblue; /* Placeholder background color for the description square */
+  margin-right: 5%;
+}
+
+.Sproduct-info {
+  width: 100%; /* Full width of the container */
+  height: 100px; /* Adjust the height as needed */
+  background-color: grey; /* Placeholder background color for the info rectangle */
+}
+
+
+
+
+
+
+
+

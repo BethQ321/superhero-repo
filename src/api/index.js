@@ -43,9 +43,13 @@ const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
     setLineItems([...lineItems, response.data]);
   };
   
-  
-  const createReview = async (productId, review, setReview) => {
+ 
+
+
+  //second add user
+  const createReview = async (productId, review, setReview ) => {
     const response = await axios.post("/api/reviews", {
+      name:review.name,
       product_id: productId,
       review_title: review.review_title,
       reviewText: review.reviewText, 
@@ -70,6 +74,28 @@ const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
       )
       );
 };
+
+const updateDownLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
+  // Subtracting one from the existing quantity
+  lineItem.quantity = lineItem.quantity - 1;
+
+  const response = await axios.put(
+    `/api/lineItems/${lineItem.id}`,
+    {
+      quantity: lineItem.quantity,
+      order_id: cart.id,
+    },
+    getHeaders()
+  );
+
+  // Update the line items in the state
+  setLineItems(
+    lineItems.map((item) =>
+      item.id === response.data.id ? response.data : item
+    )
+  );
+};
+
 
 
 const updateOrder = async ({ order, setOrders }) => {
@@ -131,6 +157,7 @@ const api = {
   createLineItem,
   updateLineItem,
   updateOrder,
+  updateDownLineItem,
   removeFromCart,
   attemptLoginWithToken,
   createReview,
