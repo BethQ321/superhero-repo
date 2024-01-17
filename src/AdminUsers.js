@@ -3,13 +3,13 @@ import axios from "axios";
 
 const AdminUsers = ({ auth }) => {
   const [users, setUsers] = useState([]);
- const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/api/users");
-        setUsers(response.data); 
+        setUsers(response.data);
       } catch (error) {
         setError(error.message);
       }
@@ -57,11 +57,12 @@ const AdminUsers = ({ auth }) => {
               <td>{user.phone}</td>
               <td>{user.is_admin ? "Yes" : "No"}</td>
               <td>{user.is_vip ? "Yes" : "No"}</td>
-              <td> <button
-                  onClick={() => toggleVIPStatus(user.id, user.is_vip)}
-                >
+              <td>
+                {" "}
+                <button onClick={() => toggleVIPStatus(user.id, user.is_vip)}>
                   Toggle VIP
-                </button></td>
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

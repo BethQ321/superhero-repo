@@ -50,10 +50,7 @@ const Login = ({ login }) => {
           onChange={(ev) => setPassword(ev.target.value)}
         />
         {error && <div className="login-error">{error}</div>}
-        <button
-          className="login-button"
-          disabled={!username || !password}
-        >
+        <button className="login-button" disabled={!username || !password}>
           Login
         </button>
       </form>

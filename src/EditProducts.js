@@ -10,7 +10,6 @@ const EditProducts = ({ products, formatPrice }) => {
     price: "",
   });
 
-
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = (product) => {
@@ -39,7 +38,7 @@ const EditProducts = ({ products, formatPrice }) => {
         description: editedProduct.description,
         price: editedProduct.price,
       });
-  
+
       setEditedProduct({
         id: "",
         name: "",
@@ -51,7 +50,7 @@ const EditProducts = ({ products, formatPrice }) => {
       console.error("Error updating product:", error);
     }
   };
-  
+
   const handleDelete = async (productId) => {
     try {
       await api.deleteProduct(productId);
@@ -59,8 +58,6 @@ const EditProducts = ({ products, formatPrice }) => {
       console.error("Error deleting product:", error);
     }
   };
-  
-  
 
   return (
     <>

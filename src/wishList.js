@@ -1,6 +1,12 @@
-import React from 'react';
+import React from "react";
 
-const WishList = ({ removeFromWishList, wishList, products, updateOrder, cart }) => {
+const WishList = ({
+  removeFromWishList,
+  wishList,
+  products,
+  updateOrder,
+  cart,
+}) => {
   // Function to format a price into dollars (e.g., 100 => $1.00)
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
@@ -22,7 +28,7 @@ const WishList = ({ removeFromWishList, wishList, products, updateOrder, cart })
                       await updateOrder({ ...cart, is_cart: true, lineItem });
                       removeFromWishList(lineItem.id);
                     } catch (error) {
-                      console.error('Could not add item to cart:', error);
+                      console.error("Could not add item to cart:", error);
                     }
                   }}
                 >

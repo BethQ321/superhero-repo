@@ -3,7 +3,17 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import api from "./api";
 
-const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineItem, updateDownLineItem, handleDecrement, cartItems, createLineItem }) => {
+const SingleProduct = ({
+  auth,
+  products,
+  lineItem,
+  removeFromCart,
+  updateLineItem,
+  updateDownLineItem,
+  handleDecrement,
+  cartItems,
+  createLineItem,
+}) => {
   const params = useParams();
   const productId = params.id;
   const [review, setReview] = useState({
@@ -12,20 +22,15 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
     review_title: "",
     reviewText: "",
     rating: "",
-
   });
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
 
-
   const oneProduct = products.find((product) => {
-    return product.id === productId
-  })
+    return product.id === productId;
+  });
 
-
-
-
-  // 
+  //
 
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
@@ -37,19 +42,6 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
     createLineItem(oneProduct);
     setIsAddedToCart(true);
   };
-
-  // const handleAddAnother = () => {
-  //   updateLineItem(cartItem);
-  // };
-
-  // const handleRemoveOne = () => {
-  //   updateDownLineItem(cartItem);
-  // };
-
-
-
-
-
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -63,8 +55,6 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
 
     fetchReviews();
   }, [productId]);
-
-
 
   //first add user
   const handleReviewSubmit = async (event) => {
@@ -86,8 +76,6 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
 
   return (
     <div>
-
-
       <div>
         <h2>{oneProduct.name}</h2>
         <div className="Sproduct-container">
@@ -95,11 +83,9 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
             <img src={oneProduct.image} className="Sproduct-image" />
           </div>
           <div className="Sproduct-description">
-
             {oneProduct.description}
 
             <div>
-              
               {/*Add to Cart button */}
               {!cartItem && (
                 <button onClick={handleAddToCart}>Add to Cart</button>
@@ -118,29 +104,14 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
                   Remove One!
                 </button>
               )}
-
             </div>
-
-
-
           </div>
         </div>
-
-
       </div>
 
-
-      <div>
-
-
-
-      </div>
+      <div></div>
 
       <br></br>
-
-
-
-
 
       <h2>Product Review</h2>
 
@@ -152,9 +123,7 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
             id="name"
             name="name"
             value={review.name}
-            onChange={(e) =>
-              setReview({ ...review, name: e.target.value })
-            }
+            onChange={(e) => setReview({ ...review, name: e.target.value })}
             required
           />
         </div>
@@ -224,7 +193,6 @@ const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineIte
             ))}
         </ul>
       </div>
-
 
       <br />
       <Link to="/products">Back to Products</Link>

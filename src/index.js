@@ -78,7 +78,7 @@ const App = () => {
   const updateDownLineItem = async (lineItem) => {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
-  
+
   const updateOrder = async (order) => {
     await api.updateOrder({ order, setOrders });
   };
@@ -145,7 +145,9 @@ const App = () => {
   };
   //wishlist
   const removeFromList = (itemId) => {
-    setWishList(currentWishList => currentWishList.filter(item => item.id !== itemId));
+    setWishList((currentWishList) =>
+      currentWishList.filter((item) => item.id !== itemId)
+    );
   };
   const addToWishList = (product) => {
     setWishList((currentWishList) => [...currentWishList, product]);
@@ -183,7 +185,21 @@ const App = () => {
               />
             }
           />
-          <Route path="/products/:id" element={<SingleProduct auth={auth} products={products} lineItem={lineItems} cartItems={cartItems} createLineItem={createLineItem} handleDecrement={handleDecrement} updateDownLineItem= {updateDownLineItem} updateLineItem={updateLineItem} />} />
+          <Route
+            path="/products/:id"
+            element={
+              <SingleProduct
+                auth={auth}
+                products={products}
+                lineItem={lineItems}
+                cartItems={cartItems}
+                createLineItem={createLineItem}
+                handleDecrement={handleDecrement}
+                updateDownLineItem={updateDownLineItem}
+                updateLineItem={updateLineItem}
+              />
+            }
+          />
           <Route
             path="/orders"
             element={
@@ -215,19 +231,28 @@ const App = () => {
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
-          <Route path="/wishList" element={<WishList
-            wishList={wishList}
-            removeFromWishList={removeFromList}
-            products={products}
-            updateOrder={updateOrder}
-            cart={cart}
-          />} />
+          <Route
+            path="/wishList"
+            element={
+              <WishList
+                wishList={wishList}
+                removeFromWishList={removeFromList}
+                products={products}
+                updateOrder={updateOrder}
+                cart={cart}
+              />
+            }
+          />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
-          <Route path="/allusers" element={<AdminUsers  auth={auth} />} />
-          <Route path="/editproducts" element={<EditProducts products={products} formatPrice={formatPrice} />} />
-
+          <Route path="/allusers" element={<AdminUsers auth={auth} />} />
+          <Route
+            path="/editproducts"
+            element={
+              <EditProducts products={products} formatPrice={formatPrice} />
+            }
+          />
         </Routes>
       </main>
       {/*
