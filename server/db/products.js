@@ -41,14 +41,15 @@ const createProduct = async (product) => {
   return response.rows[0];
 };
 
+//fourth? add username
 const createReview = async(review)=> {
   const SQL = `
-    INSERT INTO review  (id, product_id, review_title, reviewText, rating) 
-    VALUES($1, $2, $3, $4, $5) 
+    INSERT INTO review  (id, name, product_id, review_title, reviewText, rating) 
+    VALUES($1, $2, $3, $4, $5, $6) 
     RETURNING *
   `;
   
-  const response = await client.query(SQL, [ uuidv4(), review.product_id, review.review_title, review.reviewText, review.rating]);
+  const response = await client.query(SQL, [ uuidv4(), review.name, review.product_id, review.review_title, review.reviewText, review.rating]);
   return response.rows[0];
 };
 
