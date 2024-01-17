@@ -3,7 +3,7 @@ const { fetchProducts } = require("../db");
 const express = require("express");
 const app = express.Router();
 const { isLoggedIn, isAdmin } = require("./middleware");
-const { createReview, createProduct } = require('../db/products');
+const { createReview, createProduct, updateProduct, deleteProduct } = require('../db/products');
 
 app.use(express.json());
 
@@ -23,6 +23,35 @@ app.post("/", async (req, res, next) => {
       next(error); 
   }
 });
+
+app.put("/:productId", async (req, res, next) => {
+  const { productId } = req.params;
+  const { name, description, price} = req.body;
+
+  try {
+    const updatedProduct = await updateProduct(productId, name, description, price); 
+    res.json(updatedProduct);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete("/:productId", async (req, res, next) => {
+  const { productId } = req.params;
+
+  try {
+    const deletedProduct = await deleteProduct(productId);
+
+    if (deletedProduct) {
+      res.status(404).json({ error: "Product not found" });
+    } else {
+      res.status(204).send();
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 
 module.exports = app;

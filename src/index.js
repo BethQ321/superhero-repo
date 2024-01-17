@@ -16,6 +16,7 @@ import SingleProduct from "./SingleProduct";
 import Admin from "./Admin";
 import AddProduct from "./AddProductForm";
 import AdminUsers from "./AdminUsers";
+import EditProducts from "./EditProducts";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -224,7 +225,9 @@ const App = () => {
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
-          <Route path="allusers" element={<AdminUsers  auth={auth} />} />
+          <Route path="/allusers" element={<AdminUsers  auth={auth} />} />
+          <Route path="/editproducts" element={<EditProducts products={products} formatPrice={formatPrice} />} />
+
         </Routes>
       </main>
       {/*
