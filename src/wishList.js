@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from './api/index';
@@ -33,14 +32,13 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, updateLineItems
       return;
     }
   
-    
     if (!cart || !cart.id) {
       console.error('Invalid cart or cart ID not found');
       return;
     }
   
     try {
-   
+     
       await api.createLineItem({
         product: productToAdd,
         cart: cart,
@@ -58,10 +56,10 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, updateLineItems
 
   const handleRemove = async (wishlistItemId) => {
     try {
-     
+      
       await axios.delete(`/api/wishList/${wishlistItemId}`, api.getHeaders());
       
-    
+      
       setWishList((prevWishList) => prevWishList.filter(item => item.wishlist_id !== wishlistItemId));
     } catch (error) {
       console.error('Error removing item from wishlist:', error);
@@ -93,7 +91,6 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, updateLineItems
             </li>
           ))}
         </ul>
-
       )}
     </div>
   );
