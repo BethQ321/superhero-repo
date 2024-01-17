@@ -8,6 +8,8 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
     ? products.length
     : products.filter((product) => !product.vip_only).length;
 
+
+
   return (
     <nav className="nav-container">
       {/* Logged-in user links */}
