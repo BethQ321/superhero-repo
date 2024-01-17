@@ -56,7 +56,7 @@ const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
     setReview(response.data);
   };
 
-  const createShippingAddress = async( street_address, city, state, zip_code) => {
+  const createShippingAddress = async( shipping, street_address, setShipping) => {
     const response = await axios.post("/api/shippingaddress", {
       street_address: street_address,
       city: shipping.city,

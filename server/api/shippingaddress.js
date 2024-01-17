@@ -14,8 +14,11 @@ app.get("/", async (req, res, next) => {
 
 
 
-// route for creating reviews for a specific product
+// route for creating a shipping address for a order,... connected to "../db/products"
+
 app.post("/", async (req, res, next) => {
+    
+    // const id = req.params;
     try {
     const shippingData = req.body;
     const createdShippingAddress = await createShippingAddress(shippingData);

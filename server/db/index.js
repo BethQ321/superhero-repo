@@ -92,7 +92,15 @@ const seed = async () => {
 
   `;
   await client.query(SQL);
-
+  const []  = await Promise.all([ 
+    createShippingAddress({
+      street_address: "batman",
+      city: "gotham",
+      state: "michigan",
+      zip_code: 123,
+    
+    }),
+  ]);
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
       username: "moe",

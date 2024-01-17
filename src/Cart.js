@@ -16,31 +16,22 @@ const Cart = ({
   const params = useParams();
   const street_address = params.id;
   const [shipping, setShipping] = useState({
-    street_address: street_address,
+    street_address: "",
     city: "",
     state: "",
     zip_code: "",
   });
-  const [shippingAddress, setShippingAddress] = useState([]);
   const [error, setError] = useState(null);
   
-  useEffect(() => {
-    const fetchShippingAddress = async () => {
-      try {
-        const response = await axios.get(`./api/shippingAddress?street_address=${street_address}`);
-        setShippingAddress(response.data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
 
-    // fetchShippingAddress();
-  }, [street_address]);
+ 
 
   const handleShippingAddress = async (event) => {
     event.preventDefault();
     try {
-        const response = await axios.post("./api/shippingaddress",street_address, shipping);
+        //   This commented out line was what i had before, Morgan told me to go the other route...
+        //  const response = await api.createShippingAddress(street_address, shipping);
+        const response = await axios.post(`/api/shippingaddress`, shipping);
         console.log("Shipping address created", response);
         setShipping({
             street_address:"",
@@ -135,11 +126,12 @@ const Cart = ({
             required />
           </form>
           {/* shipping address form  */}
+          <button onClick={handleShippingAddress} > Shipping Address -works- </button>
           <button type="submit"
-            onSubmit={handleShippingAddress}
+            
             onClick={() => {
               updateOrder({ ...cart, is_cart: false });
-              
+              //check if there needs to be an added line or smth in updatedorder function in the button for the submit for shipping address to be submitted
             }}
           >
             Create Order
