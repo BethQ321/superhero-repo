@@ -8,7 +8,7 @@ const findUserByToken = async (token) => {
   try {
     const payload = await jwt.verify(token, process.env.JWT);
     const SQL = `
-      SELECT id, username, is_admin, is_vip
+      SELECT id, username,password, phone,email, is_admin, is_vip,Fname,Lname
       FROM users
       WHERE id = $1
     `;
@@ -99,6 +99,12 @@ const createUser = async (user) => {
   const response = await client.query(SQL);
   return response.rows;
 };*/
+
+
+
+
+
+
 
 module.exports = {
   createUser,

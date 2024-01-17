@@ -243,7 +243,7 @@ const App = () => {
               />
             }
           />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Profile" element={<Profile  auth={auth}/>} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/allusers" element={<AdminUsers auth={auth} />} />
