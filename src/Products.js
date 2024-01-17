@@ -20,7 +20,7 @@ const Products = ({
   addToWishList,
 }) => {
 
-  const addProductToWishlist = async (product) => {
+ const addProductToWishlist = async (product) => {
     try {
       const response = await axios.post('/api/wishList', { productId: product.id }, 
       api.getHeaders()
@@ -30,6 +30,7 @@ const Products = ({
       console.error('Error adding product to wishlist:', error);
     }
   };
+
 
 
 
