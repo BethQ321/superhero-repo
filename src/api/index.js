@@ -23,6 +23,11 @@ const fetchLineItems = async (setLineItems) => {
   setLineItems(response.data);
 };
 
+const fetchReviews = async (setReviews) => {
+  const response = await axios.get("/api/reviews");
+  setReviews(response.data);
+};
+
 const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
   const response = await axios.post(
     "/api/lineItems",
@@ -33,6 +38,22 @@ const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
     getHeaders()
   );
   setLineItems([...lineItems, response.data]);
+};
+
+//second add user
+const createReview = async (productId, review, setReview) => {
+  const response = await axios.post(
+    "/api/reviews",
+    {
+      name: review.name,
+      product_id: productId,
+      review_title: review.review_title,
+      reviewText: review.reviewText,
+      rating: review.rating,
+    },
+    getHeaders()
+  );
+  setReview(response.data);
 };
 
 const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
@@ -47,6 +68,32 @@ const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
   setLineItems(
     lineItems.map((lineItem) =>
       lineItem.id == response.data.id ? response.data : lineItem
+    )
+  );
+};
+
+const updateDownLineItem = async ({
+  lineItem,
+  cart,
+  lineItems,
+  setLineItems,
+}) => {
+  // Subtracting one from the existing quantity
+  lineItem.quantity = lineItem.quantity - 1;
+
+  const response = await axios.put(
+    `/api/lineItems/${lineItem.id}`,
+    {
+      quantity: lineItem.quantity,
+      order_id: cart.id,
+    },
+    getHeaders()
+  );
+
+  // Update the line items in the state
+  setLineItems(
+    lineItems.map((item) =>
+      item.id === response.data.id ? response.data : item
     )
   );
 };
@@ -78,6 +125,14 @@ const attemptLoginWithToken = async (setAuth) => {
     }
   }
 };
+const deleteProduct = async (productId) => {
+  try {
+    await axios.delete(`/api/products/${productId}`, getHeaders());
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
+  }
+};
 
 const login = async ({ credentials, setAuth }) => {
   const response = await axios.post("/api/login", credentials);
@@ -103,9 +158,16 @@ const api = {
   createLineItem,
   updateLineItem,
   updateOrder,
+  updateDownLineItem,
   removeFromCart,
   attemptLoginWithToken,
+
   getHeaders,
+
+  createReview,
+  fetchReviews,
+  deleteProduct,
+
 };
 
 export default api;

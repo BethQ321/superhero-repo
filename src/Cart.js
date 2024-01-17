@@ -14,13 +14,14 @@ const Cart = ({
   };
 
   // Filter line items to consider only the items in the current cart
-  const cartLineItems =
-    cart && Array.isArray(cart) ? lineItems.filter((lineItem) => lineItem.order_id === cart.id) : [];
+ const cartLineItems = cart && cart.id 
+    ? lineItems.filter((lineItem) => lineItem.order_id === cart.id)
+    : [];
 
   return (
-    <div>
-      <h2>Cart</h2>
-      <ul>
+    <div className="cart-container">
+      <h2 className="cart-title">Cart</h2>
+      <ul className="cart-list">
         {cartLineItems.map((lineItem) => {
           const product =
             products.find((product) => product.id === lineItem.product_id) || {};
@@ -29,17 +30,19 @@ const Cart = ({
             <li key={lineItem.id}>
               {product.name} ({lineItem.quantity}) - Total:{" "}
               {formatPrice(totalPrice)}
-              <button onClick={() => updateLineItem(lineItem)}>+</button>
-              <button onClick={() => handleDecrement(lineItem)}>-</button>
-              <button onClick={() => removeFromCart(lineItem)}>
-                Remove From Cart
-              </button>
+              <div className="cart-actions">
+                <button onClick={() => updateLineItem(lineItem)}>+</button>
+                <button onClick={() => handleDecrement(lineItem)}>-</button>
+                <button onClick={() => removeFromCart(lineItem)}>
+                  Remove From Cart
+                </button>
+              </div>
             </li>
           );
         })}
       </ul>
       {cartLineItems.length ? (
-        <div>
+        <div className="cart-actions">
           <button
             onClick={() => {
               updateOrder({ ...cart, is_cart: false });
@@ -47,7 +50,7 @@ const Cart = ({
           >
             Create Order
           </button>
-          <p>
+          <p className="cart-total">
             Total Price:{" "}
             {formatPrice(
               cartLineItems.reduce(

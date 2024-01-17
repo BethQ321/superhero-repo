@@ -1,37 +1,412 @@
-body {
-  font-family: verdana;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; 
 }
 
-form {
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.home-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.home-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.home-subtitle {
+  font-size: 18px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.home-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.home-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 2rem;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.home-image:hover {
+  transform: scale(1.05);
+}
+
+.home-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.home-link:hover {
+  color: #0056b3;
+}
+
+
+nav {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.nav-container a:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+
+nav a.active {
+  border-bottom: 2px solid #fff;
+}
+
+nav button {
+  background-color: #fff;
+  color: #007bff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+nav button:hover {
+  background-color: #0056b3;
+  color: #fff;
+  transform: scale(1.05);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+
+.product-container, .cart-container, .login-container, .register-container, .wishlist-container, .registration-complete-container, .orders-container {
+  padding: 20px;
+
+}
+
+
+.product-list, .cart-list, .orders-list, .wishlist-list {
+  list-style: none;
+  padding: 0;
+}
+
+.product-list li, .cart-list li, .orders-list .order-item, .wishlist-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+
+.product-list li a, .cart-list li a, .orders-list .order-item a, .wishlist-item a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.product-list li a:hover, .cart-list li a:hover, .orders-list .order-item a:hover, .wishlist-item a:hover {
+  
+  transform: translateY(-2px);}
+
+
+  .product-list img.productImage {
+  width: 200px; 
+  height: auto; 
+  margin-right: 10px;
+  border-radius: 1.5rem;
+}
+
+
+
+
+.product-list button:hover, .cart-list button:hover, .cart-actions button:hover, .login-button:hover, .register-button:hover, .wishlist-button:hover {
+  background-color: #0056b3;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.login-container:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-form {
   display: flex;
   flex-direction: column;
 }
 
-form > * {
-  margin: 0.5rem;
+.login-input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-nav {
+.login-error {
+  color: red;
+  margin-top: 10px;
+}
+
+.login-button {
+  margin-top: 10px;
+}
+
+.register-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.register-container:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.register-form {
   display: flex;
- justify-content: space-evenly;
- background-color: rgb(167, 166, 166);
- color: white;
-
+  flex-direction: column;
 }
 
-/* Products styling */
+.register-input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
-.productImage {
-  width: 100px;
-  height: 150;
+.register-error {
+  color: red;
+  margin-top: 10px;
+}
+
+.register-button {
+  margin-top: 10px;
 }
 
 
-.flash-effect {
-  animation: flashAnimation 1.5s linear infinite;
+.registration-complete-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: box-shadow 0.3s ease;
 }
 
-@keyframes flashAnimation {
-  0%, 100% {background-color:transparent;}
-  50% {background-color: red;}
+.registration-complete-container:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
+
+.registration-complete-image {
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  display: block;
+}
+
+.registration-complete-link {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.registration-complete-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.orders-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.orders-container:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.orders-list {
+  list-style: none;
+  padding: 0;
+}
+
+.order-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.order-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-date {
+  font-weight: bold;
+}
+
+.order-total {
+  font-weight: bold;
+}
+
+.order-items-list {
+  list-style: none;
+  padding: 0;
+}
+
+.order-item {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-item-name {
+  font-weight: bold;
+}
+
+.order-item-quantity {
+  font-weight: bold;
+}
+
+.order-item-price {
+  font-weight: bold;
+}
+
+.order-total {
+  font-size: 1.2rem;
+}
+
+.order-date {
+  font-size: 0.9rem;
+}
+
+.order-items-list {
+  margin-top: 10px;
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 0;
+}
+
+.review-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+
+
+.sproduct-container {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.Sproduct-image {
+  width: 500px; /* Set the width of the product image box */
+  height: 500px; /* Set the height of the product image box */
+  background-color: #ddd; /* Placeholder background color for the image box */
+  border: 1px solid #ccc; /* Border for the image box */
+  margin-right: 20px; /* Adjust the margin between image and description boxes */
+  margin-left: 5%;
+  overflow: hidden; /* Hide overflow content */
+  background-color: red; /* Placeholder background color for the image square */
+}
+
+.Sproduct-image img {
+  width: 100%; /* Make the image fill its container */
+  height: 100%; /* Maintain aspect ratio of the image */
+  object-fit: cover; /* Cover the entire container with the image */
+}
+
+.Sproduct-description {
+  flex: 1; /* Take up remaining space in the container */
+  background-color: #eee; /* Placeholder background color for the description box */
+  padding: 20px; /* Padding for the description box */
+  background-color: lightblue; /* Placeholder background color for the description square */
+  margin-right: 5%;
+}
+
+.Sproduct-info {
+  width: 100%; /* Full width of the container */
+  height: 100px; /* Adjust the height as needed */
+  background-color: grey; /* Placeholder background color for the info rectangle */
+}
+
+
+
+
+
+
+
+

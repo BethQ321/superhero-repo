@@ -2,7 +2,7 @@ const { authenticate, findUserByToken, createUser } = require("../db/auth");
 
 const express = require("express");
 const app = express.Router();
-const { isLoggedIn } = require("./middleware");
+const { isLoggedIn, isAdmin } = require("./middleware");
 
 app.post("/login", async (req, res, next) => {
   try {
@@ -32,5 +32,13 @@ app.get("/me", isLoggedIn, (req, res, next) => {
     next(ex);
   }
 });
+
+/*app.get("/", async (req,res,next) => {
+     try {
+      res.send(await fetchUsers())
+     } catch (error) {
+      next(error)
+     }
+});*/
 
 module.exports = app;
