@@ -11,6 +11,7 @@ const Home = ({ auth }) => {
           {auth.is_vip ? (
             <>
               <h1 className="home-title">Welcome, {username}!</h1>
+              <img src="https://i.imgur.com/yoJLg9c.png" width="150px"/>
               <h2 className="home-subtitle">VIP Hero!</h2>
               <h3>S.H.I.E.L.D. Shop Salutes Your Heroic Excellence!</h3>
               <p>
