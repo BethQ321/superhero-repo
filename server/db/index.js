@@ -15,11 +15,12 @@ const {
 
 const seed = async () => {
   const SQL = `
-    DROP TABLE IF EXISTS line_items;
-    DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS orders;
-    DROP TABLE IF EXISTS users;
-
+  DROP TABLE IF EXISTS line_items CASCADE;
+  DROP TABLE IF EXISTS wishlist CASCADE;
+  DROP TABLE IF EXISTS orders CASCADE;
+  DROP TABLE IF EXISTS products CASCADE;
+  DROP TABLE IF EXISTS users CASCADE;
+  
     CREATE TABLE users(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
@@ -60,6 +61,15 @@ const seed = async () => {
       product_price INTEGER,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
       );
+
+      CREATE TABLE wishlist (
+        id UUID PRIMARY KEY,
+        user_id UUID REFERENCES users(id) NOT NULL,
+        product_id UUID REFERENCES products(id) NOT NULL,
+        created_at TIMESTAMP DEFAULT now(),
+        CONSTRAINT user_and_product_key UNIQUE(user_id, product_id)
+      );
+      
 
   `;
   await client.query(SQL);

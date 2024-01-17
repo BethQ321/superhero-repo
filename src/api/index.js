@@ -91,6 +91,9 @@ const logout = (setAuth) => {
   setAuth({});
 };
 
+
+
+
 const api = {
   login,
   logout,
@@ -102,6 +105,7 @@ const api = {
   updateOrder,
   removeFromCart,
   attemptLoginWithToken,
+  getHeaders,
 };
 
 export default api;

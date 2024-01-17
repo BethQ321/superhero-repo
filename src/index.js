@@ -23,6 +23,11 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
 
+  useEffect(() => {
+    console.log("Auth state after login:", auth);
+  }, [auth]);
+
+
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
@@ -210,19 +215,29 @@ const addToWishList = (product) => {
               />
             }
           />
-          <Route path="/login" element={<Login login={login} />} />
+         <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
           <Route
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
-            <Route path="/wishList" element={<WishList 
-            wishList={wishList}
-            removeFromWishList={removeFromList}
-            products={products}
-            updateOrder={updateOrder}
-            cart={cart}
-            />}/>
+         // Inside your App component's return statement
+         <Route path="/wishList" element={
+ <WishList 
+ wishList={wishList}
+ removeFromWishList={removeFromList}
+ products={products}
+ updateCart={createLineItem}
+ cart={cart}
+ auth={auth}
+ lineItems={lineItems}
+ updateLineItem={updateLineItem}
+/>
+}/>
+
+
+
+
           <Route path="/Profile" element={<Profile />} />
         </Routes>
       </main>
