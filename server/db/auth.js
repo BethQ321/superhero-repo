@@ -71,8 +71,8 @@ const createUser = async (user) => {
       user.Lname,
       user.email,
       user.phone,
-      user.is_admin,
-      user.is_vip,
+      user.is_admin || false, //default state of false
+      user.is_vip || false, //default state of false 
     ]);
 
     return response.rows[0];

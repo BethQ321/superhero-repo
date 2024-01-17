@@ -45,7 +45,7 @@ const Products = ({
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button onClick={handleSearchClick}>Search</button>
+        {/* <button onClick={handleSearchClick}>Search</button> */}
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
   

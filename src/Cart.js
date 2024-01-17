@@ -16,7 +16,8 @@ const Cart = ({
   // Filter line items to consider only the items in the current cart
  const cartLineItems = cart && cart.id 
     ? lineItems.filter((lineItem) => lineItem.order_id === cart.id)
-   : []; //fixing my cart issue 
+    : [];
+
 
   return (
     <div className="cart-container">

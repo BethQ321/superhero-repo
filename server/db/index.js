@@ -80,11 +80,6 @@ const seed = async () => {
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
     );
 
-    
-  
-  
-
-
       CREATE TABLE wishlist (
         id UUID PRIMARY KEY,
         user_id UUID REFERENCES users(id) NOT NULL,
