@@ -9,7 +9,7 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
     : products.filter((product) => !product.vip_only).length;
 
   return (
-    <nav>
+    <nav className="nav-container">
       {/* Logged-in user links */}
       {isLoggedIn ? (
         <>
@@ -21,7 +21,8 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
           <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <NavLink to="/wishList">Wishlist</NavLink>
           <NavLink to="/profile">Profile Settings</NavLink>
-          <span>
+          {auth.is_admin ? <NavLink to="/admin">Admin</NavLink> : null}
+          <span className="user-greeting">
             Welcome {auth.username}!<button onClick={logout}>Logout</button>
           </span>
         </>
