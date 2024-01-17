@@ -19,12 +19,14 @@ app.get("/", isLoggedIn, async (req, res, next) => {
 
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
-    //TODO make sure the order's user_id is req.user.id
+    console.log("POST to /lineItems, req.body:", req.body);
     res.send(await createLineItem(req.body));
   } catch (ex) {
+    console.error("Error in POST /lineItems:", ex);
     next(ex);
   }
 });
+
 
 app.put("/:id", isLoggedIn, async (req, res, next) => {
   try {

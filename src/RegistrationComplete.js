@@ -11,7 +11,10 @@ const RegistrationComplete = () => {
         alt="Registration Complete"
       />
       <h3>
-        Please, <Link to="/Login" className="registration-complete-link">Login!</Link>
+        Please,{" "}
+        <Link to="/Login" className="registration-complete-link">
+          Login!
+        </Link>
       </h3>
     </div>
   );

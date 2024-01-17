@@ -14,8 +14,6 @@ const fetchProducts = async (setProducts) => {
   setProducts(response.data);
 };
 
-
-
 const fetchOrders = async (setOrders) => {
   const response = await axios.get("/api/orders", getHeaders());
   setOrders(response.data);
@@ -31,7 +29,6 @@ const fetchReviews = async (setReviews) => {
   setReviews(response.data);
 };
 
-
 const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
   const response = await axios.post(
     "/api/lineItems",
@@ -40,21 +37,25 @@ const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
       product_id: product.id,
     },
     getHeaders()
-    );
-    setLineItems([...lineItems, response.data]);
-  };
-  
-  
-  const createReview = async (productId, review, setReview) => {
-    const response = await axios.post("/api/reviews", {
+  );
+  setLineItems([...lineItems, response.data]);
+};
+
+//second add user
+const createReview = async (productId, review, setReview) => {
+  const response = await axios.post(
+    "/api/reviews",
+    {
+      name: review.name,
       product_id: productId,
       review_title: review.review_title,
-      reviewText: review.reviewText, 
-      rating: review.rating, 
-    }, getHeaders()
-    );
-    setReview(response.data);
-  };
+      reviewText: review.reviewText,
+      rating: review.rating,
+    },
+    getHeaders()
+  );
+  setReview(response.data);
+};
 
   const createShippingAddress = async( shipping, street_address, setShipping) => {
     const response = await axios.post("/api/shippingaddress", {
@@ -76,14 +77,39 @@ const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
       order_id: cart.id,
     },
     getHeaders()
-    );
-    setLineItems(
-      lineItems.map((lineItem) =>
+  );
+  setLineItems(
+    lineItems.map((lineItem) =>
       lineItem.id == response.data.id ? response.data : lineItem
-      )
-      );
+    )
+  );
 };
 
+const updateDownLineItem = async ({
+  lineItem,
+  cart,
+  lineItems,
+  setLineItems,
+}) => {
+  // Subtracting one from the existing quantity
+  lineItem.quantity = lineItem.quantity - 1;
+
+  const response = await axios.put(
+    `/api/lineItems/${lineItem.id}`,
+    {
+      quantity: lineItem.quantity,
+      order_id: cart.id,
+    },
+    getHeaders()
+  );
+
+  // Update the line items in the state
+  setLineItems(
+    lineItems.map((item) =>
+      item.id === response.data.id ? response.data : item
+    )
+  );
+};
 
 const updateOrder = async ({ order, setOrders }) => {
   await axios.put(`/api/orders/${order.id}`, order, getHeaders());
@@ -95,10 +121,9 @@ const removeFromCart = async ({ lineItem, lineItems, setLineItems }) => {
   const response = await axios.delete(
     `/api/lineItems/${lineItem.id}`,
     getHeaders()
-    );
+  );
   setLineItems(lineItems.filter((_lineItem) => _lineItem.id !== lineItem.id));
 };
-
 
 const attemptLoginWithToken = async (setAuth) => {
   const token = window.localStorage.getItem("token");
@@ -113,7 +138,14 @@ const attemptLoginWithToken = async (setAuth) => {
     }
   }
 };
-
+const deleteProduct = async (productId) => {
+  try {
+    await axios.delete(`/api/products/${productId}`, getHeaders());
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
+  }
+};
 
 const login = async ({ credentials, setAuth }) => {
   const response = await axios.post("/api/login", credentials);
@@ -127,6 +159,9 @@ const logout = (setAuth) => {
   setAuth({});
 };
 
+
+
+
 const api = {
   login,
   logout,
@@ -136,12 +171,15 @@ const api = {
   createLineItem,
   updateLineItem,
   updateOrder,
+  updateDownLineItem,
   removeFromCart,
   attemptLoginWithToken,
   createShippingAddress,
   createReview,
   fetchReviews,
   getHeaders,
+  deleteProduct,
+
 };
 
 export default api;

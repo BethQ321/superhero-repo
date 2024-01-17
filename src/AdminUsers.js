@@ -3,14 +3,13 @@ import axios from "axios";
 
 const AdminUsers = ({ auth }) => {
   const [users, setUsers] = useState([]);
- const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/api/users");
-        console.log(response)
-        setUsers(response.data); 
+        setUsers(response.data);
       } catch (error) {
         setError(error.message);
       }
@@ -18,6 +17,20 @@ const AdminUsers = ({ auth }) => {
 
     fetchUsers();
   }, []);
+
+  const toggleVIPStatus = async (userId, isVip) => {
+    try {
+      await axios.put(`/api/users/${userId}/toggleVIP`, { isVip: !isVip });
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId ? { ...user, is_vip: !isVip } : user
+        )
+      );
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   return (
     <div>
@@ -44,6 +57,12 @@ const AdminUsers = ({ auth }) => {
               <td>{user.phone}</td>
               <td>{user.is_admin ? "Yes" : "No"}</td>
               <td>{user.is_vip ? "Yes" : "No"}</td>
+              <td>
+                {" "}
+                <button onClick={() => toggleVIPStatus(user.id, user.is_vip)}>
+                  Toggle VIP
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

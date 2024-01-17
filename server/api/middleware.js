@@ -1,7 +1,9 @@
 const { findUserByToken } = require("../db/auth");
 
+
 const isLoggedIn = async (req, res, next) => {
   try {
+    console.log("Authorization Header:", req.headers.authorization);
     const user = await findUserByToken(req.headers.authorization);
     req.user = user;
     next();
@@ -9,6 +11,7 @@ const isLoggedIn = async (req, res, next) => {
     next(ex);
   }
 };
+
 
 const isAdmin = (req, res, next) => {
   if (req.user.is_admin) {
