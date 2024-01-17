@@ -85,6 +85,10 @@ const seed = async () => {
   `;
   await client.query(SQL);
 
+
+
+
+
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
       username: "moe",

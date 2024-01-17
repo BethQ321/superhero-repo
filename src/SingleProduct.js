@@ -3,19 +3,27 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import api from "./api";
 
-const SingleProduct = ({ auth,  }) => {
+const SingleProduct = ({ auth, products, removeFromCart, updateLineItem, handleDecrement, cartItems }) => {
   const params = useParams();
   const productId = params.id;
   const [review, setReview] = useState({
-    name:"",
+    name: "",
     product_id: productId,
     review_title: "",
     reviewText: "",
     rating: "",
-    
+
   });
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
+
+
+  const oneProduct = products.find((product) => {
+    return product.id === productId
+  })
+
+
+
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -31,6 +39,7 @@ const SingleProduct = ({ auth,  }) => {
   }, [productId]);
 
 
+
   //first add user
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +48,7 @@ const SingleProduct = ({ auth,  }) => {
       console.log(review);
       console.log("Review created:", response);
       setReview({
-        name:"",
+        name: "",
         review_title: "",
         reviewText: "",
         rating: "",
@@ -51,10 +60,47 @@ const SingleProduct = ({ auth,  }) => {
 
   return (
     <div>
+
+    
+<div>
+    <h2>{oneProduct.name}</h2>
+      <div class="Sproduct-container">
+        <div>
+          <img src={oneProduct.image}  class="Sproduct-image"  />
+        </div>
+        <div class="Sproduct-description">
+          <p>
+            {oneProduct.description} 
+
+
+       
+
+
+          </p>
+              
+        </div>
+        </div>
+
+
+    </div>
+
+
+      <div>
+
+       
+
+      </div>
+
+      <br></br>
+
+
+
+
+
       <h2>Product Review</h2>
 
       <form onSubmit={handleReviewSubmit}>
-      <div>
+        <div>
           <label htmlFor="name">Reviewer:</label>
           <input
             type="text"
@@ -67,7 +113,7 @@ const SingleProduct = ({ auth,  }) => {
             required
           />
         </div>
-        
+
         <div>
           <label htmlFor="reviewTitle">Review Title:</label>
           <input
@@ -111,28 +157,28 @@ const SingleProduct = ({ auth,  }) => {
         <button type="submit">Submit Review</button>
       </form>
       <div>
-  <h3>Reviews</h3>
-  <ul className="reviews-list">
-    {reviews
-      .filter((review) => review.product_id === productId) 
-      .map((review) => (
-        <li key={review.id} className="review-box">
-          <div className="review-title">
-            <h4>{review.review_title}</h4> 
-          </div>
-          <div className="review-text">
-            <p>{review.reviewtext}</p> 
-          </div>
-          <div className="review-rating">
-            <p>Rating: {review.rating}/5</p>
-          </div>
-          <div className="name">
-            <p>Rating: {review.name}</p>
-          </div>
-        </li>
-      ))}
-  </ul>
-</div>
+        <h3>Reviews</h3>
+        <ul className="reviews-list">
+          {reviews
+            .filter((review) => review.product_id === productId)
+            .map((review) => (
+              <li key={review.id} className="review-box">
+                <div className="review-title">
+                  <h4>{review.review_title}</h4>
+                </div>
+                <div className="review-text">
+                  <p>{review.reviewtext}</p>
+                </div>
+                <div className="review-rating">
+                  <p>Rating: {review.rating}/5</p>
+                </div>
+                <div className="name">
+                  <p>Name: {review.name}</p>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </div>
 
 
       <br />
