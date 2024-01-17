@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, UseNavigate, useNavigate } from "react-router-dom";
 import Products from "./Products";
 import Orders from "./Orders";
 import Cart from "./Cart";
@@ -27,6 +27,7 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
+  const navigate = useNavigate();
 
 
 
@@ -147,6 +148,7 @@ const App = () => {
   };
   const logout = () => {
     api.logout(setAuth);
+    navigate('/')
   };
   //wishlist
   const removeFromList = (itemId) => {
