@@ -175,6 +175,7 @@ const App = () => {
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
                 addToWishList={addToWishList}
+                
               />
             }
           />

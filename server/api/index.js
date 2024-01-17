@@ -8,6 +8,7 @@ app.use("/orders", require("./orders"));
 app.use("/lineItems", require("./lineItems"));
 app.use("/reviews", require("./reviews")); 
 app.use("/users", require("./users"))
+app.use("/shippingaddress", require("./shippingaddress"))
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -1,6 +1,6 @@
 const client = require("./client");
 
-const { fetchProducts, createProduct, createReview } = require("./products");
+const { fetchProducts, createProduct, createReview, createShippingAddress} = require("./products");
 
 const { createUser, authenticate, findUserByToken } = require("./auth");
 
@@ -17,11 +17,13 @@ const {
   fetchUsers,
 } = require("./users")
 
+
 const seed = async () => {
   const SQL = `
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS review;
     DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS shipping_address;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
     
@@ -58,12 +60,20 @@ const seed = async () => {
       rating INTEGER DEFAULT 1
       );
     
-      CREATE TABLE orders(
-      id UUID PRIMARY KEY,
-      created_at TIMESTAMP DEFAULT now(),
-      is_cart BOOLEAN NOT NULL DEFAULT true,
-      user_id UUID REFERENCES users(id) NOT NULL
-    );
+      CREATE TABLE shipping_address(
+        id UUID PRIMARY KEY,
+        street_address VARCHAR(100) NOT NULL,
+        city VARCHAR(100) NOT NULL,
+        state VARCHAR(100) NOT NULL,
+        zip_code INTEGER
+        );
+        
+        CREATE TABLE orders(
+        id UUID PRIMARY KEY,
+        created_at TIMESTAMP DEFAULT now(),
+        is_cart BOOLEAN NOT NULL DEFAULT true,
+        user_id UUID REFERENCES users(id) NOT NULL
+      );
 
     CREATE TABLE line_items(
       id UUID PRIMARY KEY,
@@ -190,7 +200,7 @@ const seed = async () => {
       class:"mystic",
     }),
     createProduct({
-      name: "Probability Manipulator Dice:",
+      name: "Probability Manipulator Dice",
       price: 100,
       image:
         "https://i.imgur.com/GWTCsuy.png",
@@ -301,7 +311,7 @@ const seed = async () => {
       class:"mystic",
     }),
     createProduct({
-      name: "Elemental Fusion Crystal:",
+      name: "Elemental Fusion Crystal",
       price: 100,
       image: "https://i.imgur.com/tO4PWc0.png",
       description:
@@ -355,7 +365,7 @@ const seed = async () => {
       class:"tech",
     }),
     createProduct({
-      name: " Eye of Heimdall - Astral Projection Amulet",
+      name: "Eye of Heimdall - Astral Projection Amulet",
       price: 100,
       image: "https://i.imgur.com/kXSJe8T.png",
       description:
@@ -425,15 +435,6 @@ const seed = async () => {
         "A versatile belt with compartments to store various gadgets, tools, and weapons.",
       vip_only: false,
       class:"suit",
-    }),
-    createProduct({
-      name: "Elemental Fusion Crystal",
-      price: 100,
-      image: "https://i.imgur.com/tO4PWc0.png",
-      description:
-        "A gemstone that, when activated, can combine two elements (e.g., fire, water, earth, and air) to create a unique elemental power.",
-      vip_only: false,
-      class:"mystic",
     }),
     createProduct({
       name: "Dimensional Anchor Gloves",
@@ -524,6 +525,7 @@ module.exports = {
   updateOrder,
   authenticate,
   findUserByToken,
+  createShippingAddress,
   seed,
   client,
 };
