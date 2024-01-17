@@ -50,6 +50,7 @@ const authenticate = async (credentials) => {
     throw error;
   }
 
+  // Token generation should happen here, after verifying the user's credentials
   return jwt.sign({ id: response.rows[0].id }, process.env.JWT);
 };
 

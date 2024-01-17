@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import api from './api/index'
 
 const Products = ({
   products,
@@ -17,14 +19,34 @@ const Products = ({
   formatPrice,
   addToWishList,
 }) => {
-  const addProductToWishlist = (product) => {
-    console.log("Adding to Wishlist:", product);
-    addToWishList(product);
+
+  const addProductToWishlist = async (product) => {
+    try {
+      const response = await axios.post('/api/wishList', { productId: product.id }, 
+      api.getHeaders()
+      );
+      console.log('Product added to wishlist:', response.data);
+    } catch (error) {
+      console.error('Error adding product to wishlist:', error);
+    }
   };
+
+
 
   return (
     <div className="product-container">
       <h2>Products</h2>
+
+      <input
+        type="text"
+        placeholder="Search Products"
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
+     {<button onClick={handleSearchClick}>Search</button> }
+      <button onClick={handleShowAllClick}>Show All</button>
+      <ul>
+
       <div className="product-search">
         <input
           type="text"
@@ -36,6 +58,7 @@ const Products = ({
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
       <ul className="product-list">
+
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
             (lineItem) => lineItem.product_id === product.id

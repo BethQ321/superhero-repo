@@ -17,11 +17,15 @@ const { fetchUsers } = require("./users");
 
 const seed = async () => {
   const SQL = `
-    DROP TABLE IF EXISTS line_items;
-    DROP TABLE IF EXISTS review;
-    DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS orders;
-    DROP TABLE IF EXISTS users;
+
+  DROP TABLE IF EXISTS line_items CASCADE;
+  DROP TABLE IF EXISTS review CASCADE;
+  DROP TABLE IF EXISTS wishlist CASCADE;
+  DROP TABLE IF EXISTS orders CASCADE;
+  DROP TABLE IF EXISTS products CASCADE;
+  DROP TABLE IF EXISTS users CASCADE;
+  
+
     
     CREATE TABLE products(
       id UUID PRIMARY KEY,
@@ -34,6 +38,7 @@ const seed = async () => {
       class VARCHAR (100)
 
     );
+
 
     CREATE TABLE users(
       id UUID PRIMARY KEY,
@@ -79,6 +84,15 @@ const seed = async () => {
   
   
 
+
+      CREATE TABLE wishlist (
+        id UUID PRIMARY KEY,
+        user_id UUID REFERENCES users(id) NOT NULL,
+        product_id UUID REFERENCES products(id) NOT NULL,
+        created_at TIMESTAMP DEFAULT now(),
+        CONSTRAINT user_and_product_key UNIQUE(user_id, product_id)
+      );
+      
 
   `;
   await client.query(SQL);

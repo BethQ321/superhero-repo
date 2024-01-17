@@ -14,9 +14,8 @@ const Cart = ({
   };
 
   // Filter line items to consider only the items in the current cart
-  const cartLineItems = lineItems.filter(
-    (lineItem) => lineItem.order_id === cart.id
-  );
+  const cartLineItems =
+    cart && Array.isArray(cart) ? lineItems.filter((lineItem) => lineItem.order_id === cart.id) : [];
 
   return (
     <div className="cart-container">
@@ -24,8 +23,7 @@ const Cart = ({
       <ul className="cart-list">
         {cartLineItems.map((lineItem) => {
           const product =
-            products.find((product) => product.id === lineItem.product_id) ||
-            {};
+            products.find((product) => product.id === lineItem.product_id) || {};
           const totalPrice = lineItem.quantity * lineItem.product_price; // Calculate total price
           return (
             <li key={lineItem.id}>

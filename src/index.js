@@ -27,8 +27,13 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
+
+
+
+
   //const [users, setUsers] = useState([]);
   //const [error, setError] = useState(null);
+
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
@@ -225,12 +230,31 @@ const App = () => {
               />
             }
           />
-          <Route path="/login" element={<Login login={login} />} />
+         <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
           <Route
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
+
+        
+         <Route path="/wishList" element={
+ <WishList 
+ wishList={wishList}
+ removeFromWishList={removeFromList}
+ products={products}
+ updateCart={createLineItem}
+ cart={cart}
+ auth={auth}
+ lineItems={lineItems}
+ updateLineItem={updateLineItem}
+/>
+}/>
+
+
+
+
+
           <Route
             path="/wishList"
             element={
@@ -243,6 +267,7 @@ const App = () => {
               />
             }
           />
+
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />

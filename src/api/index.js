@@ -146,6 +146,9 @@ const logout = (setAuth) => {
   setAuth({});
 };
 
+
+
+
 const api = {
   login,
   logout,
@@ -158,9 +161,13 @@ const api = {
   updateDownLineItem,
   removeFromCart,
   attemptLoginWithToken,
+
+  getHeaders,
+
   createReview,
   fetchReviews,
   deleteProduct,
+
 };
 
 export default api;
