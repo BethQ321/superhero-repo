@@ -18,12 +18,12 @@ const { fetchUsers } = require("./users");
 const seed = async () => {
   const SQL = `
 
-  DROP TABLE IF EXISTS line_items CASCADE;
-  DROP TABLE IF EXISTS review CASCADE;
-  DROP TABLE IF EXISTS wishlist CASCADE;
-  DROP TABLE IF EXISTS orders CASCADE;
-  DROP TABLE IF EXISTS products CASCADE;
-  DROP TABLE IF EXISTS users CASCADE;
+  DROP TABLE IF EXISTS line_items;
+  DROP TABLE IF EXISTS review;
+  DROP TABLE IF EXISTS wishlist;
+  DROP TABLE IF EXISTS orders;
+  DROP TABLE IF EXISTS products;
+  DROP TABLE IF EXISTS users;
   
 
     
