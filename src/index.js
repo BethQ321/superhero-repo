@@ -74,6 +74,10 @@ const App = () => {
   const updateLineItem = async (lineItem) => {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
+  const updateDownLineItem = async (lineItem) => {
+    await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
+  };
+  
   const updateOrder = async (order) => {
     await api.updateOrder({ order, setOrders });
   };
@@ -178,7 +182,7 @@ const App = () => {
               />
             }
           />
-          <Route path="/products/:id" element={<SingleProduct auth={auth} products={products} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem} />} />
+          <Route path="/products/:id" element={<SingleProduct auth={auth} products={products} lineItem={lineItems} cartItems={cartItems} createLineItem={createLineItem} handleDecrement={handleDecrement} updateDownLineItem= {updateDownLineItem} updateLineItem={updateLineItem} />} />
           <Route
             path="/orders"
             element={

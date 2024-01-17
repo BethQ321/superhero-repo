@@ -75,6 +75,28 @@ const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
       );
 };
 
+const updateDownLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
+  // Subtracting one from the existing quantity
+  lineItem.quantity = lineItem.quantity - 1;
+
+  const response = await axios.put(
+    `/api/lineItems/${lineItem.id}`,
+    {
+      quantity: lineItem.quantity,
+      order_id: cart.id,
+    },
+    getHeaders()
+  );
+
+  // Update the line items in the state
+  setLineItems(
+    lineItems.map((item) =>
+      item.id === response.data.id ? response.data : item
+    )
+  );
+};
+
+
 
 const updateOrder = async ({ order, setOrders }) => {
   await axios.put(`/api/orders/${order.id}`, order, getHeaders());
@@ -127,6 +149,7 @@ const api = {
   createLineItem,
   updateLineItem,
   updateOrder,
+  updateDownLineItem,
   removeFromCart,
   attemptLoginWithToken,
   createReview,

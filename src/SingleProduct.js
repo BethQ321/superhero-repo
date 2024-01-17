@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import api from "./api";
 
-const SingleProduct = ({ auth, products, removeFromCart, updateLineItem, handleDecrement, cartItems }) => {
+const SingleProduct = ({ auth, products, lineItem, removeFromCart, updateLineItem, updateDownLineItem, handleDecrement, cartItems, createLineItem }) => {
   const params = useParams();
   const productId = params.id;
   const [review, setReview] = useState({
@@ -21,6 +21,32 @@ const SingleProduct = ({ auth, products, removeFromCart, updateLineItem, handleD
   const oneProduct = products.find((product) => {
     return product.id === productId
   })
+
+
+
+
+  // 
+
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+
+  const cartItem = cartItems.find(
+    (lineItem) => lineItem.product_id === oneProduct.id
+  );
+
+  const handleAddToCart = () => {
+    createLineItem(oneProduct);
+    setIsAddedToCart(true);
+  };
+
+  // const handleAddAnother = () => {
+  //   updateLineItem(cartItem);
+  // };
+
+  // const handleRemoveOne = () => {
+  //   updateDownLineItem(cartItem);
+  // };
+
+
 
 
 
@@ -61,33 +87,52 @@ const SingleProduct = ({ auth, products, removeFromCart, updateLineItem, handleD
   return (
     <div>
 
-    
-<div>
-    <h2>{oneProduct.name}</h2>
-      <div class="Sproduct-container">
-        <div>
-          <img src={oneProduct.image}  class="Sproduct-image"  />
-        </div>
-        <div class="Sproduct-description">
-          <p>
-            {oneProduct.description} 
 
+      <div>
+        <h2>{oneProduct.name}</h2>
+        <div className="Sproduct-container">
+          <div>
+            <img src={oneProduct.image} className="Sproduct-image" />
+          </div>
+          <div className="Sproduct-description">
 
-       
+            {oneProduct.description}
 
-
-          </p>
+            <div>
               
-        </div>
+              {/*Add to Cart button */}
+              {!cartItem && (
+                <button onClick={handleAddToCart}>Add to Cart</button>
+              )}
+
+              {/*Add to Cart button */}
+              {cartItem && (
+                <button onClick={() => updateLineItem(cartItem)}>
+                  Add One!
+                </button>
+              )}
+
+              {/* Subtract from Cart button */}
+              {cartItem && (
+                <button onClick={() => handleDecrement(cartItem)}>
+                  Remove One!
+                </button>
+              )}
+
+            </div>
+
+
+
+          </div>
         </div>
 
 
-    </div>
+      </div>
 
 
       <div>
 
-       
+
 
       </div>
 
