@@ -37,17 +37,7 @@ const Products = ({
   return (
     <div className="product-container">
       <h2>Products</h2>
-
-      <input
-        type="text"
-        placeholder="Search Products"
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-     {<button onClick={handleSearchClick}>Search</button> }
-      <button onClick={handleShowAllClick}>Show All</button>
-      <ul>
-
+  
       <div className="product-search">
         <input
           type="text"
@@ -58,8 +48,8 @@ const Products = ({
         <button onClick={handleSearchClick}>Search</button>
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
+  
       <ul className="product-list">
-
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
             (lineItem) => lineItem.product_id === product.id
