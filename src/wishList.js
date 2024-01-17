@@ -22,33 +22,31 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, updateLineItems
   }, [auth, products]);
 
   const handleAddToCartFromWishlist = async (item) => {
-    // Extract the necessary properties from the item
+    
     const { product_id, product_price } = item;
   
-    // Find the product to add by its id
+    
     const productToAdd = products.find((p) => p.id === product_id);
     if (!productToAdd) {
       console.error(`Product not found for ID: ${product_id}`);
       return;
     }
   
-    // Ensure we have a valid cart with an ID
     if (!cart || !cart.id) {
       console.error('Invalid cart or cart ID not found');
       return;
     }
   
     try {
-      // Call the createLineItem API function with the product, cart, and product_price
+     
       await api.createLineItem({
         product: productToAdd,
         cart: cart,
-        product_price: product_price, // Make sure this value is in the correct unit (e.g., cents)
-        lineItems: lineItems, // Pass the lineItems state
-        setLineItems: updateLineItems, // Use updateLineItems to update lineItems
+        product_price: product_price, 
+        lineItems: lineItems, 
+        setLineItems: updateLineItems, 
       });
-      // If needed, update the state here to reflect the new line item in the cart
-      // ...
+      
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
@@ -58,10 +56,10 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, updateLineItems
 
   const handleRemove = async (wishlistItemId) => {
     try {
-      // Send DELETE request to the API
+      
       await axios.delete(`/api/wishList/${wishlistItemId}`, api.getHeaders());
       
-      // Update the state to remove the deleted item
+      
       setWishList((prevWishList) => prevWishList.filter(item => item.wishlist_id !== wishlistItemId));
     } catch (error) {
       console.error('Error removing item from wishlist:', error);
