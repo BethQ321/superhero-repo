@@ -3,7 +3,12 @@ const { fetchProducts } = require("../db");
 const express = require("express");
 const app = express.Router();
 const { isLoggedIn, isAdmin } = require("./middleware");
-const { createReview, createProduct, updateProduct, deleteProduct } = require('../db/products');
+const {
+  createReview,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = require("../db/products");
 
 app.use(express.json());
 
@@ -17,19 +22,24 @@ app.get("/", async (req, res, next) => {
 
 app.post("/", async (req, res, next) => {
   try {
-      const newProduct = await createProduct(req.body); 
-      res.status(201).json(newProduct); 
+    const newProduct = await createProduct(req.body);
+    res.status(201).json(newProduct);
   } catch (error) {
-      next(error); 
+    next(error);
   }
 });
 
 app.put("/:productId", async (req, res, next) => {
   const { productId } = req.params;
-  const { name, description, price} = req.body;
+  const { name, description, price } = req.body;
 
   try {
-    const updatedProduct = await updateProduct(productId, name, description, price); 
+    const updatedProduct = await updateProduct(
+      productId,
+      name,
+      description,
+      price
+    );
     res.json(updatedProduct);
   } catch (error) {
     next(error);
@@ -52,9 +62,4 @@ app.delete("/:productId", async (req, res, next) => {
   }
 });
 
-
-
 module.exports = app;
-
-
-

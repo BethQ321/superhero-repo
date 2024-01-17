@@ -13,9 +13,7 @@ const {
   fetchOrders,
 } = require("./cart");
 
-const {
-  fetchUsers,
-} = require("./users")
+const { fetchUsers } = require("./users");
 
 const seed = async () => {
   const SQL = `
@@ -84,10 +82,6 @@ const seed = async () => {
 
   `;
   await client.query(SQL);
-
-
-
-
 
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
@@ -183,27 +177,25 @@ const seed = async () => {
       description:
         "Enchanted hammer that grants the wielder (if worthy, no refunds!) control over lightning, flight and superhuman",
       vip_only: true,
-      class:"weapon",
+      class: "weapon",
     }),
     createProduct({
       name: "Vortex Vial:",
       price: 100,
-      image:
-        "https://i.imgur.com/Ml3KgVM.png",
+      image: "https://i.imgur.com/Ml3KgVM.png",
       description:
         "A small vial containing a miniature tornado that can be released to create localized storms or tornadoes.",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Probability Manipulator Dice:",
       price: 100,
-      image:
-        "https://i.imgur.com/GWTCsuy.png",
+      image: "https://i.imgur.com/GWTCsuy.png",
       description:
         "A set of enchanted dice that can alter the probability of events, allowing the hero to influence luck and outcomes.",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Shark Laser",
@@ -213,7 +205,7 @@ const seed = async () => {
       description:
         "This is an easily mounted high energy precision laser that fits most big sharks (not hammerheads). Excelent for shark tanks under trap doors in secret layers or castle dikes. ***Batteries and shark not included*** ",
       vip_only: false,
-      class:"weapon",
+      class: "weapon",
     }),
     createProduct({
       name: "Lightsaber",
@@ -222,7 +214,7 @@ const seed = async () => {
       description:
         'Perfect weapon for heros or villains who know how to handle a sword, color not guaranteed might change over time based "mood" best if used outdoors, best if user is strong in the force but not a requirement',
       vip_only: false,
-      class:"weapon",
+      class: "weapon",
     }),
     createProduct({
       name: "Power_Armor",
@@ -231,7 +223,7 @@ const seed = async () => {
       description:
         "Heavy duty Power Armor for all non super powered heros comes with a cape for added heroic look ( does not work with jet pack add on )- performance enhancing and bulletproof and comes with bluetooth and USB-C charging cable",
       vip_only: false,
-      class:"suit",
+      class: "suit",
     }),
     createProduct({
       name: "BatRang",
@@ -240,7 +232,7 @@ const seed = async () => {
       description:
         "A bat-shaped throwing weapon used by Batman. It can be thrown at enemies or used for various utility purposes.",
       vip_only: false,
-      class:"weapon",
+      class: "weapon",
     }),
     createProduct({
       name: "Webshooter",
@@ -249,7 +241,7 @@ const seed = async () => {
       description:
         "Wrist-mounted devices that allowed Spider-Man to shoot and swing from webs. They are a crucial tool for his acrobatic crime-fighting. Comes in different colors and customizable webs and materials that suits your task",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Jet_Pack",
@@ -258,7 +250,7 @@ const seed = async () => {
       description:
         "Allows the wearer up to 2 hour flight time, to escape or infiltrate the most dificicult situations imaginable... or just to make a cool entrance. Not reccomended with outfits that include capes or highly flammable materials like flannel. Runs on jetfuel or in emergencies 95 octain or higer ",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Gravity_Boots",
@@ -267,17 +259,16 @@ const seed = async () => {
       description:
         "Boots with adjustable gravity manipulation, allowing the hero to walk on walls, ceilings, or make impressive leaps. This gadget would provide enhanced mobility and escape options. Is grated to be used in atmosphere and in space by at least two scientists",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Shadow-Distortion Cloak",
       price: 100,
-      image:
-        "https://i.imgur.com/ENyIxVe.png852_679301.jpg",
+      image: "https://i.imgur.com/ENyIxVe.png852_679301.jpg",
       description:
         "A cloak that can manipulate light and shadow, allowing the hero to blend into darkness or create illusions. Great for infiltration and the material is super slippery and does not catch on sharp objects, is very silent and is anti bacterial and odor to throw off scent",
       vip_only: false,
-      class:"suit",
+      class: "suit",
     }),
     createProduct({
       name: "Holographic_Projectors",
@@ -286,7 +277,7 @@ const seed = async () => {
       description:
         "Small, portable devices that can project realistic holograms. Heroes could use them for disguise, creating illusions, or communicating with allies.",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Kryptonite_SprayON",
@@ -295,7 +286,7 @@ const seed = async () => {
       description:
         "Harmless and biodegradable for most, but for that special someone will put them on even then playing field. Just spray any item and let dry for 2 hours before use, Not recomended for direct use due to short range",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Gravitational Singularity Sphere",
@@ -304,7 +295,7 @@ const seed = async () => {
       description:
         "A handheld orb that can create miniature black holes, capable of absorbing or repelling matter in a localized area.",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Elemental Fusion Crystal:",
@@ -313,7 +304,7 @@ const seed = async () => {
       description:
         "A gemstone that, when activated, can combine two elements (e.g., fire, water, earth, and air) to create a unique elemental power. Prior knowledge of chemistry is helpful with this mystical artifact as you will probably not be able to familirazie yourself with all possible combinations last minute, in the right hands this is a very powerful tool in the wrong hands it might end up unleashing catostrophic destruction.",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Submercible vehicle AKA SubMERICA",
@@ -322,7 +313,7 @@ const seed = async () => {
       description:
         "An aquatic vehicle equipped with sonar, torpedoes, and advanced navigation for underwater missions. Can be used as forward operation command post and a temporary secret layer. ",
       vip_only: false,
-      class:"vehicle",
+      class: "vehicle",
     }),
     createProduct({
       name: "Atlas - Giant mech suite",
@@ -331,7 +322,7 @@ const seed = async () => {
       description:
         "A colossal ( empire state height ) mechanical suit piloted by the hero, capable of taking on colossal threats or rescuing civilians from danger. Remote piloting possible but not reccomended as it still in Beta testing and could cause catostrophic disctruction of civilian infrastructure. This is not a road legal or axle bearing vehicle and should not be used on infrastucture and or civilan areas unless in absolout last case end of the world scenarios",
       vip_only: false,
-      class:"vehicle",
+      class: "vehicle",
     }),
     createProduct({
       name: "Reacto spacecraft",
@@ -340,8 +331,8 @@ const seed = async () => {
       description:
         "A spacecraft equipped for interstellar travel, enabling the hero to protect Earth from extraterrestrial threats. Can operate in atmosphere and gravity its main purpos is for last minuite space missions, comes equipped with 1 years rations of food and diplomatic material for 'first contact' scenarios",
       vip_only: false,
-      class:"vechicle",
-    }), 
+      class: "vechicle",
+    }),
     createProduct({
       name: "Terraforming device",
       price: 100,
@@ -349,7 +340,7 @@ const seed = async () => {
       description:
         "A device that can manipulate and reshape the environment, useful for disaster relief or combating environmental threats. Please note that any hostile intention of use of this device will result in immideate shut down of device and all payments are non refundable",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Time bubble Gun",
@@ -358,7 +349,7 @@ const seed = async () => {
       description:
         "A time manipulaton device that emits a time destortion buble around the user. Once used the device has the ability to slow down time within that bubble and the range is adjustable, bigger the radius the less time distortion available... bcause sicence. An effective tool or defense against speedsters and mystics. ps. a sidenote everything in the bubble will slow down except for the user him self or anyone who is in direct contact and remains in contact with the user upon activation. Bullets that enter the field will slow down allowing the user to reinact the famous Matrix sceane. ",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: " Eye of Heimdall - Astral Projection Amulet",
@@ -367,7 +358,7 @@ const seed = async () => {
       description:
         "An amulet that allows the hero to project their consciousness into the astral plane, exploring other realms and gathering information in the way very few can, knowledge is power.",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Gemini - Soul-Linking Bracelet",
@@ -376,7 +367,7 @@ const seed = async () => {
       description:
         " A bracelet that links the hero's soul with another individual, enabling telepathic communication and sharing of experiences. Allows the master werear to learn the truth even faster and with greater accuracy than with the Lasso of truth",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Dreamwalker - Enchanted Dreamcatcher",
@@ -385,7 +376,7 @@ const seed = async () => {
       description:
         "A dreamcatcher crown that allows the user to manipulate dreams of others. The hero will have the ability to directly affect user through sleepwalking or implanting thoughts or ideas in the short term. Long term affects have been disabled due to dictatorial and world domination tendancies and corruption. VIP only",
       vip_only: true,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Mistwalker - Enchanted cape",
@@ -394,16 +385,16 @@ const seed = async () => {
       description:
         "Mystic Enchanted Cape: A cape imbued with enchantments that grant the hero the ability to phase through solid objects and become incorporeal.",
       vip_only: true,
-      class:"suit",
+      class: "suit",
     }),
-      createProduct({
-        name: "Dreamscape Goggles",
-        price: 100,
-        image: "https://i.imgur.com/nOFjF8c.png",
-        description:
-          "Goggles that allow the hero to enter and interact with the dream world, influencing the subconscious minds of others.",
-        vip_only: false,
-        class: "tech",
+    createProduct({
+      name: "Dreamscape Goggles",
+      price: 100,
+      image: "https://i.imgur.com/nOFjF8c.png",
+      description:
+        "Goggles that allow the hero to enter and interact with the dream world, influencing the subconscious minds of others.",
+      vip_only: false,
+      class: "tech",
     }),
     createProduct({
       name: "Dimensional Resonance Whistle",
@@ -412,7 +403,7 @@ const seed = async () => {
       description:
         "A whistle that can resonate with alternate dimensions, summoning creatures or allies from parallel worlds.",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Morphing Liquid Chain",
@@ -421,7 +412,7 @@ const seed = async () => {
       description:
         "A chain made of shape-shifting liquid metal that can transform into various weapons or tools on command.",
       vip_only: false,
-      class:"weapon",
+      class: "weapon",
     }),
     createProduct({
       name: "Utility Belt",
@@ -430,7 +421,7 @@ const seed = async () => {
       description:
         "A versatile belt with compartments to store various gadgets, tools, and weapons.",
       vip_only: false,
-      class:"suit",
+      class: "suit",
     }),
     createProduct({
       name: "Elemental Fusion Crystal",
@@ -439,7 +430,7 @@ const seed = async () => {
       description:
         "A gemstone that, when activated, can combine two elements (e.g., fire, water, earth, and air) to create a unique elemental power.",
       vip_only: false,
-      class:"mystic",
+      class: "mystic",
     }),
     createProduct({
       name: "Dimensional Anchor Gloves",
@@ -448,7 +439,7 @@ const seed = async () => {
       description:
         "Gloves that can create stable dimensional anchors, preventing teleportation or interdimensional movement in a specific area.",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Bio-Nano Hive Armor (Men)",
@@ -457,7 +448,7 @@ const seed = async () => {
       description:
         "A suit made of nanobots that can rapidly adapt to incoming threats, forming protective shields or augmenting the hero's abilities.",
       vip_only: false,
-      class:"suit",
+      class: "suit",
     }),
     createProduct({
       name: "Bio-Nano Hive Armor (Women)",
@@ -466,7 +457,7 @@ const seed = async () => {
       description:
         "A suit made of nanobots that can rapidly adapt to incoming threats, forming protective shields or augmenting the hero's abilities.",
       vip_only: false,
-      class:"suit",
+      class: "suit",
     }),
     createProduct({
       name: "Mind Shielding Helmet",
@@ -475,7 +466,7 @@ const seed = async () => {
       description:
         "A helmet that provides protection against mental attacks, such as telepathy or mind control.",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Healing Serum",
@@ -484,7 +475,7 @@ const seed = async () => {
       description:
         " A special serum that accelerates the hero's healing process, aiding in recovery from injuries.",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Reality-Warping Kaleidoscope",
@@ -493,13 +484,14 @@ const seed = async () => {
       description:
         "A kaleidoscope that can twist and distort reality, creating mesmerizing visual effects and illusions. It casts a wide web and affects as big of an area as the hero can muster, be careful this item is powerfull but using it will come at a cost (other than our store price) to the user as it feeds of the sanity of the user, the more you will loose your sanity so use it wisely and sparsly",
       vip_only: false,
-      class:"tech",
+      class: "tech",
     }),
     createProduct({
       name: "Interdimensional Motorcycle",
       price: 100,
       image: "https://i.imgur.com/dP3031s.jpg",
-      description: "A motorcycle equipped with a device that allows heroes to travel between different dimensions and realities.",
+      description:
+        "A motorcycle equipped with a device that allows heroes to travel between different dimensions and realities.",
       vip_only: false,
       class: "vehicle",
     }),
@@ -507,7 +499,8 @@ const seed = async () => {
       name: "Titanium Armored Battle Bus",
       price: 100,
       image: "https://i.imgur.com/2jmsmre.jpg",
-      description: "A heavily armored and weaponized bus that serves as a mobile command center for superhero teams, equipped with advanced surveillance and communication systems.",
+      description:
+        "A heavily armored and weaponized bus that serves as a mobile command center for superhero teams, equipped with advanced surveillance and communication systems.",
       vip_only: false,
       class: "vehicle",
     }),
@@ -515,7 +508,8 @@ const seed = async () => {
       name: "Dragon Scale Armor",
       price: 100,
       image: "https://i.imgur.com/KWmmWc5.jpg",
-      description: "Armor crafted from dragon scales, providing not only exceptional protection but also the ability to withstand extreme temperatures and dragon-related powers.",
+      description:
+        "Armor crafted from dragon scales, providing not only exceptional protection but also the ability to withstand extreme temperatures and dragon-related powers.",
       vip_only: false,
       class: "suit",
     }),
@@ -523,7 +517,8 @@ const seed = async () => {
       name: "Holographic Command Center",
       price: 100,
       image: "https://i.imgur.com/qZFoh9J.jpg",
-      description: "A portable device that projects a full-scale holographic command center, complete with a 3D interface for mission planning and coordination.",
+      description:
+        "A portable device that projects a full-scale holographic command center, complete with a 3D interface for mission planning and coordination.",
       vip_only: false,
       class: "tech",
     }),
@@ -531,7 +526,8 @@ const seed = async () => {
       name: "Sorcerer's Grimoire",
       price: 100,
       image: "https://i.imgur.com/jxk2ww9.jpg",
-      description: "A spellbook filled with powerful incantations and rituals, allowing the user to cast a wide range of magical spells.",
+      description:
+        "A spellbook filled with powerful incantations and rituals, allowing the user to cast a wide range of magical spells.",
       vip_only: false,
       class: "mystic",
     }),
@@ -539,7 +535,8 @@ const seed = async () => {
       name: "Magnetic Gauntlets",
       price: 100,
       image: "https://i.imgur.com/dz5TCCz.jpg",
-      description: "Gauntlets that can generate magnetic fields, providing heroes with the ability to control metal objects or create magnetic pathways.",
+      description:
+        "Gauntlets that can generate magnetic fields, providing heroes with the ability to control metal objects or create magnetic pathways.",
       vip_only: false,
       class: "tech",
     }),
@@ -547,7 +544,8 @@ const seed = async () => {
       name: "Wearable Exoskeleton",
       price: 100,
       image: "https://i.imgur.com/wz5N7av.jpg",
-      description: "An exoskeleton suit that enhances the user's strength, agility, and endurance, making it easier to perform physically demanding tasks.",
+      description:
+        "An exoskeleton suit that enhances the user's strength, agility, and endurance, making it easier to perform physically demanding tasks.",
       vip_only: false,
       class: "suit",
     }),
@@ -555,7 +553,8 @@ const seed = async () => {
       name: "Rebreather Mask",
       price: 100,
       image: "https://i.imgur.com/eM85u6r.jpg",
-      description: "A mask that allows users to breathe underwater by filtering and recycling oxygen, perfect for underwater missions.",
+      description:
+        "A mask that allows users to breathe underwater by filtering and recycling oxygen, perfect for underwater missions.",
       vip_only: false,
       class: "suit",
     }),
@@ -563,7 +562,8 @@ const seed = async () => {
       name: "Electromagnetic Pulse (EMP) Emitter",
       price: 100,
       image: "https://i.imgur.com/DPUa2my.jpg",
-      description: "A handheld device that emits an electromagnetic pulse to disrupt or disable electronic devices, useful for disabling security systems or drones",
+      description:
+        "A handheld device that emits an electromagnetic pulse to disrupt or disable electronic devices, useful for disabling security systems or drones",
       vip_only: false,
       class: "tech",
     }),
@@ -571,7 +571,8 @@ const seed = async () => {
       name: "Aerodynamic Utility Umbrella",
       price: 100,
       image: "https://i.imgur.com/jfvrin5.png",
-      description: "An umbrella with a reinforced frame that doubles as a lightweight glider, allowing for controlled descents from heights",
+      description:
+        "An umbrella with a reinforced frame that doubles as a lightweight glider, allowing for controlled descents from heights",
       vip_only: false,
       class: "tech",
     }),
@@ -579,7 +580,8 @@ const seed = async () => {
       name: "Smart Contact Lenses",
       price: 100,
       image: "https://i.imgur.com/DSDJrqh.jpg",
-      description: "Contact lenses with augmented reality displays, providing vital information, analysis, and mission updates directly to the wearer's eyes.",
+      description:
+        "Contact lenses with augmented reality displays, providing vital information, analysis, and mission updates directly to the wearer's eyes.",
       vip_only: false,
       class: "tech",
     }),
@@ -587,7 +589,8 @@ const seed = async () => {
       name: "Remote-Controlled Insect Drone",
       price: 100,
       image: "https://i.imgur.com/Z7XsK6l.jpg",
-      description: "A small, insect-like drone with camera capabilities, useful for covert surveillance and reconnaissance.",
+      description:
+        "A small, insect-like drone with camera capabilities, useful for covert surveillance and reconnaissance.",
       vip_only: false,
       class: "tech",
     }),
@@ -595,7 +598,8 @@ const seed = async () => {
       name: "Molecular Disruptor Grenades",
       price: 100,
       image: "https://i.imgur.com/Ie791Vx.png",
-      description: " Grenades that disintegrate or rearrange the molecular structure of objects, causing them to break down or transform.",
+      description:
+        " Grenades that disintegrate or rearrange the molecular structure of objects, causing them to break down or transform.",
       vip_only: false,
       class: "tech",
     }),
@@ -603,7 +607,8 @@ const seed = async () => {
       name: "Nano-Replicator Pen",
       price: 100,
       image: "https://i.imgur.com/WKGrwkU.jpg",
-      description: "A pen-like device that uses nanotechnology to replicate small objects, tools, or keys when pressed against the desired target.",
+      description:
+        "A pen-like device that uses nanotechnology to replicate small objects, tools, or keys when pressed against the desired target.",
       vip_only: false,
       class: "tech",
     }),

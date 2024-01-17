@@ -11,7 +11,7 @@ const Home = ({ auth }) => {
           {auth.is_vip ? (
             <>
               <h1 className="home-title">Welcome, {username}!</h1>
-              <img src="https://i.imgur.com/yoJLg9c.png" width="150px"/>
+              <img src="https://i.imgur.com/yoJLg9c.png" width="150px" />
               <h2 className="home-subtitle">VIP Hero!</h2>
               <h3>S.H.I.E.L.D. Shop Salutes Your Heroic Excellence!</h3>
               <p>
@@ -54,7 +54,9 @@ const Home = ({ auth }) => {
                 Welcome to the S.H.I.E.L.D. Shop - Your Super Hero Inventive
                 Equipment and Life-saving Devices Headquarters!
               </p>
-              <p className="home-text">Unleash Your Inner Hero with S.H.I.E.L.D. Shop!</p>
+              <p className="home-text">
+                Unleash Your Inner Hero with S.H.I.E.L.D. Shop!
+              </p>
               <p>
                 You're not just a visitor; you're a valued member of our hero
                 community. As a logged-in user, you have exclusive access to the
@@ -71,16 +73,20 @@ const Home = ({ auth }) => {
               </p>
             </>
           )}
-          <img src="https://i.imgur.com/aWLFmXi.png"
-          alt="Hero Image"
-          className="home-image"
+          <img
+            src="https://i.imgur.com/aWLFmXi.png"
+            alt="Hero Image"
+            className="home-image"
           />
         </div>
       ) : (
         /*not logged in*/
         <>
           <h1 className="home-title">S.H.I.E.L.D. Shop</h1>
-          <h3 className="home-subtitle"> (Super Hero Inventive Equipment and Life-saving Devices)</h3>
+          <h3 className="home-subtitle">
+            {" "}
+            (Super Hero Inventive Equipment and Life-saving Devices)
+          </h3>
           <p className="home-text">
             Are you ready to step into a world of heroism and adventure? Welcome
             to the S.H.I.E.L.D. Shop, where we provide you with the ultimate
@@ -103,13 +109,20 @@ const Home = ({ auth }) => {
             now!
           </p>
 
-          <img src="https://i.imgur.com/aWLFmXi.png"
-           alt="Hero Image"
-           className="home-image"
+          <img
+            src="https://i.imgur.com/aWLFmXi.png"
+            alt="Hero Image"
+            className="home-image"
           />
           <h3 className="home-subtitle">
-            Please, <Link to="/Login" className="home-link">Login</Link> in or{" "}
-            <Link to="/Register" className="home-link">Register</Link>
+            Please,{" "}
+            <Link to="/Login" className="home-link">
+              Login
+            </Link>{" "}
+            in or{" "}
+            <Link to="/Register" className="home-link">
+              Register
+            </Link>
           </h3>
         </>
       )}

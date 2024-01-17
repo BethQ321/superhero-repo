@@ -12,15 +12,13 @@ const fetchProducts = async () => {
 };
 
 const fetchReviews = async () => {
-  
-    const SQL = `
+  const SQL = `
       SELECT *
       FROM review
     `;
-    const response = await client.query(SQL);
-    return response.rows;
+  const response = await client.query(SQL);
+  return response.rows;
 };
-
 
 const createProduct = async (product) => {
   const SQL = `
@@ -42,14 +40,21 @@ const createProduct = async (product) => {
 };
 
 //fourth? add username
-const createReview = async(review)=> {
+const createReview = async (review) => {
   const SQL = `
     INSERT INTO review  (id, name, product_id, review_title, reviewText, rating) 
     VALUES($1, $2, $3, $4, $5, $6) 
     RETURNING *
   `;
-  
-  const response = await client.query(SQL, [ uuidv4(), review.name, review.product_id, review.review_title, review.reviewText, review.rating]);
+
+  const response = await client.query(SQL, [
+    uuidv4(),
+    review.name,
+    review.product_id,
+    review.review_title,
+    review.reviewText,
+    review.rating,
+  ]);
   return response.rows[0];
 };
 
@@ -62,16 +67,20 @@ const updateProduct = async (productId, name, description, price) => {
       RETURNING *
     `;
 
-    const response = await client.query(SQL, [productId, name, description, price]);
+    const response = await client.query(SQL, [
+      productId,
+      name,
+      description,
+      price,
+    ]);
 
     if (response.rows.length === 0) {
-  
-      throw new Error('Product not found');
+      throw new Error("Product not found");
     }
 
-    return response.rows[0]; 
+    return response.rows[0];
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 
@@ -86,7 +95,6 @@ const deleteProduct = async (productId) => {
     throw error;
   }
 };
-
 
 module.exports = {
   fetchProducts,
