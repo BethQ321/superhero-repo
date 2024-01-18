@@ -71,6 +71,7 @@ const createLineItem = async (lineItem) => {
   return response.rows[0];
 };
 
+
 const deleteLineItem = async (lineItem) => {
   await ensureCart(lineItem);
   const SQL = `

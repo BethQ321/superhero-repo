@@ -18,15 +18,16 @@ const { fetchUsers } = require("./users");
 
 const seed = async () => {
   const SQL = `
-
-    DROP TABLE IF EXISTS line_items;
-    DROP TABLE IF EXISTS review;
+  DROP TABLE IF EXISTS review;
     DROP TABLE IF EXISTS wishlist;
-    DROP TABLE IF EXISTS shipping_address;
+    DROP TABLE IF EXISTS line_items;
+    -- Drop tables with dependencies last
     DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS shipping_address CASCADE; -- Use CASCADE to drop dependent objects
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
-
+    
+  
     
     CREATE TABLE products(
       id UUID PRIMARY KEY,
@@ -66,6 +67,7 @@ const seed = async () => {
     
       CREATE TABLE shipping_address(
         id UUID PRIMARY KEY,
+        user_id UUID REFERENCES users(id),
         street_address VARCHAR(100) NOT NULL,
         city VARCHAR(100) NOT NULL,
         state VARCHAR(100) NOT NULL,
@@ -76,7 +78,8 @@ const seed = async () => {
         id UUID PRIMARY KEY,
         created_at TIMESTAMP DEFAULT now(),
         is_cart BOOLEAN NOT NULL DEFAULT true,
-        user_id UUID REFERENCES users(id) NOT NULL
+        user_id UUID REFERENCES users(id) NOT NULL,
+        shipping_address_id UUID REFERENCES shipping_address(id)
       );
 
     CREATE TABLE line_items(
@@ -100,7 +103,7 @@ const seed = async () => {
 
   `;
   await client.query(SQL);
-  const []  = await Promise.all([ 
+  const [batman]  = await Promise.all([ 
     createShippingAddress({
       street_address: "batman",
       city: "gotham",

@@ -17,17 +17,17 @@ app.get("/", async (req, res, next) => {
 // route for creating a shipping address for a order,... connected to "../db/products"
 
 app.post("/", async (req, res, next) => {
-    
-    // const id = req.params;
+    user_id = req.body.user_id
     try {
-    const shippingData = req.body;
-    const createdShippingAddress = await createShippingAddress(shippingData);
+        const shippingData = req.body;
+        const createdShippingAddress = await createShippingAddress(shippingData, user_id);
 
-    res.status(201).json(createdShippingAddress);
+        res.status(201).json(createdShippingAddress);
     } catch (error) {
-    next(error); 
+        next(error);
     }
 });
+
 
 
 module.exports = app;
