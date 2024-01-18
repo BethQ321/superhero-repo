@@ -91,14 +91,20 @@ const createUser = async (user) => {
   }
 };
 
-/*const fetchUsers = async () => {
-  const SQL = `
-    SELECT *
-    FROM users
-  `;
-  const response = await client.query(SQL);
-  return response.rows;
-};*/
+
+const updateUserProfile = async (userId, fname, lname, email, phone) => {
+  try {
+    const SQL = `
+      UPDATE users
+      SET Fname = $2, Lname = $3, email = $4, phone = $5
+      WHERE id = $1
+    `;
+    await client.query(SQL, [userId, fname, lname, email, phone]);
+  } catch (error) {
+    console.error('Error updating profile in DB/Auth:', error);
+    throw error;
+  }
+};
 
 
 
@@ -108,6 +114,7 @@ const createUser = async (user) => {
 
 module.exports = {
   createUser,
+  updateUserProfile,
   authenticate,
   findUserByToken,
 };

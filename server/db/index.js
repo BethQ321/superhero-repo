@@ -17,11 +17,11 @@ const { fetchUsers } = require("./users");
 
 const seed = async () => {
   const SQL = `
-    DROP TABLE IF EXISTS line_items;
-    DROP TABLE IF EXISTS review;
-    DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS orders;
-    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS line_items  ;
+    DROP TABLE IF EXISTS review  ;
+    DROP TABLE IF EXISTS products  ;
+    DROP TABLE IF EXISTS orders  ;
+    DROP TABLE IF EXISTS users   ;
     
     CREATE TABLE products(
       id UUID PRIMARY KEY,
