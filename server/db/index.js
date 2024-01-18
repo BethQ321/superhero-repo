@@ -78,8 +78,8 @@ const seed = async () => {
         id UUID PRIMARY KEY,
         created_at TIMESTAMP DEFAULT now(),
         is_cart BOOLEAN NOT NULL DEFAULT true,
-        user_id UUID REFERENCES users(id) NOT NULL,
-        shipping_address_id UUID REFERENCES shipping_address(id)
+        user_id UUID REFERENCES users(id) NOT NULL
+        
       );
 
     CREATE TABLE line_items(
@@ -103,6 +103,20 @@ const seed = async () => {
 
   `;
   await client.query(SQL);
+
+  const alterLineItemsTable = `
+  ALTER TABLE line_items
+  DROP CONSTRAINT line_items_order_id_fkey,
+  ADD CONSTRAINT line_items_order_id_fkey
+  FOREIGN KEY (order_id)
+  REFERENCES orders(id)
+  ON DELETE CASCADE;
+`;
+
+await client.query(alterLineItemsTable);
+
+
+
   const [batman]  = await Promise.all([ 
     createShippingAddress({
       street_address: "batman",

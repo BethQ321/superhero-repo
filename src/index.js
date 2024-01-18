@@ -17,6 +17,7 @@ import Admin from "./Admin";
 import AddProduct from "./AddProductForm";
 import AdminUsers from "./AdminUsers";
 import EditProducts from "./EditProducts";
+import AllOrders from "./AllOrders";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -247,6 +248,7 @@ const App = () => {
  auth={auth}
  lineItems={lineItems}
  updateLineItem={updateLineItem}
+ setLineItems={setLineItems}
 />
 }/>
 
@@ -274,9 +276,10 @@ const App = () => {
           <Route
             path="/editproducts"
             element={
-              <EditProducts products={products} formatPrice={formatPrice} />
-            }
-          />
+              <EditProducts products={products} formatPrice={formatPrice} />} />
+            
+              <Route path="allorders" element={<AllOrders orders={orders} />} />
+              
         </Routes>
       </main>
       {/*

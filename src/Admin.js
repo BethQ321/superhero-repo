@@ -8,6 +8,7 @@ const Admin = () => {
       <NavLink to="/addproduct">Add Product</NavLink>
       <NavLink to="/allusers">Users</NavLink>
       <NavLink to="/editproducts">Edit Products</NavLink>
+      <NavLink to="/allorders">Orders</NavLink>
     </>
   );
 };
