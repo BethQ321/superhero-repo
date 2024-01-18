@@ -7,10 +7,12 @@ app.use("/", require("./auth"));
 app.use("/orders", require("./orders"));
 app.use("/lineItems", require("./lineItems"));
 
+
 app.use("/reviews", require("./reviews")); 
 app.use("/users", require("./users"))
 app.use("/shippingaddress", require("./shippingaddress"))
 app.use("/wishlist", require("./wishList")); // Add this line
+
 
 
 app.use((err, req, res, next) => {

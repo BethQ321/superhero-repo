@@ -249,6 +249,7 @@ const App = () => {
  lineItems={lineItems}
  updateLineItem={updateLineItem}
  setLineItems={setLineItems}
+
 />
 }/>
 
@@ -268,8 +269,7 @@ const App = () => {
               />
             }
           />
-
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Profile" element={<Profile  auth={auth}/>} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/allusers" element={<AdminUsers auth={auth} />} />
