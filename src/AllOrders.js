@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "./api";
+import { Link } from "react-router-dom";
 
 const AllOrders = () => {
   const [users, setUsers] = useState([]);
-  const [allOrders, setAllOrders] = useState([]); 
+  const [allOrders, setAllOrders] = useState([]);
 
   useEffect(() => {
     axios.get("/api/users").then((response) => {
@@ -29,18 +30,19 @@ const AllOrders = () => {
   };
 
   const handleDeleteOrder = async (orderId) => {
-    console.log("Deleting order with ID:", orderId); 
+    console.log("Deleting order with ID:", orderId);
     try {
       await api.deleteOrder(orderId);
-      window.location.reload(); 
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting order:", error);
     }
   };
 
   return (
-    <div>
-      <h1>All Orders</h1>
+    <div className="orders-container">
+      {" "}
+      <h1 className="home-title">All Orders</h1>{" "}
       <table>
         <thead>
           <tr>
@@ -57,12 +59,20 @@ const AllOrders = () => {
               <td>{order.created_at}</td>
               <td>{getUsernameForOrder(order)}</td>
               <td>
-                <button onClick={() => handleDeleteOrder(order.id)}>Delete</button>
+                <button
+                  className="button-style"
+                  onClick={() => handleDeleteOrder(order.id)}
+                >
+                  Delete
+                </button>{" "}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Link to="/admin" className="back-button">
+        Back to Admin
+      </Link>
     </div>
   );
 };

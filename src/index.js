@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route, UseNavigate, useNavigate } from "react-router-dom";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  UseNavigate,
+  useNavigate,
+} from "react-router-dom";
 import Products from "./Products";
 import Orders from "./Orders";
 import Cart from "./Cart";
@@ -28,6 +34,7 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
+  const navigate = useNavigate();
 
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
@@ -143,7 +150,7 @@ const App = () => {
   };
   const logout = () => {
     api.logout(setAuth);
-    navigate('/')
+    navigate("/");
   };
   //wishlist
   const removeFromList = (itemId) => {
@@ -184,7 +191,6 @@ const App = () => {
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
                 addToWishList={addToWishList}
-                
               />
             }
           />
@@ -226,36 +232,32 @@ const App = () => {
                 handleDecrement={handleDecrement}
                 updateLineItem={updateLineItem}
                 auth={auth}
-                
               />
             }
           />
-         <Route path="/login" element={<Login login={login} />} />
+          <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
           <Route
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
 
-        
-         <Route path="/wishList" element={
- <WishList 
- wishList={wishList}
- removeFromWishList={removeFromList}
- products={products}
- updateCart={createLineItem}
- cart={cart}
- auth={auth}
- lineItems={lineItems}
- updateLineItem={updateLineItem}
- setLineItems={setLineItems}
-
-/>
-}/>
-
-
-
-
+          <Route
+            path="/wishList"
+            element={
+              <WishList
+                wishList={wishList}
+                removeFromWishList={removeFromList}
+                products={products}
+                updateCart={createLineItem}
+                cart={cart}
+                auth={auth}
+                lineItems={lineItems}
+                updateLineItem={updateLineItem}
+                setLineItems={setLineItems}
+              />
+            }
+          />
 
           <Route
             path="/wishList"
@@ -269,17 +271,18 @@ const App = () => {
               />
             }
           />
-          <Route path="/Profile" element={<Profile  auth={auth}/>} />
+          <Route path="/Profile" element={<Profile auth={auth} />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/allusers" element={<AdminUsers auth={auth} />} />
           <Route
             path="/editproducts"
             element={
-              <EditProducts products={products} formatPrice={formatPrice} />} />
-            
-              <Route path="allorders" element={<AllOrders orders={orders} />} />
-              
+              <EditProducts products={products} formatPrice={formatPrice} />
+            }
+          />
+
+          <Route path="allorders" element={<AllOrders orders={orders} />} />
         </Routes>
       </main>
       {/*

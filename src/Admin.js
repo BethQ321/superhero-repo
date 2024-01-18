@@ -3,13 +3,13 @@ import { Link, NavLink } from "react-router-dom";
 
 const Admin = () => {
   return (
-    <>
-      <h1>Administrator</h1>
-      <NavLink to="/addproduct">Add Product</NavLink>
-      <NavLink to="/allusers">Users</NavLink>
-      <NavLink to="/editproducts">Edit Products</NavLink>
-      <NavLink to="/allorders">Orders</NavLink>
-    </>
+    <div className="admin-container">
+      <h1 className="admin-title">Administrator</h1>
+      <NavLink className="admin-nav-link" to="/addproduct">Add Product</NavLink>
+      <NavLink className="admin-nav-link" to="/allusers">Users</NavLink>
+      <NavLink className="admin-nav-link" to="/editproducts">Edit Products</NavLink>
+      <NavLink className="admin-nav-link" to="/allorders">Orders</NavLink>
+    </div>
   );
 };
 
