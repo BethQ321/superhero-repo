@@ -27,13 +27,6 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
-  const navigate = useNavigate();
-
-
-
-
-  //const [users, setUsers] = useState([]);
-  //const [error, setError] = useState(null);
 
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
@@ -63,6 +56,7 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
+
   /*useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -230,6 +224,8 @@ const App = () => {
                 removeFromCart={removeFromCart}
                 handleDecrement={handleDecrement}
                 updateLineItem={updateLineItem}
+                auth={auth}
+                
               />
             }
           />
