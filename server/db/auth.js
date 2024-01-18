@@ -100,6 +100,7 @@ const updateUserProfile = async (userId, fname, lname, email, phone) => {
       WHERE id = $1
     `;
     await client.query(SQL, [userId, fname, lname, email, phone]);
+    console.log("updateUserProfile works")
   } catch (error) {
     console.error('Error updating profile in DB/Auth:', error);
     throw error;

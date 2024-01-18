@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Profile = ({ auth }) => {
 
-//   console.log("huh")
+  //console.log("huh")
 //   const [fname, setFname] = useState(auth.fname || '');
 //   const [lname, setLname] = useState(auth.lname || '');
 //   const [email, setEmail] = useState(auth.email || '');
@@ -22,13 +22,28 @@ const Profile = ({ auth }) => {
  
 //   const user_id = auth.id
 
+//  const [editedU, setEditedU] = useState({
+//     id: "",
+//     fname: "",
+//     lname: "",
+//     email: "",
+//     phone: "",
+//   });
+
+//   //console.log(auth.id)
+//    console.log( "user" ,auth.id ,user_id)
+//   // console.log("name", fname)
+//   // console.log(lname)
+//   // console.log("email", email)
+//   // console.log("phone", phone)
+
 //   const updateUserProfile = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.put("/api/profile", user_id, {  //error 500
-//       //await axios.put("/api/auth/profile", user_id, {  //error404
+//       await axios.put(`/api/profile/${auth.id}`, {  //error 500
+      
      
-//   fname, lname, email,phone,
+//       user_id,fname, lname, email,phone,
 // });
 //    //console.log(response.data);
 
@@ -147,6 +162,7 @@ const Profile = ({ auth }) => {
 
   const [isEditing, setIsEditing] = useState(false);
 
+  //fill in with user values
   const handleEdit = (auth) => {
   setEditedU({
     id: auth.id,
@@ -158,6 +174,7 @@ const Profile = ({ auth }) => {
     setIsEditing(true);
   };
 
+  //object
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedU({
@@ -175,7 +192,7 @@ const Profile = ({ auth }) => {
       //   params: { id: editedU.id }
       // });
 
-      await axios.put(`/api/auth/${editedU.id}`, { //404 error
+      await axios.put(`/api/${editedU.id}`, { //404 error
 
         fname: editedU.fname,
         lname: editedU.lname,
@@ -204,9 +221,9 @@ const Profile = ({ auth }) => {
 
       {/* Edit Form */}
       {isEditing && (
-        <div>
+        <div className="profile-box">
           <h2>Edit User</h2>
-          <form>
+          <form className="profile-form">
             <label>
               First Name:
               <input
@@ -237,7 +254,7 @@ const Profile = ({ auth }) => {
             </label>
             <br />
             <label>
-              Price (in cents):
+              Phone number:
               <input
                 type="text"
                 name="phone"
