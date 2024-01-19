@@ -123,5 +123,5 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
 
                 }  
  
-};
+
 export default WishList;
