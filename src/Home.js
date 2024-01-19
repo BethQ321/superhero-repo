@@ -11,7 +11,11 @@ const Home = ({ auth }) => {
           {auth.is_vip ? (
             <>
               <h1 className="home-title">Welcome, {username}!</h1>
-              <img src="https://i.imgur.com/yoJLg9c.png" width="150px" />
+              <img
+                className="homepage-image"
+                src="https://i.imgur.com/yoJLg9c.png"
+                width="150px"
+              />
               <h2 className="home-subtitle">VIP Hero!</h2>
               <h3>S.H.I.E.L.D. Shop Salutes Your Heroic Excellence!</h3>
               <p>
@@ -49,6 +53,11 @@ const Home = ({ auth }) => {
           ) : (
             <>
               <h1 className="home-title">Welcome, {username}!</h1>
+              <img
+                className="homepage-image"
+                src="https://i.imgur.com/yoJLg9c.png"
+                width="150px"
+              />
               {/* Non-VIP content */}
               <p className="home-text">
                 Welcome to the S.H.I.E.L.D. Shop - Your Super Hero Inventive

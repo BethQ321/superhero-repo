@@ -73,6 +73,7 @@ const createLineItem = async (lineItem) => {
   return response.rows[0];
 };
 
+
 const deleteLineItem = async (lineItem) => {
   await ensureCart(lineItem);
   const SQL = `
@@ -90,6 +91,17 @@ const updateOrder = async (order) => {
   return response.rows[0];
 };
 
+const fetchAllOrders = async () => {
+  const SQL = `
+  SELECT *
+  FROM orders
+  `;
+  const response = await client.query(SQL);
+  return response.rows;
+}
+
+
+
 const fetchOrders = async (userId) => {
   const SQL = `
     SELECT * FROM orders
@@ -106,10 +118,18 @@ const fetchOrders = async (userId) => {
     );
     response = await client.query(SQL, [userId]);
     return response.rows;
-    //return fetchOrders(userId);
   }
   return response.rows;
 };
+
+const deleteOrder = async (orderId) => {
+  const SQL = `
+    DELETE FROM orders
+    WHERE id = $1
+  `;
+  await client.query(SQL, [orderId]);
+};
+
 
 module.exports = {
   fetchLineItems,
@@ -118,4 +138,6 @@ module.exports = {
   deleteLineItem,
   updateOrder,
   fetchOrders,
+  deleteOrder,
+  fetchAllOrders
 };

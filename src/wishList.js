@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import api from './api/index';
 
-const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems}) => {
+const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems }) => {
   const [wishList, setWishList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [addToCartError, setAddToCartError] = useState(null); // State for error message
 
   useEffect(() => {
     const fetchWishList = async () => {
@@ -22,44 +23,39 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems}) 
   }, [auth, products]);
 
   const handleAddToCartFromWishlist = async (item) => {
-    const { product_id } = item;
-    const productToAdd = products.find((p) => p.id === product_id);
-    console.log('productToAdd', productToAdd)
+    const { product_id, wishlist_id } = item;
+    const productToAdd = products.find(p => p.id === product_id);
+    
     if (!productToAdd) {
-  
-      console.error(`Product not found for ID: ${product_id}`);
       return;
     }
-  
+    
     if (!cart || !cart.id) {
-      console.error('Invalid cart or cart ID not found');
       return;
     }
-  
+    
+    // Check if the item is already in the cart
+    const isItemInCart = lineItems.some(lineItem => lineItem.product_id === product_id);
+
+    if (isItemInCart) {
+      setAddToCartError('This item is already in your cart.'); // Set error message
+      return;
+    }
+
     try {
-      console.log('Adding item to cart:', {
-        product: productToAdd,
-        cart: cart,
-        lineItems: lineItems,
-      });
-  
       await api.createLineItem({
         product: productToAdd,
         cart: cart,
         lineItems: lineItems,
         setLineItems: setLineItems,
       });
-  
-      const updatedLineItems = await api.fetchLineItems();
-      setLineItems(updatedLineItems);
+      // const updatedLineItems = await api.fetchLineItems();
+      // setLineItems(updatedLineItems);
+      await handleRemove(wishlist_id);
     } catch (error) {
-      console.error('Error adding item to cart:', error);
+      console.error('Error in handleAddToCartFromWishlist:', error);
     }
-    console.log('Type of setLineItems:', typeof setLineItems);
-
   };
-  
-
 
   const handleRemove = async (wishlistItemId) => {
     try {
@@ -69,7 +65,6 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems}) 
       console.error('Error removing item from wishlist:', error);
     }
   };
-
 
   return (
     <div>
@@ -91,9 +86,9 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems}) 
           ))}
         </ul>
       )}
+      {addToCartError && <div className="error">{addToCartError}</div>} {/* Display error message */}
     </div>
   );
 };
 
 export default WishList;
-

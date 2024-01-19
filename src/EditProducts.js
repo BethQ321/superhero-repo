@@ -61,8 +61,8 @@ const EditProducts = ({ products, formatPrice }) => {
 
   return (
     <>
-      <h1>Edit Products</h1>
-      <table>
+      <h1 className="home-title" >Edit Products</h1>
+      <div className="orders-container"><table>
         <thead>
           <tr>
             <th>Name</th>
@@ -85,11 +85,11 @@ const EditProducts = ({ products, formatPrice }) => {
           ))}
         </tbody>
       </table>
-
+</div>
       {/* Edit Form */}
       {isEditing && (
-        <div>
-          <h2>Edit Product</h2>
+        <div className="edit-product-form" >
+          <h2 className="form-heading">Edit Product</h2>
           <form>
             <label>
               Name:
@@ -115,12 +115,13 @@ const EditProducts = ({ products, formatPrice }) => {
               <input
                 type="number"
                 name="price"
+                className="form-input"
                 value={editedProduct.price}
                 onChange={handleInputChange}
               />
             </label>
             <br />
-            <button onClick={handleSave}>Save</button>
+            <button className="form-button" onClick={handleSave}>Save</button>
           </form>
         </div>
       )}

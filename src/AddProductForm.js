@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState({
@@ -82,6 +83,8 @@ const AddProduct = () => {
         />
       </label>
       <button type="submit">Add Product</button>
+      <br></br><br></br>
+      <Link to="/admin" className="back-button">Back to Admin</Link>
     </form>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const AdminUsers = ({ auth }) => {
   const [users, setUsers] = useState([]);
@@ -33,8 +34,8 @@ const AdminUsers = ({ auth }) => {
   };
 
   return (
-    <div>
-      <h2>Admin Users</h2>
+    <div className="orders-container">
+      <h2>All Users</h2>
       <table>
         <thead>
           <tr>
@@ -67,6 +68,9 @@ const AdminUsers = ({ auth }) => {
           ))}
         </tbody>
       </table>
+      <Link to="/admin" className="back-button">
+        Back to Admin
+      </Link>
     </div>
   );
 };

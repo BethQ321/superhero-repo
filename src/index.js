@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route, UseNavigate, useNavigate } from "react-router-dom";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  UseNavigate,
+  useNavigate,
+} from "react-router-dom";
 import Products from "./Products";
 import Orders from "./Orders";
 import Cart from "./Cart";
@@ -17,6 +23,7 @@ import Admin from "./Admin";
 import AddProduct from "./AddProductForm";
 import AdminUsers from "./AdminUsers";
 import EditProducts from "./EditProducts";
+import AllOrders from "./AllOrders";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -28,12 +35,6 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
   const navigate = useNavigate();
-
-
-
-
-  //const [users, setUsers] = useState([]);
-  //const [error, setError] = useState(null);
 
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
@@ -63,6 +64,7 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
+
   /*useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -148,7 +150,7 @@ const App = () => {
   };
   const logout = () => {
     api.logout(setAuth);
-    navigate('/')
+    navigate("/");
   };
   //wishlist
   const removeFromList = (itemId) => {
@@ -189,7 +191,6 @@ const App = () => {
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
                 addToWishList={addToWishList}
-                
               />
             }
           />
@@ -230,10 +231,11 @@ const App = () => {
                 removeFromCart={removeFromCart}
                 handleDecrement={handleDecrement}
                 updateLineItem={updateLineItem}
+                auth={auth}
               />
             }
           />
-         <Route path="/login" element={<Login login={login} />} />
+          <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
           <Route
             path="/RegistrationComplete"
@@ -270,6 +272,8 @@ updateOrder={updateOrder}
               <EditProducts products={products} formatPrice={formatPrice} />
             }
           />
+
+          <Route path="allorders" element={<AllOrders orders={orders} />} />
         </Routes>
       </main>
       {/*
