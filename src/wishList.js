@@ -28,10 +28,10 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
     const productToAdd = products.find(p => p.id === product_id);
     
     if (!productToAdd) {
-      return;
-    }
-    
-    if (!cart || !cart.id) {
+      setAddToCartErrors({
+        ...addToCartErrors,
+        [wishlist_id]: 'Product not found.'
+      });
       return;
     }
     
@@ -40,7 +40,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
     if (isItemInCart) {
       setAddToCartErrors({
         ...addToCartErrors,
-        [wishlist_id]: 'This item is already in your cart'
+        [wishlist_id]: 'This item is already in your cart.'
       });
       return;
     }
@@ -53,9 +53,16 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
         setLineItems: setLineItems,
       });
 
+      const response = await axios.delete(`/api/wishList/${wishlist_id}`, api.getHeaders());
+      console.log("Remove from wishlist response:", response);
+
       setWishList(prevWishList => prevWishList.filter(item => item.wishlist_id !== wishlist_id));
     } catch (error) {
       console.error('Error in handleAddToCartFromWishlist:', error);
+      setAddToCartErrors({
+        ...addToCartErrors,
+        [wishlist_id]: 'Error processing your request.'
+      });
     }
   };
 
@@ -97,7 +104,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
                   Add to Cart
                 </button>
                 <button
-                  className="add-to-wishlist"
+                  className="remove-from-wishlist"
                   onClick={() => handleRemove(item.wishlist_id)}
                 >
                   Remove
@@ -115,6 +122,5 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
     </div>
   );
 };
-
 
 export default WishList;
