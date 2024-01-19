@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import api from './api/index';
 
-const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems }) => {
+const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
   const [wishList, setWishList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [addToCartError, setAddToCartError] = useState(null); // State for error message
+  const [addToCartErrors, setAddToCartErrors] = useState({}); 
 
   useEffect(() => {
     const fetchWishList = async () => {
@@ -34,11 +35,13 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems })
       return;
     }
     
-    // Check if the item is already in the cart
     const isItemInCart = lineItems.some(lineItem => lineItem.product_id === product_id);
 
     if (isItemInCart) {
-      setAddToCartError('This item is already in your cart.'); // Set error message
+      setAddToCartErrors({
+        ...addToCartErrors,
+        [wishlist_id]: 'This item is already in your cart'
+      });
       return;
     }
 
@@ -49,9 +52,8 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems })
         lineItems: lineItems,
         setLineItems: setLineItems,
       });
-      // const updatedLineItems = await api.fetchLineItems();
-      // setLineItems(updatedLineItems);
-      await handleRemove(wishlist_id);
+
+      setWishList(prevWishList => prevWishList.filter(item => item.wishlist_id !== wishlist_id));
     } catch (error) {
       console.error('Error in handleAddToCartFromWishlist:', error);
     }
@@ -67,28 +69,52 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems })
   };
 
   return (
-    <div>
+    <div className="product-container">
       <h2>Wish List</h2>
       {isLoading ? (
         <p>Loading wish list...</p>
       ) : wishList.length === 0 ? (
         <p>No items in your wish list.</p>
       ) : (
-        <ul>
+        <ul className="product-list">
           {wishList.map((item) => (
             <li key={item.wishlist_id}>
-              <img src={item.product_image} alt={item.product_name} />
-              <div>{item.product_name} - ${item.product_price}</div>
-              <div>{item.product_description}</div>
-              <button onClick={() => handleAddToCartFromWishlist(item)}>Add to Cart</button>
-              <button onClick={() => handleRemove(item.wishlist_id)}>Remove</button>
+              <Link to={`/products/${item.product_id}`}>
+                {item.product_name}
+                <br />
+                <img
+                  className="productImage"
+                  src={item.product_image}
+                  alt={item.product_name}
+                />
+              </Link>
+              <p>{item.product_description} - ${item.product_price}</p>
+              <div>
+                <button
+                  className="add-to-cart"
+                  onClick={() => handleAddToCartFromWishlist(item)}
+                >
+                  Add to Cart
+                </button>
+                <button
+                  className="add-to-wishlist"
+                  onClick={() => handleRemove(item.wishlist_id)}
+                >
+                  Remove
+                </button>
+                {addToCartErrors[item.wishlist_id] && (
+                  <div className="error">
+                    {addToCartErrors[item.wishlist_id]}
+                  </div>
+                )}
+              </div>
             </li>
           ))}
         </ul>
       )}
-      {addToCartError && <div className="error">{addToCartError}</div>} {/* Display error message */}
     </div>
   );
 };
+
 
 export default WishList;

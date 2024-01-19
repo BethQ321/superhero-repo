@@ -802,3 +802,21 @@ nav a img {
 .homepage-image {
   border-radius: 1rem;
 }
+
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.button-group {
+  display: flex;
+  gap: 5px; 
+  align-items: center;
+}
+
+.wishlist-error {
+  margin-top: 10px; 
+  color: red;
+  margin-top: 10px;
+}
