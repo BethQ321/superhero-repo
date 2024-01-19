@@ -19,8 +19,12 @@ const Products = ({
   formatPrice,
   addToWishList,
 }) => {
-  const [wishlistErrors, setWishlistErrors] = useState({});
 
+  const [selectedClass, setSelectedClass] = useState("All");
+  const [showVipOnly, setShowVipOnly] = useState(false);
+  
+const [wishlistErrors, setWishlistErrors] = useState({});
+  
   const addProductToWishlist = async (product) => {
     try {
       setWishlistErrors({ ...wishlistErrors, [product.id]: '' });
@@ -40,6 +44,31 @@ const Products = ({
     }
   };
 
+  const filterProductsByClass = (selectedClass) => {
+    if (selectedClass === "All") {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((product) => product.class === selectedClass);
+      setFilteredProducts(filtered);
+    }
+  };
+
+  const handleVipCheckboxChange = () => {
+    setShowVipOnly(!showVipOnly);
+    if (!showVipOnly) {
+      const vipFilteredProducts = products.filter((product) => product.vip_only);
+      setFilteredProducts(vipFilteredProducts);
+    } else {
+      filterProductsByClass(selectedClass);
+    }
+  };
+
+  useEffect(() => {
+    if (!showVipOnly) {
+      filterProductsByClass(selectedClass);
+    }
+  }, [selectedClass, showVipOnly, products]);
+
   return (
     <div className="product-container">
       <h2>Products</h2>
@@ -54,6 +83,31 @@ const Products = ({
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
 
+      <div className="product-filter">
+        <label>Filter by Class:</label>
+        <select
+          value={selectedClass}
+          onChange={(e) => setSelectedClass(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="suit">Suit</option>
+          <option value="vehicle">Vehicle</option>
+          <option value="mystic">Mystic</option>
+          <option value="tech">Tech</option>
+        </select><br></br>
+
+        {auth.is_vip ? (
+          <label>
+            <input
+              type="checkbox"
+              checked={showVipOnly}
+              onChange={handleVipCheckboxChange}
+            />
+            Show VIP Items Only
+          </label>
+        ) : null }
+      </div>
+
       <ul className="product-list">
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
@@ -63,14 +117,17 @@ const Products = ({
           return (
             <li key={product.id}>
               <Link to={`/products/${product.id}`}>
-                {product.name}
-                <br />
+
+                {product.vip_only ? `${product.name} (VIP Item!)` : product.name}
+                <br></br>
+
                 <img
                   className="productImage"
                   src={product.image}
                   alt={product.name}
                 />
               </Link>
+
               <div>{product.description} - {formatPrice(product.price)}</div>
               <div className="product-actions">
                 {auth.id ? (
@@ -106,6 +163,7 @@ const Products = ({
                   )
                 ) : null}
               </div>
+              
             </li>
           );
         })}
