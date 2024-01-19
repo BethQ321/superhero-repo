@@ -19,7 +19,7 @@ app.get("/", isLoggedIn, async (req, res, next) => {
 
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
-    console.log("POST to /lineItems, req.body:", req.body);
+    //console.log("POST to /lineItems, req.body:", req.body);
     res.send(await createLineItem(req.body));
   } catch (ex) {
     console.error("Error in POST /lineItems:", ex);

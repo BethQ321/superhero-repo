@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
-import api from './api/index'
+import axios from "axios";
+import api from "./api/index";
 
 const Products = ({
   products,
@@ -19,25 +19,23 @@ const Products = ({
   formatPrice,
   addToWishList,
 }) => {
-
- const addProductToWishlist = async (product) => {
+  const addProductToWishlist = async (product) => {
     try {
-      const response = await axios.post('/api/wishList', { productId: product.id }, 
-      api.getHeaders()
+      const response = await axios.post(
+        "/api/wishList",
+        { productId: product.id },
+        api.getHeaders()
       );
-      console.log('Product added to wishlist:', response.data);
+      console.log("Product added to wishlist:", response.data);
     } catch (error) {
-      console.error('Error adding product to wishlist:', error);
+      console.error("Error adding product to wishlist:", error);
     }
   };
-
-
-
 
   return (
     <div className="product-container">
       <h2>Products</h2>
-  
+
       <div className="product-search">
         <input
           type="text"
@@ -45,10 +43,9 @@ const Products = ({
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        {/* <button onClick={handleSearchClick}>Search</button> */}
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
-  
+
       <ul className="product-list">
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
@@ -88,17 +85,20 @@ const Products = ({
                   </>
                 ) : (
                   <>
-                    <button onClick={() => createLineItem(product)}>
+                    <button
+                      className="add-to-cart"
+                      onClick={() => createLineItem(product)}
+                    >
                       Add to Cart
                     </button>
-                    <button onClick={() => addProductToWishlist(product)}>
+                    <button
+                      className="add-to-wishlist"
+                      onClick={() => addProductToWishlist(product)}
+                    >
                       Add to Wishlist
                     </button>
                   </>
                 )
-              ) : null}
-              {auth.is_admin ? (
-                <Link to={`/products/${product.id}/edit`}>Edit</Link>
               ) : null}
             </li>
           );

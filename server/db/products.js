@@ -70,22 +70,23 @@ const createReview = async (review) => {
 };
 
 
-const createShippingAddress = async(shipping)=> {
+const createShippingAddress = async(shipping, userId)=> {
   const SQL = `
-    INSERT INTO shipping_address (id, street_address, city, state, zip_code) 
-    VALUES($1, $2, $3, $4, $5) 
+    INSERT INTO shipping_address (id, user_id, street_address, city, state, zip_code) 
+    VALUES($1, $2, $3, $4, $5, $6) 
     RETURNING *
   `;
   
   const response = await client.query(SQL, [ 
     uuidv4(), 
+    userId,
     shipping.street_address, 
     shipping.city, 
     shipping.state, 
     shipping.zip_code,
   ]);
   return response.rows[0];
-  
+}
 const updateProduct = async (productId, name, description, price) => {
   try {
     const SQL = `
@@ -123,6 +124,7 @@ const deleteProduct = async (productId) => {
     throw error;
   }
 };
+
 
 module.exports = {
   fetchProducts,

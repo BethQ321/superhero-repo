@@ -96,4 +96,3 @@ const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems}) 
 };
 
 export default WishList;
-

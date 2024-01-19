@@ -86,19 +86,16 @@ const SingleProduct = ({
             {oneProduct.description}
 
             <div>
-              {/*Add to Cart button */}
               {!cartItem && (
                 <button onClick={handleAddToCart}>Add to Cart</button>
               )}
 
-              {/*Add to Cart button */}
               {cartItem && (
                 <button onClick={() => updateLineItem(cartItem)}>
                   Add One!
                 </button>
               )}
 
-              {/* Subtract from Cart button */}
               {cartItem && (
                 <button onClick={() => handleDecrement(cartItem)}>
                   Remove One!

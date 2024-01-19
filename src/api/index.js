@@ -19,6 +19,12 @@ const fetchOrders = async (setOrders) => {
   setOrders(response.data);
 };
 
+const fetchAllOrders = async (setAllOrders) => {
+  const response = await axios.get("/api/orders/all", getHeaders());
+  console.log(response.data)
+  setAllOrders(response.data);
+};
+
 const fetchLineItems = async (setLineItems) => {
 
   const response = await axios.get("/api/lineItems", getHeaders());
@@ -149,6 +155,17 @@ const deleteProduct = async (productId) => {
   }
 };
 
+const deleteOrder = async (orderId) => {
+  try {
+    await axios.delete(`/api/orders/${orderId}`, getHeaders());
+  } catch (error) {
+    console.error("Error deleting product2:", error);
+    throw error;
+  }
+};
+
+
+
 const login = async ({ credentials, setAuth }) => {
   const response = await axios.post("/api/login", credentials);
   const { token } = response.data;
@@ -181,6 +198,8 @@ const api = {
   fetchReviews,
   getHeaders,
   deleteProduct,
+  deleteOrder,
+  fetchAllOrders,
 
 };
 
