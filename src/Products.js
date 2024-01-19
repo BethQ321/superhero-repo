@@ -39,7 +39,9 @@ const Products = ({
     if (selectedClass === "All") {
       setFilteredProducts(products);
     } else {
-      const filtered = products.filter((product) => product.class === selectedClass);
+      const filtered = products.filter(
+        (product) => product.class === selectedClass
+      );
       setFilteredProducts(filtered);
     }
   };
@@ -47,7 +49,9 @@ const Products = ({
   const handleVipCheckboxChange = () => {
     setShowVipOnly(!showVipOnly);
     if (!showVipOnly) {
-      const vipFilteredProducts = products.filter((product) => product.vip_only);
+      const vipFilteredProducts = products.filter(
+        (product) => product.vip_only
+      );
       setFilteredProducts(vipFilteredProducts);
     } else {
       filterProductsByClass(selectedClass);
@@ -63,7 +67,7 @@ const Products = ({
   return (
     <div className="product-container">
       <h2>Products</h2>
-
+  
       <div className="product-search">
         <input
           type="text"
@@ -73,7 +77,7 @@ const Products = ({
         />
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
-
+  
       <div className="product-filter">
         <label>Filter by Class:</label>
         <select
@@ -85,9 +89,10 @@ const Products = ({
           <option value="vehicle">Vehicle</option>
           <option value="mystic">Mystic</option>
           <option value="tech">Tech</option>
-        </select><br></br>
-
-        {auth.is_vip ? (
+        </select>
+        <br></br>
+  
+        {auth.is_vip && (
           <label>
             <input
               type="checkbox"
@@ -96,9 +101,9 @@ const Products = ({
             />
             Show VIP Items Only
           </label>
-        ) : null }
+        )}
       </div>
-
+  
       <ul className="product-list">
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
@@ -106,20 +111,25 @@ const Products = ({
           );
           return (
             <li key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                {product.vip_only ? `${product.name} (VIP Item!)` : product.name}
-                <br></br>
+              <Link to={`/products/${product.id}`} className="product-link">
+                <div className="product-name">
+                  {product.vip_only
+                    ? `${product.name} (VIP Item!)`
+                    : product.name}
+                </div>
                 <img
                   className="productImage"
                   src={product.image}
                   alt={product.name}
                 />
               </Link>
-              : {product.description} - {formatPrice(product.price)}
+              <div className="product-description"><Link to={`/products/${product.id}`}>{product.name}</Link><br /><br />
+                {formatPrice(product.price)}<br /> : {product.description}
+              </div>
               {auth.id ? (
                 cartItem ? (
                   <>
-                    <Link to={`/cart`}>Added!</Link>
+                    <Link to={`/cart`}>View Cart</Link>
                     <button onClick={() => updateLineItem(cartItem)}>
                       Add Another
                     </button>
@@ -133,7 +143,7 @@ const Products = ({
                       Add to Cart
                     </button>
                     <button
-                      className="add-to-wishlist"
+                      className="add-to-cart"
                       onClick={() => addProductToWishlist(product)}
                     >
                       Add to Wishlist
@@ -147,6 +157,5 @@ const Products = ({
       </ul>
     </div>
   );
-};
-
+      }
 export default Products;

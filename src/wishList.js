@@ -70,26 +70,29 @@ console.log(setLineItems)
 
 
   return (
-    <div>
-      <h2>Wish List</h2>
-      {isLoading ? (
-        <p>Loading wish list...</p>
-      ) : wishList.length === 0 ? (
-        <p>No items in your wish list.</p>
-      ) : (
-        <ul>
-          {wishList.map((item) => (
-            <li key={item.wishlist_id}>
-              <img src={item.product_image} alt={item.product_name} />
-              <div>{item.product_name} - ${item.product_price}</div>
-              <div>{item.product_description}</div>
-              <button onClick={() => handleAddToCartFromWishlist(item)}>Add to Cart</button>
-              <button onClick={() => handleRemove(item.wishlist_id)}>Remove</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <div className="wishlist-container">
+    <h2>Wish List</h2>
+    {isLoading ? (
+      <p>Loading wish list...</p>
+    ) : wishList.length === 0 ? (
+      <p>No items in your wish list.</p>
+    ) : (
+      <ul className="wishlist">
+        {wishList.map((item) => (
+          <li key={item.wishlist_id} className="wishlist-item">
+            <img src={item.product_image} alt={item.product_name} className="wishlist-item-image" />
+            <div className="wishlist-item-details">
+              <span>{item.product_name} - ${item.product_price}</span>
+              <p>{item.product_description}</p>
+            </div>
+            <button onClick={() => handleAddToCartFromWishlist(item)} className="add-to-cart">Add to Cart</button>
+            <button onClick={() => handleRemove(item.wishlist_id)} className="add-to-cart">Remove</button>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+  
   );
 };
 

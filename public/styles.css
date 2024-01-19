@@ -796,3 +796,62 @@ nav a img {
 .homepage-image {
   border-radius: 1rem;
 }
+
+.wishlist-container {
+  /* Style for the container */
+}
+
+.wishlist {
+  list-style: none;
+  padding: 0;
+}
+
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.wishlist-item-image {
+  width: 200px;
+  height: auto;
+  margin-right: 15px;
+  border-radius: 1rem;
+}
+
+.wishlist-item-details {
+  flex-grow: 1;
+}
+
+.wishlist-add-to-cart, .wishlist-remove {
+  margin-left: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.product-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  display: block; 
+}
+
+.product-name {
+  max-width: 200px; 
+  margin-bottom: 10px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.productImage {
+  display: block; 
+  margin: 0 auto;
+}
+
+.product-description {
+  max-width: 400px; 
+  word-wrap: break-word; 
+}
