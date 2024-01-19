@@ -132,7 +132,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
   </div>
 );
 
-  );
+  
 };
 
 export default WishList;
