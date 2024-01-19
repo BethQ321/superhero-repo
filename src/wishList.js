@@ -115,11 +115,23 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
                   </div>
                 )}
               </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+            </Link>
+            <div className="wishlist-item-actions">
+              <button onClick={() => handleAddToCartFromWishlist(item)} className="add-to-cart">Add to Cart</button>
+              <button onClick={() => handleRemove(item.wishlist_id)} className="add-to-cart">Remove</button>
+              {addToCartErrors && addToCartErrors[item.wishlist_id] && (
+                <div className="error">
+                  {addToCartErrors[item.wishlist_id]}
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
+
   );
 };
 
