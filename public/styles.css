@@ -286,6 +286,12 @@ body {
   margin-top: 10px;
 }
 
+.error {
+  color: red;
+  margin-top: 10px;
+
+}
+
 .register-container {
   max-width: 400px;
   margin: 0 auto;
@@ -854,4 +860,22 @@ nav a img {
 .product-description {
   max-width: 400px; 
   word-wrap: break-word; 
+
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.button-group {
+  display: flex;
+  gap: 5px; 
+  align-items: center;
+}
+
+.wishlist-error {
+  margin-top: 10px; 
+  color: red;
+  margin-top: 10px;
+
 }

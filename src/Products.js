@@ -19,11 +19,16 @@ const Products = ({
   formatPrice,
   addToWishList,
 }) => {
+
   const [selectedClass, setSelectedClass] = useState("All");
   const [showVipOnly, setShowVipOnly] = useState(false);
-
+  
+const [wishlistErrors, setWishlistErrors] = useState({});
+  
   const addProductToWishlist = async (product) => {
     try {
+      setWishlistErrors({ ...wishlistErrors, [product.id]: '' });
+
       const response = await axios.post(
         "/api/wishList",
         { productId: product.id },
@@ -31,6 +36,10 @@ const Products = ({
       );
       console.log("Product added to wishlist:", response.data);
     } catch (error) {
+      setWishlistErrors({
+        ...wishlistErrors,
+        [product.id]: 'Item is already on your wishlist'
+      });
       console.error("Error adding product to wishlist:", error);
     }
   };
@@ -109,48 +118,63 @@ const Products = ({
           const cartItem = cartItems.find(
             (lineItem) => lineItem.product_id === product.id
           );
+
           return (
             <li key={product.id}>
+
               <Link to={`/products/${product.id}`} className="product-link">
                 <div className="product-name">
                   {product.vip_only
                     ? `${product.name} (VIP Item!)`
                     : product.name}
                 </div>
+
                 <img
                   className="productImage"
                   src={product.image}
                   alt={product.name}
                 />
               </Link>
-              <div className="product-description"><Link to={`/products/${product.id}`}>{product.name}</Link><br /><br />
-                {formatPrice(product.price)}<br /> : {product.description}
-              </div>
-              {auth.id ? (
-                cartItem ? (
-                  <>
-                    <Link to={`/cart`}>View Cart</Link>
-                    <button onClick={() => updateLineItem(cartItem)}>
-                      Add Another
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      className="add-to-cart"
-                      onClick={() => createLineItem(product)}
-                    >
-                      Add to Cart
-                    </button>
-                    <button
-                      className="add-to-cart"
-                      onClick={() => addProductToWishlist(product)}
-                    >
-                      Add to Wishlist
-                    </button>
-                  </>
-                )
-              ) : null}
+<div className="product-description">
+  <Link to={`/products/${product.id}`}>{product.name}</Link><br /><br />
+  {formatPrice(product.price)}<br /> : {product.description}
+</div>
+
+<div className="product-actions">
+  {auth.id ? (
+    cartItem ? (
+      <div className="button-group">
+        <Link to={`/cart`}>View Cart</Link>
+        <button onClick={() => updateLineItem(cartItem)}>
+          Add Another
+        </button>
+      </div>
+    ) : (
+      <div>
+        <div className="button-group">
+          <button
+            className="add-to-cart"
+            onClick={() => createLineItem(product)}
+          >
+            Add to Cart
+          </button>
+          <button
+            className="add-to-cart"
+            onClick={() => addProductToWishlist(product)}
+          >
+            Add to Wishlist
+          </button>
+        </div>
+        {wishlistErrors && wishlistErrors[product.id] && (
+          <div className="wishlist-error">
+            {wishlistErrors[product.id]}
+          </div>
+        )}
+      </div>
+    )
+  ) : null}
+</div>
+
             </li>
           );
         })}
