@@ -241,28 +241,37 @@ const App = () => {
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
+          <Route
+            path="/wishList"
+            element={
+              <WishList
+                wishList={wishList}
+                removeFromWishList={removeFromList}
+                products={products}
+                updateCart={createLineItem}
+                cart={cart}
+                auth={auth}
+                lineItems={lineItems}
+                updateLineItem={updateLineItem}
+                setLineItems={setLineItems}
+              />
+            }
+          />
 
-        
-         <Route path="/wishList" element={
- <WishList 
- wishList={wishList}
- removeFromWishList={removeFromList}
- products={products}
- updateCart={createLineItem}
- cart={cart}
- auth={auth}
- lineItems={lineItems}
-setLineItems={setLineItems}
-updateOrder={updateOrder}
-/>
-}/>
+          <Route
+            path="/wishList"
+            element={
+              <WishList
+                wishList={wishList}
+                removeFromWishList={removeFromList}
+                products={products}
+                updateOrder={updateOrder}
+                cart={cart}
+              />
+            }
+          />
+          <Route path="/Profile" element={<Profile auth={auth} />} />
 
-
-
-
-
-
-          <Route path="/Profile" element={<Profile />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/allusers" element={<AdminUsers auth={auth} />} />
