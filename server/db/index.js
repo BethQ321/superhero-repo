@@ -1,6 +1,6 @@
 const client = require("./client");
 
-const { fetchProducts, createProduct, createReview } = require("./products");
+const { fetchProducts, createProduct, createReview, createShippingAddress} = require("./products");
 
 const { createUser, authenticate, findUserByToken } = require("./auth");
 
@@ -15,16 +15,17 @@ const {
 
 const { fetchUsers } = require("./users");
 
+
 const seed = async () => {
   const SQL = `
 
-  DROP TABLE IF EXISTS line_items;
-  DROP TABLE IF EXISTS review;
-  DROP TABLE IF EXISTS wishlist;
-  DROP TABLE IF EXISTS orders;
-  DROP TABLE IF EXISTS products;
-  DROP TABLE IF EXISTS users;
-  
+    DROP TABLE IF EXISTS line_items;
+    DROP TABLE IF EXISTS review;
+    DROP TABLE IF EXISTS wishlist;
+    DROP TABLE IF EXISTS shipping_address;
+    DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS users;
 
     
     CREATE TABLE products(
@@ -63,12 +64,20 @@ const seed = async () => {
       
       );
     
-      CREATE TABLE orders(
-      id UUID PRIMARY KEY,
-      created_at TIMESTAMP DEFAULT now(),
-      is_cart BOOLEAN NOT NULL DEFAULT true,
-      user_id UUID REFERENCES users(id) NOT NULL
-    );
+      CREATE TABLE shipping_address(
+        id UUID PRIMARY KEY,
+        street_address VARCHAR(100) NOT NULL,
+        city VARCHAR(100) NOT NULL,
+        state VARCHAR(100) NOT NULL,
+        zip_code INTEGER
+        );
+        
+        CREATE TABLE orders(
+        id UUID PRIMARY KEY,
+        created_at TIMESTAMP DEFAULT now(),
+        is_cart BOOLEAN NOT NULL DEFAULT true,
+        user_id UUID REFERENCES users(id) NOT NULL
+      );
 
     CREATE TABLE line_items(
       id UUID PRIMARY KEY,
@@ -91,7 +100,15 @@ const seed = async () => {
 
   `;
   await client.query(SQL);
-
+  const []  = await Promise.all([ 
+    createShippingAddress({
+      street_address: "batman",
+      city: "gotham",
+      state: "michigan",
+      zip_code: 123,
+    
+    }),
+  ]);
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
       username: "moe",
@@ -198,7 +215,7 @@ const seed = async () => {
       class: "mystic",
     }),
     createProduct({
-      name: "Probability Manipulator Dice:",
+      name: "Probability Manipulator Dice",
       price: 100,
       image: "https://i.imgur.com/GWTCsuy.png",
       description:
@@ -307,15 +324,6 @@ const seed = async () => {
       class: "mystic",
     }),
     createProduct({
-      name: "Elemental Fusion Crystal:",
-      price: 100,
-      image: "https://i.imgur.com/tO4PWc0.png",
-      description:
-        "A gemstone that, when activated, can combine two elements (e.g., fire, water, earth, and air) to create a unique elemental power. Prior knowledge of chemistry is helpful with this mystical artifact as you will probably not be able to familirazie yourself with all possible combinations last minute, in the right hands this is a very powerful tool in the wrong hands it might end up unleashing catostrophic destruction.",
-      vip_only: false,
-      class: "mystic",
-    }),
-    createProduct({
       name: "Submercible vehicle AKA SubMERICA",
       price: 100,
       image: "https://i.imgur.com/FoUEBpM.png",
@@ -361,7 +369,7 @@ const seed = async () => {
       class: "tech",
     }),
     createProduct({
-      name: " Eye of Heimdall - Astral Projection Amulet",
+      name: "Eye of Heimdall - Astral Projection Amulet",
       price: 100,
       image: "https://i.imgur.com/kXSJe8T.png",
       description:
@@ -433,6 +441,7 @@ const seed = async () => {
       class: "suit",
     }),
     createProduct({
+
       name: "Elemental Fusion Crystal",
       price: 100,
       image: "https://i.imgur.com/tO4PWc0.png",
@@ -442,6 +451,7 @@ const seed = async () => {
       class: "mystic",
     }),
     createProduct({
+
       name: "Dimensional Anchor Gloves",
       price: 100,
       image: "https://i.imgur.com/0EcMpsj.png",
@@ -656,6 +666,7 @@ module.exports = {
   updateOrder,
   authenticate,
   findUserByToken,
+  createShippingAddress,
   seed,
   client,
 };

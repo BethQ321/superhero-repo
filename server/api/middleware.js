@@ -1,7 +1,6 @@
 const { findUserByToken } = require("../db/auth");
 
 
-
 const isLoggedIn = async (req, res, next) => {
   try {
     console.log("Authorization Header:", req.headers.authorization);

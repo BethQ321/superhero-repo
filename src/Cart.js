@@ -1,4 +1,7 @@
-import React from "react";
+import axios from 'axios';
+import React, { useEffect,useState } from 'react';
+import { Link, useParams } from 'react-router-dom'
+
 
 const Cart = ({
   updateOrder,
@@ -9,6 +12,38 @@ const Cart = ({
   updateLineItem,
   handleDecrement,
 }) => {
+  
+  const params = useParams();
+  const street_address = params.id;
+  const [shipping, setShipping] = useState({
+    street_address: "",
+    city: "",
+    state: "",
+    zip_code: "",
+  });
+  const [error, setError] = useState(null);
+  
+
+ 
+
+  const handleShippingAddress = async (event) => {
+    event.preventDefault();
+    try {
+        //   This commented out line was what i had before, Morgan told me to go the other route...
+        //  const response = await api.createShippingAddress(street_address, shipping);
+        const response = await axios.post(`/api/shippingaddress`, shipping);
+        console.log("Shipping address created", response);
+        setShipping({
+            street_address:"",
+            city:"",
+            state:"",
+            zip_code:"",
+        });
+    } catch (error) {
+        setError(error.message)
+    }
+};
+
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
@@ -44,9 +79,59 @@ const Cart = ({
       </ul>
       {cartLineItems.length ? (
         <div className="cart-actions">
-          <button
+          
+          {/* shipping address form  */}
+          <p>Please fill in your shipping address below </p>
+          <br/>
+
+          <p>***Valued customer please note that the shipping function is currently experiencing some technical difficulties and is not working.****</p>
+          <br/>
+
+          <p> All orders are to be picked up under your alias in the Walgreens pharmacy next to Wayne enterprice HQ in Gotham within 24h of order being made. Alfred, how do you stop speach to write .. Alfreeeed!...oh press this butto.</p>
+          <form >
+            <p>Street Address</p>
+            <input  
+            type='text'
+            id='streetAddress'
+            placeholder="Street Address"
+            value={shipping.street_address}
+            onChange={(e) => setShipping({ ...shipping, street_address: e.target.value })}
+            required 
+            />
+            <p>City</p>
+            <input  
+            type='text'
+            id='city'
+            placeholder="City"
+            value={shipping.city}
+            onChange={(e) => setShipping({ ...shipping, city: e.target.value })}
+            required
+            />
+            <p>State</p>
+            <input  
+            type='text'  
+            id='state'          
+            placeholder="State"
+            value={shipping.state}
+            onChange={(e) => setShipping({ ...shipping, state: e.target.value })}
+            required 
+            />
+            <p>Zip Code</p>
+            <input  
+            type='number'
+            id='zipCode'
+            placeholder="Zip Code"
+            value={shipping.zip_code}
+            onChange={(e) => setShipping({ ...shipping, zip_code: e.target.value })}
+            required />
+          </form>
+          {/* shipping address form  */}
+          <button onClick={handleShippingAddress} > Shipping Address -works- </button>
+          <button type="submit"
+            
             onClick={() => {
               updateOrder({ ...cart, is_cart: false });
+              //check if there needs to be an added line or smth in updatedorder function in the button for the submit for shipping address to be submitted
             }}
           >
             Create Order

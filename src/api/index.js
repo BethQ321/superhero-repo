@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const getHeaders = () => {
   return {
     headers: {
@@ -58,6 +59,18 @@ const createReview = async (productId, review, setReview) => {
   setReview(response.data);
 };
 
+  const createShippingAddress = async( shipping, street_address, setShipping) => {
+    const response = await axios.post("/api/shippingaddress", {
+      street_address: street_address,
+      city: shipping.city,
+      state: shipping.state,
+      zip_code: shipping.zip_code,
+    }, getHeaders()
+    );
+  }
+
+
+  
 const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
   const response = await axios.put(
     `/api/lineItems/${lineItem.id}`,
@@ -163,11 +176,10 @@ const api = {
   updateDownLineItem,
   removeFromCart,
   attemptLoginWithToken,
-
-  getHeaders,
-
+  createShippingAddress,
   createReview,
   fetchReviews,
+  getHeaders,
   deleteProduct,
 
 };
