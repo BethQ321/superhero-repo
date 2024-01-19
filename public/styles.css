@@ -286,6 +286,12 @@ body {
   margin-top: 10px;
 }
 
+.error {
+  color: red;
+  margin-top: 10px;
+
+}
+
 .register-container {
   max-width: 400px;
   margin: 0 auto;
