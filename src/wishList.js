@@ -6,7 +6,7 @@ import api from './api/index';
 const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
   const [wishList, setWishList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [addToCartErrors, setAddToCartErrors] = useState({}); 
+  const [addToCartErrors, setAddToCartErrors] = useState({});
 
   useEffect(() => {
     const fetchWishList = async () => {
@@ -26,7 +26,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
   const handleAddToCartFromWishlist = async (item) => {
     const { product_id, wishlist_id } = item;
     const productToAdd = products.find(p => p.id === product_id);
-    
+
     if (!productToAdd) {
       setAddToCartErrors({
         ...addToCartErrors,
@@ -34,7 +34,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       });
       return;
     }
-    
+
     const isItemInCart = lineItems.some(lineItem => lineItem.product_id === product_id);
 
     if (isItemInCart) {
@@ -95,7 +95,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
                 />
               </Link>
               <p>{item.product_description} - ${item.product_price}</p>
-              <div>
+              <div className="wishlist-item-actions">
                 <button
                   className="add-to-cart"
                   onClick={() => handleAddToCartFromWishlist(item)}
@@ -108,7 +108,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
                 >
                   Remove
                 </button>
-                {addToCartErrors[item.wishlist_id] && (
+                {addToCartErrors && addToCartErrors[item.wishlist_id] && (
                   <div className="error">
                     {addToCartErrors[item.wishlist_id]}
                   </div>
@@ -120,6 +120,8 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       )}
     </div>
   );
+
                 }  
  
+};
 export default WishList;
