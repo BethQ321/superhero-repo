@@ -250,6 +250,7 @@ const App = () => {
  auth={auth}
  lineItems={lineItems}
 setLineItems={setLineItems}
+updateOrder={updateOrder}
 />
 }/>
 
@@ -257,18 +258,6 @@ setLineItems={setLineItems}
 
 
 
-          <Route
-            path="/wishList"
-            element={
-              <WishList
-                wishList={wishList}
-                removeFromWishList={removeFromList}
-                products={products}
-                updateOrder={updateOrder}
-                cart={cart}
-              />
-            }
-          />
 
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Admin" element={<Admin />} />

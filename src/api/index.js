@@ -19,7 +19,7 @@ const fetchOrders = async (setOrders) => {
 };
 
 const fetchLineItems = async (setLineItems) => {
-  console.log(setLineItems)
+
   const response = await axios.get("/api/lineItems", getHeaders());
   setLineItems(response.data);
 };
