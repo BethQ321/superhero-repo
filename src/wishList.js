@@ -5,7 +5,7 @@ import api from './api/index';
 const WishList = ({ cart, updateCart, auth, products, lineItems, setLineItems}) => {
   const [wishList, setWishList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-console.log(setLineItems)
+
   useEffect(() => {
     const fetchWishList = async () => {
       setIsLoading(true);
@@ -47,7 +47,7 @@ console.log(setLineItems)
         product: productToAdd,
         cart: cart,
         lineItems: lineItems,
-        setLineItems,
+        setLineItems: setLineItems,
       });
   
       const updatedLineItems = await api.fetchLineItems();
@@ -55,6 +55,8 @@ console.log(setLineItems)
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
+    console.log('Type of setLineItems:', typeof setLineItems);
+
   };
   
 
