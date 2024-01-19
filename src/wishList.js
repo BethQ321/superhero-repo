@@ -74,7 +74,6 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       console.error('Error removing item from wishlist:', error);
     }
   };
-
   return (
     <div className="product-container">
       <h2>Wish List</h2>
@@ -121,6 +120,8 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       )}
     </div>
   );
-};
 
+                }  
+ 
+};
 export default WishList;
