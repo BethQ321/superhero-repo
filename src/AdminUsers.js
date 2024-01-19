@@ -52,8 +52,8 @@ const AdminUsers = ({ auth }) => {
           {users.map((user) => (
             <tr key={user.id}>
               <td>{user.username}</td>
-              <td>{user.Fname}</td>
-              <td>{user.Lname}</td>
+              <td>{user.fname}</td>
+              <td>{user.lname}</td>
               <td>{user.email}</td>
               <td>{user.phone}</td>
               <td>{user.is_admin ? "Yes" : "No"}</td>

@@ -19,6 +19,9 @@ const Products = ({
   formatPrice,
   addToWishList,
 }) => {
+  const [selectedClass, setSelectedClass] = useState("All");
+  const [showVipOnly, setShowVipOnly] = useState(false);
+
   const addProductToWishlist = async (product) => {
     try {
       const response = await axios.post(
@@ -31,6 +34,31 @@ const Products = ({
       console.error("Error adding product to wishlist:", error);
     }
   };
+
+  const filterProductsByClass = (selectedClass) => {
+    if (selectedClass === "All") {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((product) => product.class === selectedClass);
+      setFilteredProducts(filtered);
+    }
+  };
+
+  const handleVipCheckboxChange = () => {
+    setShowVipOnly(!showVipOnly);
+    if (!showVipOnly) {
+      const vipFilteredProducts = products.filter((product) => product.vip_only);
+      setFilteredProducts(vipFilteredProducts);
+    } else {
+      filterProductsByClass(selectedClass);
+    }
+  };
+
+  useEffect(() => {
+    if (!showVipOnly) {
+      filterProductsByClass(selectedClass);
+    }
+  }, [selectedClass, showVipOnly, products]);
 
   return (
     <div className="product-container">
@@ -46,6 +74,31 @@ const Products = ({
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
 
+      <div className="product-filter">
+        <label>Filter by Class:</label>
+        <select
+          value={selectedClass}
+          onChange={(e) => setSelectedClass(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="suit">Suit</option>
+          <option value="vehicle">Vehicle</option>
+          <option value="mystic">Mystic</option>
+          <option value="tech">Tech</option>
+        </select><br></br>
+
+        {auth.is_vip ? (
+          <label>
+            <input
+              type="checkbox"
+              checked={showVipOnly}
+              onChange={handleVipCheckboxChange}
+            />
+            Show VIP Items Only
+          </label>
+        ) : null }
+      </div>
+
       <ul className="product-list">
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
@@ -53,32 +106,20 @@ const Products = ({
           );
           return (
             <li key={product.id}>
-              {product.vip_only ? (
-                <Link to={`/products/${product.id}`}>
-                  {product.vip_only ? `${product.name} VIP Item` : product.name}
-                  <br></br>
-                  <img
-                    className="productImage"
-                    src={product.image}
-                    alt={product.name}
-                  />
-                </Link>
-              ) : (
-                <Link to={`/products/${product.id}`}>
-                  {product.vip_only ? `${product.name}` : product.name}
-                  <br></br>
-                  <img
-                    className="productImage"
-                    src={product.image}
-                    alt={product.name}
-                  />
-                </Link>
-              )}
+              <Link to={`/products/${product.id}`}>
+                {product.vip_only ? `${product.name} (VIP Item!)` : product.name}
+                <br></br>
+                <img
+                  className="productImage"
+                  src={product.image}
+                  alt={product.name}
+                />
+              </Link>
               : {product.description} - {formatPrice(product.price)}
               {auth.id ? (
                 cartItem ? (
                   <>
-                    <Link to={`/products/${product.id}`}>{product.name}</Link>
+                    <Link to={`/cart`}>Added!</Link>
                     <button onClick={() => updateLineItem(cartItem)}>
                       Add Another
                     </button>
