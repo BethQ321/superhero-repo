@@ -135,7 +135,7 @@ const Products = ({
               </Link>
               <div className="product-description">
                 <Link to={`/products/${product.id}`}>{product.name}</Link><br /><br />
-                {formatPrice(product.price)}<br /> : {product.description}
+                {formatPrice(product.price)}<br /> {product.description}
               </div>
               <div className="product-actions">
                 {auth.id ? (
