@@ -1,9 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Navigations = ({ auth, products, orders, cartCount, logout }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
   const isLoggedIn = auth && auth.id;
 
   const vipProductsCount = auth.is_vip
@@ -14,19 +15,31 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
     setIsDropdownVisible(!isDropdownVisible);
   };
 
+  const handleOutsideClick = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <nav className="nav-container">
-      {/* Existing Nav Links */}
       {isLoggedIn ? (
         <>
           <NavLink to="/">
             <img src="/public/logo.png" alt="logo" />
           </NavLink>
           <NavLink to="/products">Products ({vipProductsCount})</NavLink>
+          <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <NavLink to="/orders">
             Orders ({orders.filter((order) => !order.is_cart).length})
           </NavLink>
-          <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <span className="user-greeting">Welcome {auth.username}!</span>
 
           {/* Dropdown Menu Toggle */}
@@ -36,7 +49,7 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
 
           {/* Dropdown Menu */}
           {isDropdownVisible && (
-            <div className="dropdown-menu active">
+            <div ref={dropdownRef} className="dropdown-menu active">
               {" "}
               {/* Add 'active' class */}
               <NavLink to="/wishList">Wishlist</NavLink>
