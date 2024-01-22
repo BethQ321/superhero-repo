@@ -256,6 +256,8 @@ const App = () => {
                 products={products}
                 lineItems={lineItems}
                 shipping={shipping}
+                error={error}
+                setError={setError}
               />
             }
           />
