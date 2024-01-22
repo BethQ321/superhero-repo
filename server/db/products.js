@@ -125,6 +125,7 @@ const deleteProduct = async (productId) => {
   }
 };
 
+
 module.exports = {
   fetchProducts,
   fetchReviews,

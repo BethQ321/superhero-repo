@@ -25,32 +25,6 @@ const Orders = ({ orders, products, lineItems, shipping }) => {
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
-  // const params = useParams();
-  // let userId = params.id;
-  const [shippingInfo, setShippingInfo] = useState ()
-  const [error, setError] = useState(null);
-//const addShippingInfo = products.filter((shipping,order) => {
-
-    // return  shippingInfo.order_id === order.user_id
-  
-  // console.log(addShippingInfo.street_address)
-
-
-
-useEffect(() => {
-    const fetchShippingAddress = async () => {
-      try {
-        const response = await axios.get(`/api/shippingaddress`);
-        console.log(response.data)
-        setShippingInfo(response.data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchShippingAddress();
-   console.log(shipping.lenght)
-  }, []);
 
   // Function to calculate the total price of an order
   const calculateOrderTotal = (order) => {

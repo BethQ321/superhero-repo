@@ -6,12 +6,11 @@ import api from "./api";
 const SingleProduct = ({
   auth,
   products,
-  lineItem,
+  cartItems,
   removeFromCart,
   updateLineItem,
   updateDownLineItem,
   handleDecrement,
-  cartItems,
   createLineItem,
 }) => {
   const params = useParams();
@@ -26,23 +25,7 @@ const SingleProduct = ({
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
 
-  const oneProduct = products.find((product) => {
-    return product.id === productId;
-  });
-
-  //
-
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-
-  const cartItem = cartItems.find(
-    (lineItem) => lineItem.product_id === oneProduct.id
-  );
-
-  const handleAddToCart = () => {
-    createLineItem(oneProduct);
-    setIsAddedToCart(true);
-  };
-
+  // Reload fix
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -56,13 +39,18 @@ const SingleProduct = ({
     fetchReviews();
   }, [productId]);
 
-  //first add user
+  const oneProduct = products.find((product) => product.id === productId);
+  const cartItem = cartItems.find((item) => item.product_id === oneProduct?.id);
+
+  const handleAddToCart = () => {
+    createLineItem(oneProduct);
+  };
+
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await api.createReview(productId, review);
-      console.log(review);
-      console.log("Review created:", response);
+      setReviews([...reviews, response.data]);
       setReview({
         name: "",
         review_title: "",
@@ -70,51 +58,39 @@ const SingleProduct = ({
         rating: "",
       });
     } catch (error) {
+      console.error("Review submission error:", error);
       setError(error.message);
     }
   };
 
+  if (!oneProduct) {
+    return <div>Loading product...</div>;
+  }
+
   return (
     <div>
-      <div>
-        <h2>{oneProduct.name}</h2>
-        <div className="Sproduct-container">
+      <h2>{oneProduct.name}</h2>
+      <div className="Sproduct-container">
+        <div>
+          <img src={oneProduct.image} className="Sproduct-image" alt={oneProduct.name} />
+        </div>
+        <div className="Sproduct-description">
+          {oneProduct.description}
+
           <div>
-            <img src={oneProduct.image} className="Sproduct-image" />
-          </div>
-          <div className="Sproduct-description">
-            {oneProduct.description}
-
-            <div>
-              {/*Add to Cart button */}
-              {!cartItem && (
-                <button onClick={handleAddToCart}>Add to Cart</button>
-              )}
-
-              {/*Add to Cart button */}
-              {cartItem && (
-                <button onClick={() => updateLineItem(cartItem)}>
-                  Add One!
-                </button>
-              )}
-
-              {/* Subtract from Cart button */}
-              {cartItem && (
-                <button onClick={() => handleDecrement(cartItem)}>
-                  Remove One!
-                </button>
-              )}
-            </div>
+            {cartItem ? (
+              <div>
+                <button onClick={() => updateLineItem(cartItem)}>Add One!</button>
+                <button onClick={() => handleDecrement(cartItem)}>Remove One!</button>
+              </div>
+            ) : (
+              <button onClick={handleAddToCart}>Add to Cart</button>
+            )}
           </div>
         </div>
       </div>
 
-      <div></div>
-
-      <br></br>
-
       <h2>Product Review</h2>
-
       <form onSubmit={handleReviewSubmit}>
         <div>
           <label htmlFor="name">Reviewer:</label>
@@ -170,6 +146,7 @@ const SingleProduct = ({
         </div>
         <button type="submit">Submit Review</button>
       </form>
+
       <div>
         <h3>Reviews</h3>
         <ul className="reviews-list">
@@ -181,7 +158,7 @@ const SingleProduct = ({
                   <h4>{review.review_title}</h4>
                 </div>
                 <div className="review-text">
-                  <p>{review.reviewtext}</p>
+                  <p>{review.reviewText}</p>
                 </div>
                 <div className="review-rating">
                   <p>Rating: {review.rating}/5</p>

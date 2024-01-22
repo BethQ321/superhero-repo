@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route, UseNavigate, useNavigate } from "react-router-dom";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  UseNavigate,
+  useNavigate,
+} from "react-router-dom";
 import Products from "./Products";
 import Orders from "./Orders";
 import Cart from "./Cart";
@@ -17,6 +23,8 @@ import Admin from "./Admin";
 import AddProduct from "./AddProductForm";
 import AdminUsers from "./AdminUsers";
 import EditProducts from "./EditProducts";
+import AllOrders from "./AllOrders";
+import axios from "axios";
 
 
 const App = () => {
@@ -28,6 +36,29 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
+  const navigate = useNavigate();
+  const userId = auth.id;
+
+  const [shipping, setShipping] = useState({
+    user_id: userId,
+    street_address: "",
+    city: "",
+    state: "",
+    zip_code: "",
+  });
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (auth.id) {
+      setShipping(prevShipping => ({
+        ...prevShipping,
+        user_id: auth.id
+      }));
+    }
+  }, [auth.id]);
+
+  
+  
  const [error, setError] = useState(null);
   // const [ shipping, setShipping] = useState ({
   //   user_id: '',
@@ -79,18 +110,6 @@ const App = () => {
   //   fetchShippingAddress();
   // }, []);
 
-  /*useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await api.fetchUsers();
-        setUsers(response); // Set users state with the fetched data
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchUsers();
-  }, []);*/
   const createLineItem = async (product) => {
     await api.createLineItem({ product, cart, lineItems, setLineItems });
   };
@@ -100,13 +119,41 @@ const App = () => {
   const updateDownLineItem = async (lineItem) => {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
-
+  
   const updateOrder = async (order) => {
     await api.updateOrder({ order, setOrders });
   };
   const removeFromCart = async (lineItem) => {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
+  const handleShippingAndOrder = async () => {
+    try {
+      console.log(userId)
+      console.log(shipping)
+      const response = await axios.post(`/api/shippingaddress`, {
+        ...shipping,
+        user_id: userId,
+      });
+      console.log("Shipping address created", response);
+
+      await updateOrder({ ...cart, is_cart: false });
+
+      setShipping({
+        user_id: userId,
+        street_address: "",
+        city: "",
+        state: "",
+        zip_code: "",
+      });
+      navigate("/orders");
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  const handleShippingChange = (e) => {
+    const { id, value } = e.target; 
+    setShipping({ ...shipping, [id]: value });}
+
   const handleDecrement = async (lineItem) => {
     if (lineItem.quantity > 1) {
       const updatedQuantity = lineItem.quantity - 2;
@@ -164,7 +211,7 @@ const App = () => {
   };
   const logout = () => {
     api.logout(setAuth);
-    navigate('/')
+    navigate("/");
   };
   //wishlist
   const removeFromList = (itemId) => {
@@ -205,7 +252,6 @@ const App = () => {
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
                 addToWishList={addToWishList}
-                
               />
             }
           />
@@ -233,6 +279,7 @@ const App = () => {
                 products={products}
                 lineItems={lineItems}
                 shipping={shipping}
+                shipping={shipping}
               />
             }
           />
@@ -248,34 +295,34 @@ const App = () => {
                 handleDecrement={handleDecrement}
                 updateLineItem={updateLineItem}
                 auth={auth}
-                
+                handleShippingAndOrder={handleShippingAndOrder}
+                shipping={shipping}
+                handleShippingChange={handleShippingChange}
               />
             }
           />
-         <Route path="/login" element={<Login login={login} />} />
+          <Route path="/login" element={<Login login={login} />} />
           <Route path="register" element={<Register />} />
           <Route
             path="/RegistrationComplete"
             element={<RegistrationComplete />}
           />
-
-        
-         <Route path="/wishList" element={
- <WishList 
- wishList={wishList}
- removeFromWishList={removeFromList}
- products={products}
- updateCart={createLineItem}
- cart={cart}
- auth={auth}
- lineItems={lineItems}
-setLineItems={setLineItems}
-/>
-}/>
-
-
-
-
+          <Route
+            path="/wishList"
+            element={
+              <WishList
+                wishList={wishList}
+                removeFromWishList={removeFromList}
+                products={products}
+                updateCart={createLineItem}
+                cart={cart}
+                auth={auth}
+                lineItems={lineItems}
+                updateLineItem={updateLineItem}
+                setLineItems={setLineItems}
+              />
+            }
+          />
 
           <Route
             path="/wishList"
@@ -289,8 +336,8 @@ setLineItems={setLineItems}
               />
             }
           />
+          <Route path="/Profile" element={<Profile auth={auth} />} />
 
-          <Route path="/Profile" element={<Profile />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/allusers" element={<AdminUsers auth={auth} />} />
@@ -300,6 +347,8 @@ setLineItems={setLineItems}
               <EditProducts products={products} formatPrice={formatPrice} />
             }
           />
+
+          <Route path="allorders" element={<AllOrders orders={orders} />} />
         </Routes>
       </main>
       {/*

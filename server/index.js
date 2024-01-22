@@ -16,7 +16,9 @@ app.use("/api", require("./api"));
 const init = async () => {
   await client.connect();
   console.log("connected to database");
-  await seed();
+ if(process.env.SYNC){
+   await seed()
+    }
   console.log("create your tables and seed data");
 
 
