@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "./api";
+
+
+
 
 const SingleProduct = ({
   auth,
@@ -14,6 +17,7 @@ const SingleProduct = ({
   cartItems,
   createLineItem,
 }) => {
+  const navigate = useNavigate();
   const params = useParams();
   const productId = params.id;
   const [review, setReview] = useState({
@@ -69,6 +73,7 @@ const SingleProduct = ({
         reviewText: "",
         rating: "",
       });
+      navigate(`/products/${productId}`);
     } catch (error) {
       setError(error.message);
     }
