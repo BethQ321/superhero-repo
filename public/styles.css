@@ -494,7 +494,7 @@ body {
   background-color: grey;
 }
 
-/*Profile stuff */
+
 
 .profile-box {
   border: 1px solid #ccc;
@@ -804,7 +804,6 @@ nav a img {
 }
 
 .wishlist-container {
-  /* Style for the container */
 }
 
 .wishlist {
@@ -878,7 +877,6 @@ nav a img {
   margin-top: 10px; 
   color: red;
   margin-top: 10px;
-
 }
 
 .rating {
@@ -887,3 +885,4 @@ nav a img {
   gap: 0px;
  margin: 0px;
 }
+

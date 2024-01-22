@@ -24,6 +24,7 @@ import AddProduct from "./AddProductForm";
 import AdminUsers from "./AdminUsers";
 import EditProducts from "./EditProducts";
 import AllOrders from "./AllOrders";
+import axios from "axios";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -35,7 +36,28 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
   const navigate = useNavigate();
+  const userId = auth.id;
 
+  const [shipping, setShipping] = useState({
+    user_id: userId,
+    street_address: "",
+    city: "",
+    state: "",
+    zip_code: "",
+  });
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (auth.id) {
+      setShipping(prevShipping => ({
+        ...prevShipping,
+        user_id: auth.id
+      }));
+    }
+  }, [auth.id]);
+
+  
+  
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
@@ -65,18 +87,6 @@ const App = () => {
     }
   }, [auth]);
 
-  /*useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await api.fetchUsers();
-        setUsers(response); // Set users state with the fetched data
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchUsers();
-  }, []);*/
   const createLineItem = async (product) => {
     await api.createLineItem({ product, cart, lineItems, setLineItems });
   };
@@ -86,13 +96,41 @@ const App = () => {
   const updateDownLineItem = async (lineItem) => {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
-
+  
   const updateOrder = async (order) => {
     await api.updateOrder({ order, setOrders });
   };
   const removeFromCart = async (lineItem) => {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
+  const handleShippingAndOrder = async () => {
+    try {
+      console.log(userId)
+      console.log(shipping)
+      const response = await axios.post(`/api/shippingaddress`, {
+        ...shipping,
+        user_id: userId,
+      });
+      console.log("Shipping address created", response);
+
+      await updateOrder({ ...cart, is_cart: false });
+
+      setShipping({
+        user_id: userId,
+        street_address: "",
+        city: "",
+        state: "",
+        zip_code: "",
+      });
+      navigate("/orders");
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  const handleShippingChange = (e) => {
+    const { id, value } = e.target; 
+    setShipping({ ...shipping, [id]: value });}
+
   const handleDecrement = async (lineItem) => {
     if (lineItem.quantity > 1) {
       const updatedQuantity = lineItem.quantity - 2;
@@ -217,6 +255,7 @@ const App = () => {
                 orders={orders}
                 products={products}
                 lineItems={lineItems}
+                shipping={shipping}
               />
             }
           />
@@ -232,6 +271,9 @@ const App = () => {
                 handleDecrement={handleDecrement}
                 updateLineItem={updateLineItem}
                 auth={auth}
+                handleShippingAndOrder={handleShippingAndOrder}
+                shipping={shipping}
+                handleShippingChange={handleShippingChange}
               />
             }
           />

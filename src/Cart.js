@@ -11,62 +11,14 @@ const Cart = ({
   updateLineItem,
   handleDecrement,
   auth,
+  handleShippingAndOrder,
+  shipping,
+  setShipping,
+  handleShippingChange
 }) => {
   const navigate = useNavigate();
   const userId = auth.id;
 
-  const [shipping, setShipping] = useState({
-    user_id: userId,
-    street_address: "",
-    city: "",
-    state: "",
-    zip_code: "",
-  });
-  const [error, setError] = useState(null);
-
-  // const handleShippingAddress = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await axios.post(`/api/shippingaddress`, {
-  //       ...shipping,
-  //       user_id: userId,
-  //     });
-  //     console.log('Shipping address created', response);
-
-  //     setShipping({
-  //       user_id: userId,
-  //       street_address: '',
-  //       city: '',
-  //       state: '',
-  //       zip_code: '',
-  //     });
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
-
-  const handleShippingAndOrder = async () => {
-    try {
-      const response = await axios.post(`/api/shippingaddress`, {
-        ...shipping,
-        user_id: userId,
-      });
-      console.log("Shipping address created", response);
-
-      await updateOrder({ ...cart, is_cart: false });
-
-      setShipping({
-        user_id: userId,
-        street_address: "",
-        city: "",
-        state: "",
-        zip_code: "",
-      });
-      navigate("/orders");
-    } catch (error) {
-      setError(error.message);
-    }
-  };
 
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
@@ -122,12 +74,10 @@ const Cart = ({
             <p>Street Address</p>
             <input
               type="text"
-              id="streetAddress"
+              id="street_address"
               placeholder="Street Address"
               value={shipping.street_address}
-              onChange={(e) =>
-                setShipping({ ...shipping, street_address: e.target.value })
-              }
+              onChange={handleShippingChange}
               required
             />
             <p>City</p>
@@ -136,9 +86,7 @@ const Cart = ({
               id="city"
               placeholder="City"
               value={shipping.city}
-              onChange={(e) =>
-                setShipping({ ...shipping, city: e.target.value })
-              }
+              onChange={handleShippingChange}
               required
             />
             <p>State</p>
@@ -147,20 +95,16 @@ const Cart = ({
               id="state"
               placeholder="State"
               value={shipping.state}
-              onChange={(e) =>
-                setShipping({ ...shipping, state: e.target.value })
-              }
+              onChange={handleShippingChange}
               required
             />
             <p>Zip Code</p>
             <input
               type="number"
-              id="zipCode"
+              id="zip_code"
               placeholder="Zip Code"
               value={shipping.zip_code}
-              onChange={(e) =>
-                setShipping({ ...shipping, zip_code: e.target.value })
-              }
+              onChange={handleShippingChange}
               required
             />
           </form>
@@ -183,5 +127,6 @@ const Cart = ({
     </div>
   );
 };
+
 
 export default Cart;
