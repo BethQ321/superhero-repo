@@ -1,12 +1,10 @@
 import React from "react";
 
-const Orders = ({ orders, products, lineItems }) => {
-  // Function to format a price into dollars (e.g., 100 => $1.00)
+const Orders = ({ orders, products, lineItems, shipping }) => {
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
 
-  // Function to calculate the total price of an order
   const calculateOrderTotal = (order) => {
     const orderLineItems = lineItems.filter(
       (lineItem) => lineItem.order_id === order.id
