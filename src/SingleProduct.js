@@ -50,19 +50,22 @@ const SingleProduct = ({
     event.preventDefault();
     try {
       const response = await api.createReview(productId, review);
-      setReviews([...reviews, response.data]);
-      setReview({
-        name: "",
-        review_title: "",
-        reviewText: "",
-        rating: "",
-      });
+      if (response.data) {
+        setReviews([...reviews, response.data]);
+        // Reset the review form
+        setReview({
+          name: "",
+          review_title: "",
+          reviewText: "",
+          rating: "",
+        });
+      }
     } catch (error) {
       console.error("Review submission error:", error);
       setError(error.message);
     }
   };
-
+  
   if (!oneProduct) {
     return <div>Loading product...</div>;
   }
@@ -89,8 +92,9 @@ const SingleProduct = ({
           </div>
         </div>
       </div>
-
-      <h2>Product Review</h2>
+      <br />
+      <Link to="/products">Back to Products</Link>
+      <h2  style={{ textAlign: "center" }}>Write A Review </h2>
       <form onSubmit={handleReviewSubmit}>
         <div>
           <label htmlFor="name">Reviewer:</label>
@@ -127,24 +131,30 @@ const SingleProduct = ({
               setReview({ ...review, reviewText: e.target.value })
             }
             required
+            style={{ marginBottom: '10px', width: "100%", height: '100px' }} 
           />
         </div>
         <div>
-          <label htmlFor="rating">Rating (0-5):</label>
-          <input
-            type="number"
-            id="rating"
-            name="rating"
-            value={review.rating}
-            onChange={(e) =>
-              setReview({ ...review, rating: parseInt(e.target.value) })
-            }
-            min="0"
-            max="5"
-            required
-          />
-        </div>
-        <button type="submit">Submit Review</button>
+  <label htmlFor="rating">Rating (0-5):</label>
+  <select
+    id="rating"
+    name="rating"
+    value={review.rating}
+    onChange={(e) =>
+      setReview({ ...review, rating: parseInt(e.target.value) })
+    }
+    style={{ fontSize: '16px', width: '100px', textAlign: "center", paddingTop: '2px', paddingBottom: '2px' }} 
+  >
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</div>
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+  <button type="submit" style={{ width: '150px', marginTop: '10px' }}>Submit Review</button> 
+</div>
       </form>
 
       <div>
@@ -157,22 +167,19 @@ const SingleProduct = ({
                 <div className="review-title">
                   <h4>{review.review_title}</h4>
                 </div>
-                <div className="review-text">
-                  <p>{review.reviewText}</p>
+                <div className="name">
+                  <p>Review By: {review.name}</p>
                 </div>
                 <div className="review-rating">
                   <p>Rating: {review.rating}/5</p>
                 </div>
-                <div className="name">
-                  <p>Name: {review.name}</p>
+                <div className="review-text">
+                  <p>Review: {review.reviewtext}</p>
                 </div>
               </li>
             ))}
         </ul>
       </div>
-
-      <br />
-      <Link to="/products">Back to Products</Link>
     </div>
   );
 };
