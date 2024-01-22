@@ -686,4 +686,5 @@ module.exports = {
   createShippingAddress,
   seed,
   client,
+  createReview,
 };

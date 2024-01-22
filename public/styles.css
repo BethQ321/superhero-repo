@@ -877,5 +877,12 @@ nav a img {
   margin-top: 10px; 
   color: red;
   margin-top: 10px;
+}
 
-} 
+.rating {
+  display: flex;
+  justify-content: flex-start / flex-end / center;
+  gap: 0px;
+ margin: 0px;
+}
+

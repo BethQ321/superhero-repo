@@ -19,12 +19,11 @@ const Products = ({
   formatPrice,
   addToWishList,
 }) => {
-
   const [selectedClass, setSelectedClass] = useState("All");
   const [showVipOnly, setShowVipOnly] = useState(false);
-  
-const [wishlistErrors, setWishlistErrors] = useState({});
-  
+  const [wishlistErrors, setWishlistErrors] = useState({});
+  const [wishlistStatus, setWishlistStatus] = useState({});
+
   const addProductToWishlist = async (product) => {
     try {
       setWishlistErrors({ ...wishlistErrors, [product.id]: '' });
@@ -35,6 +34,7 @@ const [wishlistErrors, setWishlistErrors] = useState({});
         api.getHeaders()
       );
       console.log("Product added to wishlist:", response.data);
+      setWishlistStatus({ ...wishlistStatus, [product.id]: true });
     } catch (error) {
       setWishlistErrors({
         ...wishlistErrors,
@@ -138,7 +138,7 @@ const [wishlistErrors, setWishlistErrors] = useState({});
       <ul className="product-list">
         {filteredProducts.map((product) => {
           const cartItem = cartItems.find(
-            (lineItem) => lineItem.product_id === product.id
+            (item) => item.product_id === product.id
           );
 
           return (
@@ -190,6 +190,7 @@ const [wishlistErrors, setWishlistErrors] = useState({});
       </div>
     )
   ) : null}              </div>
+
             </li>
           );
         })}
@@ -198,5 +199,4 @@ const [wishlistErrors, setWishlistErrors] = useState({});
   );
 };
 
-  
 export default Products;
