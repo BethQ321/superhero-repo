@@ -18,6 +18,7 @@ import AddProduct from "./AddProductForm";
 import AdminUsers from "./AdminUsers";
 import EditProducts from "./EditProducts";
 
+
 const App = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -27,6 +28,14 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
+ const [error, setError] = useState(null);
+  // const [ shipping, setShipping] = useState ({
+  //   user_id: '',
+  //   street_address: '',
+  //   city: '',
+  //   state: '',
+  //   zip_code: '',
+  // })
 
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
@@ -56,6 +65,19 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
+  
+  // useEffect(() => {
+  //   const fetchShippingAddress = async () => {
+  //     try {
+  //       const response = await axios.get(`/db/products`);
+  //       setShipping(response.data);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     }
+  //   };
+
+  //   fetchShippingAddress();
+  // }, []);
 
   /*useEffect(() => {
     const fetchUsers = async () => {
@@ -210,6 +232,7 @@ const App = () => {
                 orders={orders}
                 products={products}
                 lineItems={lineItems}
+                shipping={shipping}
               />
             }
           />

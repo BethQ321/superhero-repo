@@ -1,6 +1,7 @@
 import axios from "axios";
 
 
+
 const getHeaders = () => {
   return {
     headers: {
@@ -14,13 +15,20 @@ const fetchProducts = async (setProducts) => {
   setProducts(response.data);
 };
 
-const fetchOrders = async (setOrders) => {
+
+const fetchShippingAddress = async (setShipping) => {
+  const response = await axios.get("/api/shippingaddress", getHeaders());
+  setShipping(response.data);
+};
+
+
+const fetchOrders = async (setOrders) => { 
   const response = await axios.get("/api/orders", getHeaders());
   setOrders(response.data);
 };
 
 const fetchLineItems = async (setLineItems) => {
-  console.log(setLineItems)
+  // console.log(setLineItems)
   const response = await axios.get("/api/lineItems", getHeaders());
   setLineItems(response.data);
 };
@@ -29,6 +37,7 @@ const fetchReviews = async (setReviews) => {
   const response = await axios.get("/api/reviews");
   setReviews(response.data);
 };
+
 
 const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
   console.log(product);
@@ -127,6 +136,7 @@ const removeFromCart = async ({ lineItem, lineItems, setLineItems }) => {
   setLineItems(lineItems.filter((_lineItem) => _lineItem.id !== lineItem.id));
 };
 
+
 const attemptLoginWithToken = async (setAuth) => {
   const token = window.localStorage.getItem("token");
   if (token) {
@@ -179,6 +189,7 @@ const api = {
   createShippingAddress,
   createReview,
   fetchReviews,
+  fetchShippingAddress,
   getHeaders,
   deleteProduct,
 
