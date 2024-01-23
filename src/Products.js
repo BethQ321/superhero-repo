@@ -26,22 +26,23 @@ const Products = ({
 
   const addProductToWishlist = async (product) => {
     try {
-      setWishlistErrors({ ...wishlistErrors, [product.id]: '' });
+        setWishlistErrors({ ...wishlistErrors, [product.id]: '' });
 
-      const response = await axios.post(
-        "/api/wishList",
-        { productId: product.id },
-        api.getHeaders()
-      );
-      setWishlistStatus({ ...wishlistStatus, [product.id]: true });
+        const response = await axios.post(
+            "/api/wishList",
+            { productId: product.id },
+            api.getHeaders()
+        );
+        setWishlistStatus({ ...wishlistStatus, [product.id]: true });
     } catch (error) {
-      setWishlistErrors({
-        ...wishlistErrors,
-        [product.id]: 'Item is already on your wishlist'
-      });
-      console.error("Error adding product to wishlist:", error);
+        setWishlistErrors({
+            ...wishlistErrors,
+            [product.id]: 'Item is already on your wishlist'
+        });
+        console.error("Error adding product to wishlist:", error);
     }
-  };
+};
+
 
   const filterProductsByClass = (selectedClass) => {
     if (selectedClass === "All") {
@@ -174,12 +175,18 @@ const Products = ({
           >
             Add to Cart
           </button>
-          <button
-            className="add-to-cart"
-            onClick={() => addProductToWishlist(product)}
-          >
-            Add to Wishlist
-          </button>
+          {wishlistStatus[product.id] ? (
+            <div className="wishlist-added">
+              Added to Wishlist
+            </div>
+          ) : (
+            <button
+              className="add-to-wishlist"
+              onClick={() => addProductToWishlist(product)}
+            >
+              Add to Wishlist
+            </button>
+          )}
         </div>
         {wishlistErrors && wishlistErrors[product.id] && (
           <div className="wishlist-error">
@@ -188,7 +195,8 @@ const Products = ({
         )}
       </div>
     )
-  ) : null}              </div>
+  ) : null}              
+     </div>
 
             </li>
           );
