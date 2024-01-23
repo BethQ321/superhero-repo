@@ -253,7 +253,7 @@ await client.query(alterLineItemsTable);
     createProduct({
       name: "Lightsaber",
       price: 5000000,
-      image: "https://m.media-amazon.com/images/I/21CwADI7+ML._AC_US40_.jpg",
+      image: "https://i.imgur.com/iFi8LU8.png",
       description:
         'Perfect weapon for heros or villains who know how to handle a sword, color not guaranteed might change over time based "mood" best if used outdoors, best if user is strong in the force but not a requirement',
       vip_only: false,
@@ -271,7 +271,7 @@ await client.query(alterLineItemsTable);
     createProduct({
       name: "Batarang",
       price: 2000,
-      image: "https://m.media-amazon.com/images/I/6117YUjfJUL._AC_SX466_.jpg",
+      image: "https://i.imgur.com/w2DRgk0.png",
       description:
         "A bat-shaped throwing weapon used by Batman. It can be thrown at enemies or used for various utility purposes.",
       vip_only: false,

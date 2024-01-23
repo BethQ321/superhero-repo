@@ -950,6 +950,32 @@ body.dark-mode {
   border-color: #373737;
   transition: background-color 1s, color 1s;
 }
+.dark-mode .orders-container {
+  background-color: #242424; 
+  color: #E0E0E0; 
+}
+
+.dark-mode .orders-header {
+  color: #FFFFFF; 
+}
+
+.dark-mode .order-item {
+  background-color: #1E1E1E; 
+  border-color: #373737; 
+}
+.dark-mode .order-total,
+.dark-mode .shipping-info{
+color:#373737
+}
+.dark-mode .order-details, 
+.dark-mode .shipping-info,
+.dark-mode .order-items-list,
+.dark-mode .order-item-name,
+.dark-mode .order-item-price,
+.dark-mode .order-total {
+  border-color: #373737; 
+}
+
 .Sproduct-description {
   color: #373737;
   font-weight: bold;
