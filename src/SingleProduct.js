@@ -13,6 +13,12 @@ const SingleProduct = ({
   handleDecrement,
   createLineItem,
 }) => {
+
+  const formatDate = (dateString) => {
+    const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+
   const params = useParams();
   const productId = params.id;
 
@@ -27,6 +33,7 @@ const SingleProduct = ({
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState("");
+  
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -70,9 +77,11 @@ const SingleProduct = ({
   
   if (!oneProduct) {
     return <div>Loading product...</div>;
+    
   }
 
   return (
+    
     <div>
       <h2>{oneProduct.name}</h2>
       <div className="Sproduct-container">
@@ -170,13 +179,13 @@ const SingleProduct = ({
             .map((review) => (
               <li key={review.id} className="review-box">
                 <div className="review-title">
-                  <h4>{review.review_title}</h4>
+                  <h3>{review.review_title}</h3>
+                <div className="name">
+                  <p>Written On: {formatDate(review.created_at)}</p>
+                  </div>
                 </div>
                 <div className="name">
-                  <p>Review By: {review.name}</p>
-                </div>
-                <div className="review-rating">
-                  <p>Rating: {review.rating}/5</p>
+                  <p>Rating: {review.rating}/5 | Review By: {review.name}</p>
                 </div>
                 <div className="review-text">
                   <p>Review: {review.reviewtext}</p>
