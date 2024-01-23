@@ -15,6 +15,19 @@ const {
 
 const { fetchUsers } = require("./users");
 
+const loadImage = (filePath) => {   //
+  return new Promise((resolve, reject) => {
+    const fullPath = path.join(__dirname, filePath)
+    fs.readFile(fullPath, 'base64', (err, result) => {
+      if(err){
+        reject(err)
+      }else{
+        resolve(`data:image/png;base64,${result}`)
+      }
+    })
+  })
+}
+
 
 const seed = async () => {
   const SQL = `
@@ -52,7 +65,8 @@ const seed = async () => {
       email VARCHAR(100) UNIQUE NOT NULL,
       phone VARCHAR (20) NOT NULL,
       is_admin BOOLEAN DEFAULT false NOT NULL,
-      is_vip BOOLEAN DEFAULT false NOT NULL
+      is_vip BOOLEAN DEFAULT false NOT NULL,
+      image TEXT
     );
 
     CREATE TABLE review(
