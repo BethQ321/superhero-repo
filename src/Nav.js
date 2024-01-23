@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
 
-const Navigations = ({ auth, products, orders, cartCount, logout }) => {
+const Navigations = ({ auth, products, orders, cartCount, logout, toggleDarkMode, isDarkMode }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
   const isLoggedIn = auth && auth.id;
@@ -42,16 +41,22 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
           </NavLink>
           <span className="user-greeting">Welcome {auth.username}!</span>
 
-          {/* Dropdown Menu Toggle */}
-          <button onClick={toggleDropdown} className="dropdown-toggle">
-            Menu
-          </button>
+          <div className="menu-and-dark-mode">
+            <button onClick={toggleDropdown} className="dropdown-toggle">
+              Menu
+            </button>
+            <label className="dark-mode-switch">
+              <input
+                type="checkbox"
+                checked={isDarkMode}
+                onChange={toggleDarkMode}
+              />
+              
+            </label>
+          </div>
 
-          {/* Dropdown Menu */}
           {isDropdownVisible && (
             <div ref={dropdownRef} className="dropdown-menu active">
-              {" "}
-              {/* Add 'active' class */}
               <NavLink to="/wishList">Wishlist</NavLink>
               <NavLink to="/profile">Profile Settings</NavLink>
               {auth.is_admin && <NavLink to="/admin">Admin</NavLink>}
@@ -60,7 +65,6 @@ const Navigations = ({ auth, products, orders, cartCount, logout }) => {
           )}
         </>
       ) : (
-        // Not Logged in Links
         <>
           <NavLink to="/login">Login</NavLink>
           <NavLink to="/register">Register</NavLink>
