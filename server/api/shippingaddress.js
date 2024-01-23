@@ -22,7 +22,7 @@ app.get("/", async (req, res, next) => {
 app.post("/", async (req, res, next) => {
     user_id = req.body.user_id
     try {
-        console.log(req.body)
+        //console.log(req.body)
         const shippingData = req.body;
         const createdShippingAddress = await createShippingAddress(shippingData, user_id);
 
