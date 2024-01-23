@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const Home = ({ auth }) => {
   const isLoggedIn = auth && auth.id;
   const username = auth ? auth.username : "";
+  
   return (
     <div className="home-container">
       {isLoggedIn ? (
@@ -16,8 +17,10 @@ const Home = ({ auth }) => {
                 src="https://i.imgur.com/yoJLg9c.png"
                 width="150px"
               />
+           
               <h2 className="home-subtitle">VIP Hero!</h2>
-              <h3>S.H.I.E.L.D. Shop Salutes Your Heroic Excellence!</h3>
+             
+          <h3>S.H.I.E.L.D. Shop Salutes Your Heroic Excellence!</h3>
               <p>
                 You're not just a user; you're a VIP, and that means you're part
                 of an elite league of heroes. As a VIP member, you enjoy
