@@ -892,3 +892,73 @@ nav a img {
  margin: 0px;
 }
 
+
+
+@media only screen and (max-width: 600px) {
+  .home-container,
+  .product-container,
+  .cart-container,
+  .login-container,
+  .register-container,
+  .wishlist-container,
+  .registration-complete-container,
+  .orders-container,
+  .admin-container,
+  .edit-product-form {
+    padding: 10px;
+    margin: 5px;
+  }
+
+  .home-title,
+  .form-heading {
+    font-size: 24px;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav a,
+  nav button {
+    margin: 5px 0;
+  }
+
+  .orders-container {
+    overflow-x: scroll;
+  }
+
+  .product-list li,
+  .cart-list li,
+  .orders-list .order-item,
+  .wishlist-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-list img.productImage,
+  .wishlist-item-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  form input,
+  form textarea {
+    width: calc(100% - 16px); 
+  }
+
+  .Sproduct-container {
+    flex-direction: column;
+  }
+
+  .Sproduct-image {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .Sproduct-description {
+    margin-top: 20px;
+  }
+
+}
