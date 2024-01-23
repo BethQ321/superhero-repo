@@ -895,11 +895,13 @@ nav a img {
 body.dark-mode {
   background-color: #121212;
   color: #E0E0E0;
+  transition: background-color 1s, color 1s;
 }
 
 .dark-mode nav {
   background-color: #1E1E1E;
   color: #E0E0E0;
+  transition: background-color 1s, color 1s;
 }
 
 .dark-mode nav a,
@@ -926,6 +928,12 @@ body.dark-mode {
   background-color: #242424;
   color: #E0E0E0;
   border-color: #373737;
+  transition: background-color 1s, color 1s;
+}
+.Sproduct-description {
+  color: #373737;
+  font-weight: bold;
+  
 }
 
 .dark-mode .product-list li,
@@ -934,6 +942,7 @@ body.dark-mode {
 .dark-mode .wishlist-item {
   background-color: #1E1E1E;
   border-color: #373737;
+  
 }
 
 .dark-mode .product-list li a,
@@ -956,11 +965,13 @@ body.dark-mode {
 .dark-mode th,
 .dark-mode td {
   border-color: #373737;
+  transition: border-color 1s;
 }
 
 .dark-mode th {
   background-color: #242424;
   color: #E0E0E0;
+  transition: background-color 1s, color 1s;
 }
 
 .dark-mode .dropdown-menu {
