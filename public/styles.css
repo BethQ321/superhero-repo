@@ -904,8 +904,11 @@ body.dark-mode {
   transition: background-color 1s, color 1s;
 }
 
-.dark-mode nav a,
+.dark-mode nav a {
+  color: #E0E0E0;
+}
 .dark-mode nav button {
+  background-color: #1E1E1E;
   color: #E0E0E0;
 }
 
@@ -915,6 +918,7 @@ body.dark-mode {
 .dark-mode-switch {
   padding: 10px;
 }
+
 
 .dark-mode .product-container,
 .dark-mode .cart-container,
@@ -978,6 +982,7 @@ body.dark-mode {
   background-color: #1E1E1E;
   color: #E0E0E0;
 }
+
 
 @media only screen and (max-width: 600px) {
   .home-container,
