@@ -892,7 +892,81 @@ nav a img {
  margin: 0px;
 }
 
+body.dark-mode {
+  background-color: #121212;
+  color: #E0E0E0;
+}
 
+.dark-mode nav {
+  background-color: #1E1E1E;
+  color: #E0E0E0;
+}
+
+.dark-mode nav a,
+.dark-mode nav button {
+  color: #E0E0E0;
+}
+
+.dark-mode h1 {
+  color: #E0E0E0;
+}
+.dark-mode-switch {
+  padding: 10px;
+}
+
+.dark-mode .product-container,
+.dark-mode .cart-container,
+.dark-mode .login-container,
+.dark-mode .register-container,
+.dark-mode .wishlist-container,
+.dark-mode .registration-complete-container,
+.dark-mode .orders-container,
+.dark-mode .admin-container,
+.dark-mode .edit-product-form {
+  background-color: #242424;
+  color: #E0E0E0;
+  border-color: #373737;
+}
+
+.dark-mode .product-list li,
+.dark-mode .cart-list li,
+.dark-mode .orders-list .order-item,
+.dark-mode .wishlist-item {
+  background-color: #1E1E1E;
+  border-color: #373737;
+}
+
+.dark-mode .product-list li a,
+.dark-mode .cart-list li a,
+.dark-mode .orders-list .order-item a,
+.dark-mode .wishlist-item a {
+  color: #E0E0E0;
+}
+
+.dark-mode .product-list button:hover,
+.dark-mode .cart-list button:hover,
+.dark-mode .cart-actions button:hover,
+.dark-mode .login-button:hover,
+.dark-mode .register-button:hover,
+.dark-mode .wishlist-button:hover {
+  background-color: #333333;
+}
+
+.dark-mode table,
+.dark-mode th,
+.dark-mode td {
+  border-color: #373737;
+}
+
+.dark-mode th {
+  background-color: #242424;
+  color: #E0E0E0;
+}
+
+.dark-mode .dropdown-menu {
+  background-color: #1E1E1E;
+  color: #E0E0E0;
+}
 
 @media only screen and (max-width: 600px) {
   .home-container,
