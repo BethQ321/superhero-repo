@@ -58,15 +58,6 @@ const App = () => {
   }, [auth.id]);
 
   
-  
- const [error, setError] = useState(null);
-  // const [ shipping, setShipping] = useState ({
-  //   user_id: '',
-  //   street_address: '',
-  //   city: '',
-  //   state: '',
-  //   zip_code: '',
-  // })
 
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
@@ -279,7 +270,8 @@ const App = () => {
                 products={products}
                 lineItems={lineItems}
                 shipping={shipping}
-                shipping={shipping}
+                setError={setError}
+                error={error}
               />
             }
           />

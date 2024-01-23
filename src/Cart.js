@@ -57,19 +57,7 @@ const Cart = ({
         <div className="cart-actions">
           {/* shipping address form */}
           <p>Please fill in your shipping address below</p>
-          <br />
-          <p>
-            ***Valued customer please note that the shipping function is
-            currently experiencing some technical difficulties and is not
-            working.****
-          </p>
-          <br />
-          <p>
-            All orders are to be picked up under your alias in the Walgreens
-            pharmacy next to Wayne enterprice HQ in Gotham within 24h of order
-            being made. Alfred, how do you stop speech to write ..
-            Alfreeeed!...oh press this butto.
-          </p>
+          <p>We cannot guarantee 24h delivery time if not on the surface of the Earth</p>
           <form>
             <p>Street Address</p>
             <input
