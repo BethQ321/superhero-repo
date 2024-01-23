@@ -145,7 +145,7 @@ const Products = ({
             <li key={product.id}>
               <Link to={`/products/${product.id}`} className="product-link">
                 <div className="product-name">
-                  {product.vip_only ? `${product.name} (VIP Item!)` : product.name}
+                  {product.vip_only ? `VIP Item!` : ""}
                 </div>
                 <img
                   className="productImage"
