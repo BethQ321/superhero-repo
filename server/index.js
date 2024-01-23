@@ -22,7 +22,7 @@ const init = async () => {
 }
 
 
-  const port = process.env.PORT || 5501;
+  const port = process.env.PORT || 3000;
 
 
   app.listen(port, () => {
