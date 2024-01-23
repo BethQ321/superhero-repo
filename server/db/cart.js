@@ -57,7 +57,7 @@ const updateLineItem = async (lineItem) => {
 // return {price.id}
 
 const createLineItem = async (lineItem) => {
-  console.log("Creating line item with data:", lineItem);
+  //console.log("Creating line item with data:", lineItem);
   await ensureCart(lineItem);
   const SQL = `
   INSERT INTO line_items (product_id, order_id, product_price, id)

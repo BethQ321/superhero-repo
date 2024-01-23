@@ -32,7 +32,8 @@ const EditProducts = ({ formatPrice }) => {
 
   return (
     <>
-      <h1>Edit Products</h1>
+      <h1 className="home-title">Edit Products</h1>
+      <div className="orders-container">
       <table>
         <thead>
           <tr>
@@ -57,7 +58,7 @@ const EditProducts = ({ formatPrice }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </>
   );
 };

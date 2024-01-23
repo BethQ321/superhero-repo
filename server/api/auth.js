@@ -37,7 +37,6 @@ app.get("/me", isLoggedIn, (req, res, next) => {
 app.put("/profile/:id", async (req, res, next) => {
 
   const {userId} =req.params;
-  console.log("user" , userId)
   // console.log("name", req.body.fname)
   // console.log("name", req.body.lname)
   // console.log("email", req.body.email)
@@ -51,7 +50,7 @@ app.put("/profile/:id", async (req, res, next) => {
     //const userId = req.user.id;
 
     await updateUserProfile(userId, fname, lname, email, phone);
- console.log("profile/id works?")
+ //console.log("profile/id works?")
     
   } catch (error) {
     console.error('Error updating profile in api/auth:', error);
@@ -60,7 +59,7 @@ app.put("/profile/:id", async (req, res, next) => {
 });
 
 app.put("/:id", async (req, res, next) => {
-  console.log("api/auth 2 " , req.body)
+  //console.log("api/auth 2 " , req.body)
    const {id} =req.params;
    
   try {
