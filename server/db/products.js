@@ -11,6 +11,15 @@ const fetchProducts = async () => {
   return response.rows;
 };
 
+const fetchEditProducts = async () => {
+  const SQL = `
+    SELECT *
+    FROM products
+  `;
+  const response = await client.query(SQL);
+  return response.rows;
+};
+
 const fetchReviews = async () => {
   const SQL = `
       SELECT *
@@ -125,6 +134,20 @@ const deleteProduct = async (productId) => {
   }
 };
 
+const fetchProductById = async (productId) => {
+  try {
+    const SQL = `
+    SELECT *
+    FROM products
+    WHERE id = $1
+    `;
+    const response = await client.query(SQL, [productId])
+    return response.rows[0];
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 module.exports = {
   fetchProducts,
@@ -135,4 +158,6 @@ module.exports = {
   createShippingAddress,
   updateProduct,
   deleteProduct,
+  fetchEditProducts,
+  fetchProductById
 };

@@ -22,7 +22,13 @@ const fetchShippingAddress = async (setShipping) => {
 };
 
 
-const fetchOrders = async (setOrders) => { 
+const fetchEditProducts = async (setEditProducts) => {
+  const response = await axios.get("/api/products/edit");
+  setEditProducts(response.data);
+}; 
+
+const fetchOrders = async (setOrders) => {
+
   const response = await axios.get("/api/orders", getHeaders());
   setOrders(response.data);
 };
@@ -45,7 +51,6 @@ const fetchReviews = async (setReviews) => {
 
 
 const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
-  console.log(product);
   const response = await axios.post(
     "/api/lineItems",
     {
@@ -210,6 +215,7 @@ const api = {
   deleteProduct,
   deleteOrder,
   fetchAllOrders,
+  fetchEditProducts,
 
 };
 

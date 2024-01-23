@@ -25,6 +25,8 @@ import AdminUsers from "./AdminUsers";
 import EditProducts from "./EditProducts";
 import AllOrders from "./AllOrders";
 import axios from "axios";
+import EditSingleProduct from "./EditSingleProduct";
+
 
 
 const App = () => {
@@ -36,6 +38,7 @@ const App = () => {
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [wishList, setWishList] = useState([]); //wishlist state
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
   const userId = auth.id;
 
@@ -56,6 +59,15 @@ const App = () => {
       }));
     }
   }, [auth.id]);
+  
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
 
   
 
@@ -69,7 +81,7 @@ const App = () => {
     const fetchData = async () => {
       await api.fetchProducts(setProducts);
     };
-    fetchData().then(() => console.log(products));
+    fetchData();
   }, []);
   useEffect(() => {
     if (auth.id) {
@@ -119,13 +131,10 @@ const App = () => {
   };
   const handleShippingAndOrder = async () => {
     try {
-      console.log(userId)
-      console.log(shipping)
       const response = await axios.post(`/api/shippingaddress`, {
         ...shipping,
         user_id: userId,
       });
-      console.log("Shipping address created", response);
 
       await updateOrder({ ...cart, is_cart: false });
 
@@ -221,6 +230,8 @@ const App = () => {
         orders={orders}
         cartCount={cartCount}
         logout={logout}
+        toggleDarkMode={toggleDarkMode}
+        isDarkMode={isDarkMode}
       />
       <main>
         <Routes>
@@ -270,8 +281,9 @@ const App = () => {
                 products={products}
                 lineItems={lineItems}
                 shipping={shipping}
-                setError={setError}
                 error={error}
+                setError={setError}
+
               />
             }
           />
@@ -339,60 +351,12 @@ const App = () => {
               <EditProducts products={products} formatPrice={formatPrice} />
             }
           />
+          <Route path="/edit-single-product/:productId" element={<EditSingleProduct formatPrice={formatPrice} />} />
 
           <Route path="allorders" element={<AllOrders orders={orders} />} />
         </Routes>
       </main>
-      {/*
-        auth.id ? (
-          <>
-            <nav>
-              <Link to='/products'>Products ({ products.length })</Link>
-              <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
-              <Link to='/cart'>Cart ({ cartCount })</Link>
-              <span>
-                Welcome { auth.username }!
-                <button onClick={ logout }>Logout</button>
-              </span>
-            </nav>
-            <main>
-              <Products
-                auth = { auth }
-                products={ products }
-                cartItems = { cartItems }
-                createLineItem = { createLineItem }
-                updateLineItem = { updateLineItem }
-              />
-              <Cart
-                handleDecrement={handleDecrement}
-                createLineItem = { createLineItem }
-                updateLineItem={updateLineItem}
-                cart = { cart }
-                lineItems = { lineItems }
-                products = { products }
-                updateOrder = { updateOrder }
-                removeFromCart = { removeFromCart }
-              />
-              <Orders
-                orders = { orders }
-                products = { products }
-                lineItems = { lineItems }
-              />
-            </main>
-            </>
-        ):(
-          <div>
-            <Login login={ login }/>
-            <Products
-              products={ products }
-              cartItems = { cartItems }
-              createLineItem = { createLineItem }
-              updateLineItem = { updateLineItem }
-              auth = { auth }
-            />
-          </div>
-        )
-      */}
+    
     </div>
   );
 };

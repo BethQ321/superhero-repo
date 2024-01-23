@@ -8,6 +8,8 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  fetchEditProducts,
+  fetchProductById,
 } = require("../db/products");
 
 app.use(express.json());
@@ -20,10 +22,34 @@ app.get("/", async (req, res, next) => {
   }
 });
 
+app.get("/edit", async (req, res, next) => {
+  try {
+    res.send(await fetchEditProducts());
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 app.post("/", async (req, res, next) => {
   try {
     const newProduct = await createProduct(req.body);
     res.status(201).json(newProduct);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/:productId", async (req, res, next) => {
+  const { productId } = req.params;
+
+  try {
+    const product = await fetchProductById(productId);
+
+    if (!product) {
+      res.status(404).json({ error: "Product not found" });
+    } else {
+      res.json(product);
+    }
   } catch (error) {
     next(error);
   }

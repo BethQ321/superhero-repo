@@ -1,41 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-
 const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
-  // Function to format a price into dollars (e.g., 100 => $1.00)
+
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
-  const [ shippingInfo, setShippingInfo] = useState ();
-  
+
+
+   const [shippingInfo, setShippingInfo] = useState([]);
+
   useEffect(() => {
     const fetchShippingAddress = async () => {
       try {
         const response = await axios.get(`/api/shippingaddress`);
-      
         setShippingInfo(response.data);
       } catch (error) {
         setError(error.message);
       }
-    }; 
-    
-    // shipping.map((shippingInfo) => { 
-    //   shippingInfo = shipping.user_id
-
-    // })
-
+    };
+  
     fetchShippingAddress();
   }, []);
 
-  
-    // shippingInfo.map((shipping) => {
-
-    // })
-    
- 
-  
-  // Function to calculate the total price of an order
   const calculateOrderTotal = (order) => {
     const orderLineItems = lineItems.filter(
       (lineItem) => lineItem.order_id === order.id
@@ -61,27 +48,27 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
       {orders
           .filter((order) => !order.is_cart)
           .map((order) => {
-            const orderShippingInfo =shippingInfo.find(shippingInfo => shippingInfo.user_id === order.user_id);
+
+            const orderShippingInfo = shippingInfo.find(info => info.user_id === order.user_id);
+
             return (
               <li key={order.id} className="order-item">
                 <div className="order-details">
-                  
-                
+                  <div className="order-date">
+                    ({new Date(order.created_at).toLocaleString()})
+                  </div>
+                  <div className="order-total">
+                    Total Price: {calculateOrderTotal(order)}
+                  </div>
                   {orderShippingInfo && (
                     <div className="shipping-info">
-                      <h4>Shipping Address</h4>
-                      <div>Street: {orderShippingInfo.street_address}</div>
+                      <div>Street Address: {orderShippingInfo.street_address}</div>
                       <div>City: {orderShippingInfo.city}</div>
                       <div>State: {orderShippingInfo.state}</div>
                       <div>Zip Code: {orderShippingInfo.zip_code}</div>
-                      <br/>
-                      <div className="order-date">Order created @
-                      <div >{new Date(order.created_at).toLocaleString()}</div>
-                  </div>
                     </div>
                   )}
-                </div>  
-              
+                </div>
                 <ul className="order-items-list">
                   {lineItems
                     .filter((lineItem) => lineItem.order_id === order.id)
@@ -104,6 +91,7 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                         </li>
                       );
                     })}
+
                     <div className="order-total">
                     Total Price: {calculateOrderTotal(order)}
                 </div>
@@ -113,6 +101,7 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
             );
           })}
       </ul>  
+
     </div>
       );
       }      

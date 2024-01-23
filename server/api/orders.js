@@ -32,7 +32,7 @@ app.get("/all", isLoggedIn, isAdmin, async (req, res, next) => {
 app.delete("/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     const orderId = req.params.id;
-    console.log("Deleting order with ID:", orderId);
+    //console.log("Deleting order with ID:", orderId);
     await deleteOrder(orderId);
     res.sendStatus(204);
   } catch (ex) {
