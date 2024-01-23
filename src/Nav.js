@@ -30,10 +30,14 @@ const Navigations = ({ auth, products, orders, cartCount, logout, toggleDarkMode
   return (
     <nav className="nav-container">
       {isLoggedIn ? (
-        <>
-          <NavLink to="/">
-            <img src="/public/logo.png" alt="logo" />
-          </NavLink>
+    <>
+      <NavLink to="/">
+        {auth.image ? (
+          <img className="profile-image" src={auth.image} alt="Profile" />
+        ) : (
+          <img className="profile-image" src="https://i.imgur.com/yoJLg9c.png" alt="Profile" />
+        )}
+      </NavLink>
           <NavLink to="/products">Products ({vipProductsCount})</NavLink>
           <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <NavLink to="/orders">
