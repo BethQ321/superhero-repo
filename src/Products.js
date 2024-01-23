@@ -33,7 +33,6 @@ const Products = ({
         { productId: product.id },
         api.getHeaders()
       );
-      console.log("Product added to wishlist:", response.data);
       setWishlistStatus({ ...wishlistStatus, [product.id]: true });
     } catch (error) {
       setWishlistErrors({

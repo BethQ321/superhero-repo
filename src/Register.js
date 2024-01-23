@@ -24,7 +24,6 @@ const Register = () => {
         email,
         phone,
       });
-      console.log(response.data);
       navigate("/RegistrationComplete");
     } catch (error) {
       setError(

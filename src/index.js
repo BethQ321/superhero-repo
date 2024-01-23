@@ -25,6 +25,7 @@ import AdminUsers from "./AdminUsers";
 import EditProducts from "./EditProducts";
 import AllOrders from "./AllOrders";
 import axios from "axios";
+import EditSingleProduct from "./EditSingleProduct";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -68,7 +69,7 @@ const App = () => {
     const fetchData = async () => {
       await api.fetchProducts(setProducts);
     };
-    fetchData().then(() => console.log(products));
+    fetchData();
   }, []);
   useEffect(() => {
     if (auth.id) {
@@ -105,13 +106,10 @@ const App = () => {
   };
   const handleShippingAndOrder = async () => {
     try {
-      console.log(userId)
-      console.log(shipping)
       const response = await axios.post(`/api/shippingaddress`, {
         ...shipping,
         user_id: userId,
       });
-      console.log("Shipping address created", response);
 
       await updateOrder({ ...cart, is_cart: false });
 
@@ -325,6 +323,7 @@ const App = () => {
               <EditProducts products={products} formatPrice={formatPrice} />
             }
           />
+          <Route path="/edit-single-product/:productId" element={<EditSingleProduct formatPrice={formatPrice} />} />
 
           <Route path="allorders" element={<AllOrders orders={orders} />} />
         </Routes>

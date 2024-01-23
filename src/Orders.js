@@ -12,7 +12,6 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
     const fetchShippingAddress = async () => {
       try {
         const response = await axios.get(`/api/shippingaddress`);
-        console.log(response.data)
         setShippingInfo(response.data);
       } catch (error) {
         setError(error.message);
@@ -21,7 +20,6 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
   
     fetchShippingAddress();
   }, []);
-  console.log(shippingInfo)
 
   const calculateOrderTotal = (order) => {
     const orderLineItems = lineItems.filter(

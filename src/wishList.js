@@ -54,7 +54,6 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       });
 
       const response = await axios.delete(`/api/wishList/${wishlist_id}`, api.getHeaders());
-      console.log("Remove from wishlist response:", response);
 
       setWishList(prevWishList => prevWishList.filter(item => item.wishlist_id !== wishlist_id));
     } catch (error) {
