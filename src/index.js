@@ -28,6 +28,7 @@ import axios from "axios";
 import EditSingleProduct from "./EditSingleProduct";
 
 
+
 const App = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -69,7 +70,7 @@ const App = () => {
   }, [isDarkMode]);
 
   
-  
+
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
@@ -98,6 +99,19 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
+  
+  // useEffect(() => {
+  //   const fetchShippingAddress = async () => {
+  //     try {
+  //       const response = await axios.get(`/db/products`);
+  //       setShipping(response.data);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     }
+  //   };
+
+  //   fetchShippingAddress();
+  // }, []);
 
   const createLineItem = async (product) => {
     await api.createLineItem({ product, cart, lineItems, setLineItems });
@@ -269,6 +283,7 @@ const App = () => {
                 shipping={shipping}
                 error={error}
                 setError={setError}
+
               />
             }
           />

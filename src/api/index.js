@@ -1,6 +1,7 @@
 import axios from "axios";
 
 
+
 const getHeaders = () => {
   return {
     headers: {
@@ -14,12 +15,20 @@ const fetchProducts = async (setProducts) => {
   setProducts(response.data);
 };
 
+
+const fetchShippingAddress = async (setShipping) => {
+  const response = await axios.get("/api/shippingaddress", getHeaders());
+  setShipping(response.data);
+};
+
+
 const fetchEditProducts = async (setEditProducts) => {
   const response = await axios.get("/api/products/edit");
   setEditProducts(response.data);
 }; 
 
 const fetchOrders = async (setOrders) => {
+
   const response = await axios.get("/api/orders", getHeaders());
   setOrders(response.data);
 };
@@ -31,7 +40,6 @@ const fetchAllOrders = async (setAllOrders) => {
 };
 
 const fetchLineItems = async (setLineItems) => {
-
   const response = await axios.get("/api/lineItems", getHeaders());
   setLineItems(response.data);
 };
@@ -40,6 +48,7 @@ const fetchReviews = async (setReviews) => {
   const response = await axios.get("/api/reviews");
   setReviews(response.data);
 };
+
 
 const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
   const response = await axios.post(
@@ -137,6 +146,7 @@ const removeFromCart = async ({ lineItem, lineItems, setLineItems }) => {
   setLineItems(lineItems.filter((_lineItem) => _lineItem.id !== lineItem.id));
 };
 
+
 const attemptLoginWithToken = async (setAuth) => {
   const token = window.localStorage.getItem("token");
   if (token) {
@@ -200,6 +210,7 @@ const api = {
   createShippingAddress,
   createReview,
   fetchReviews,
+  fetchShippingAddress,
   getHeaders,
   deleteProduct,
   deleteOrder,

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
+
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
+
 
    const [shippingInfo, setShippingInfo] = useState([]);
 
@@ -43,9 +45,10 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
     <div className="orders-container">
       <h2>Orders</h2>
       <ul className="orders-list">
-        {orders
+      {orders
           .filter((order) => !order.is_cart)
           .map((order) => {
+
             const orderShippingInfo = shippingInfo.find(info => info.user_id === order.user_id);
 
             return (
@@ -88,13 +91,21 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                         </li>
                       );
                     })}
+
+                    <div className="order-total">
+                    Total Price: {calculateOrderTotal(order)}
+                </div>
                 </ul>
+                
               </li>
             );
           })}
-      </ul>
+      </ul>  
+
     </div>
-  );
-};
+      );
+      }      
+
+
 
 export default Orders;
