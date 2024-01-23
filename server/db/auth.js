@@ -93,20 +93,21 @@ const createUser = async (user) => {
 };
 
 
-const updateUserProfile = async (userId, fname, lname, email, phone) => {
+const updateUserProfile = async (id, fname, lname, email, phone, image) => {
   try {
     const SQL = `
       UPDATE users
-      SET Fname = $2, Lname = $3, email = $4, phone = $5
+      SET Fname = $2, Lname = $3, email = $4, phone = $5, image = $6
       WHERE id = $1
     `;
-    await client.query(SQL, [userId, fname, lname, email, phone]);
+    await client.query(SQL, [id, fname, lname, email, phone, image]);
     console.log("updateUserProfile works")
   } catch (error) {
     console.error('Error updating profile in DB/Auth:', error);
     throw error;
   }
 };
+
 
 
 

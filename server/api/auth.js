@@ -1,4 +1,4 @@
-const { authenticate, findUserByToken, createUser,updateUserProfile } = require("../db/auth");
+const { authenticate, findUserByToken, createUser, updateUserProfile, } = require("../db/auth");
 
 const express = require("express");
 const app = express.Router();
@@ -34,23 +34,15 @@ app.get("/me", isLoggedIn, (req, res, next) => {
 });
 
 
-app.put("/profile/:id", async (req, res, next) => {
+ app.put("/:id", async (req, res, next) => {
 
-  const {userId} =req.params;
-  // console.log("name", req.body.fname)
-  // console.log("name", req.body.lname)
-  // console.log("email", req.body.email)
-  // console.log("phone", req.body.phone)
+  const id = req.params.id;
+  const { fname, lname, email, phone, image } = req.body;
+
 
   try {
-    const fname = req.body.fname;
-    const lname = req.body.lname;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    //const userId = req.user.id;
-
-    await updateUserProfile(userId, fname, lname, email, phone);
- //console.log("profile/id works?")
+    await updateUserProfile(id, fname, lname, email, phone, image);
+        res.status(200).send('Profile updated successfully');
     
   } catch (error) {
     console.error('Error updating profile in api/auth:', error);
@@ -67,9 +59,10 @@ app.put("/:id", async (req, res, next) => {
     const lname = req.body.lname;
     const email = req.body.email;
     const phone = req.body.phone;
+    const image = req.body.image;
     //const userId = req.user.id;
 
-    await updateUserProfile(id, fname, lname, email, phone);
+    await updateUserProfile(id, fname, lname, email, phone, image);
 
     console.log("api/id works")
   } catch (error) {
