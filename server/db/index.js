@@ -31,7 +31,7 @@ const loadImage = (filePath) => {   //
 
 const seed = async () => {
   const SQL = `
-  DROP TABLE IF EXISTS review;
+  DROP TABLE IF EXISTS review; 
     DROP TABLE IF EXISTS wishlist;
     DROP TABLE IF EXISTS line_items;
     -- Drop tables with dependencies last
@@ -75,8 +75,8 @@ const seed = async () => {
       product_id VARCHAR(500) NOT NULL,
       review_title VARCHAR(30),
       reviewText VARCHAR(1000),
-      rating INTEGER DEFAULT 1
-      
+      rating INTEGER DEFAULT 1,
+      created_at TIMESTAMP DEFAULT now() 
       );
     
       CREATE TABLE shipping_address(
