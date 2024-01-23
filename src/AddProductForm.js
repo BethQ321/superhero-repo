@@ -8,8 +8,10 @@ const AddProduct = () => {
     price: "",
     image: "",
     description: "",
+    class: "",
     vip_only: false,
   });
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -23,16 +25,18 @@ const AddProduct = () => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/products", productData);
-      console.log("Product created:", response.data);
       setProductData({
         name: "",
         price: "",
         image: "",
         description: "",
+        class: "",
         vip_only: false,
       });
+      setSuccessMessage("Product successfully added!");
     } catch (error) {
       console.error("Error creating product:", error);
+      setSuccessMessage("")
     }
   };
 
@@ -74,6 +78,15 @@ const AddProduct = () => {
         />
       </label>
       <label>
+        Class:
+        <input
+          type="text"
+          name="class"
+          value={productData.class}
+          onChange={handleInputChange}
+        />
+      </label>
+      <label>
         VIP-only:
         <input
           type="checkbox"
@@ -83,6 +96,7 @@ const AddProduct = () => {
         />
       </label>
       <button type="submit">Add Product</button>
+      {successMessage && <span className="success-message">{successMessage}</span>}
       <br></br><br></br>
       <Link to="/admin" className="back-button">Back to Admin</Link>
     </form>

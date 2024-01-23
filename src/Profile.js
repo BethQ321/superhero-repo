@@ -185,7 +185,6 @@ const Profile = ({ auth }) => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    console.log(editedU.id)
     try {
 
       // await axios.put(`/api/auth/${editedU.id}`, editedU, {   //error 404
