@@ -41,7 +41,7 @@ const AddProduct = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='add-product-form' onSubmit={handleSubmit}>
       <label>
         Product name:
         <input

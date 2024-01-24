@@ -85,15 +85,17 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
           {wishList.map((item) => (
             <li key={item.wishlist_id}>
               <Link to={`/products/${item.product_id}`}>
-                {item.product_name}
-                <br />
+                
                 <img
                   className="productImage"
                   src={item.product_image}
                   alt={item.product_name}
                 />
               </Link>
-              <p>{item.product_description} - ${item.product_price}</p>
+              <p>
+              <Link to={`/products/${item.product_id}`}>{item.product_name}</Link><br/><br />
+              ${item.product_price}:
+              <br/>{item.product_description}</p>
               <div className="wishlist-item-actions">
                 <button
                   className="add-to-cart"

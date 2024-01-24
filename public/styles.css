@@ -1033,6 +1033,67 @@ color:#373737
   color: #E0E0E0;
 }
 
+/* Regular Form Styles */
+.add-product-form {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.add-product-form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.add-product-form input[type="text"],
+.add-product-form input[type="number"],
+.add-product-form input[type="checkbox"],
+.add-product-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+  color: #333333;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  outline: none;
+}
+
+.add-product-form input[type="checkbox"] {
+  width: auto;
+  margin-right: 5px;
+}
+
+.add-product-form button[type="submit"] {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.add-product-form button[type="submit"]:hover {
+  background-color: #333333;
+}
+
+.success-message {
+  color: #00cc00;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+
 
 @media only screen and (max-width: 600px) {
   .home-container,
