@@ -52,7 +52,7 @@ const EditSingleProduct = ({ formatPrice }) => {
   return (
     <div>
       <h2>Edit Product</h2>
-      <form>
+      <form className='add-product-form'>
         <label>
           Name:
           <input type="text" name="name" value={product.name} onChange={handleInputChange} />

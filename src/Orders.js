@@ -64,6 +64,8 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                       <br/>
                       <div className="order-date">Order created @
                       <div >{new Date(order.created_at).toLocaleString()}</div>
+                      <br/>
+                      <div>Order ID: {order.id}</div>
                   </div>
                     </div>
                   )}
