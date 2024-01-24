@@ -18,6 +18,7 @@ const Products = ({
   searchQuery,
   formatPrice,
   addToWishList,
+  isDarkMode
 }) => {
   const [selectedClass, setSelectedClass] = useState("All");
   const [showVipOnly, setShowVipOnly] = useState(false);
@@ -120,10 +121,12 @@ const Products = ({
           <option value="vehicle">Vehicle</option>
           <option value="mystic">Mystic</option>
           <option value="tech">Tech</option>
+          <option value="weapon">Weapon</option>
+          {isDarkMode && <option value="villain">Villain</option>}
         </select>
         <br></br>
 
-        {auth.is_vip && (
+        {auth.is_vip ? (
           <label>
             <input
               type="checkbox"
@@ -132,15 +135,17 @@ const Products = ({
             />
             Show VIP Items Only
           </label>
-        )}
-      </div>
+        ) : null }
+              </div>
 
-      <ul className="product-list">
+              <ul className="product-list">
         {filteredProducts.map((product) => {
+          if ((!auth.id || (product.vip_only && !auth.is_vip)) || (!isDarkMode && product.class === "villain")) {
+            return null;
+          }
           const cartItem = cartItems.find(
-            (item) => item.product_id === product.id
+            (lineItem) => lineItem.product_id === product.id
           );
-
           return (
             <li key={product.id}>
               <Link to={`/products/${product.id}`} className="product-link">

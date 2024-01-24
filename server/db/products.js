@@ -149,6 +149,7 @@ const fetchProductById = async (productId) => {
 }
 
 
+
 module.exports = {
   fetchProducts,
   fetchReviews,
@@ -159,5 +160,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   fetchEditProducts,
-  fetchProductById
+  fetchProductById,
 };
