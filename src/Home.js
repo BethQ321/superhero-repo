@@ -42,11 +42,10 @@ const Home = ({ auth, isDarkMode }) => {
                   />
                   <h2 className="home-subtitle">VIP Hero!</h2>
                   <p>
-                    You're not just a user; you're a VIP, and that means
-                    you're part of an elite league of heroes. As a VIP member,
-                    you enjoy unprecedented privileges and access to the most
-                    exclusive hero resources. Here's what awaits you in your VIP
-                    experience:
+                    You're not just a user; you're a VIP, and that means you're
+                    part of an elite league of heroes. As a VIP member, you
+                    enjoy unprecedented privileges and access to the most
+                    exclusive hero resources.
                   </p>
                   {/* Add VIP-specific content here */}
                 </>
@@ -68,8 +67,7 @@ const Home = ({ auth, isDarkMode }) => {
                     collection of Villainous tools and gadgets. You're not just
                     a user; you're a Villain, and that means you're part of an
                     elite league of chaos creators. As a Villain, you enjoy
-                    exclusive access to the most destructive devices. Here's
-                    what awaits you in your Villainous experience:
+                    exclusive access to the most destructive devices.
                   </p>
                   {/* Add Villain-specific content here */}
                 </>
@@ -109,7 +107,11 @@ const Home = ({ auth, isDarkMode }) => {
             </>
           )}
           <img
-            src={isDarkMode ? "https://i.imgur.com/nfCnQii.png" : "https://i.imgur.com/nqm797X.png"}
+            src={
+              isDarkMode
+                ? "https://i.imgur.com/nfCnQii.png"
+                : "https://i.imgur.com/nqm797X.png"
+            }
             alt={isDarkMode ? "Villain" : "Hero"}
             className="home-image"
           />
@@ -147,7 +149,11 @@ const Home = ({ auth, isDarkMode }) => {
             </>
           )}
           <img
-            src={isDarkMode ? "https://i.imgur.com/nfCnQii.png" : "https://i.imgur.com/nqm797X.png"}
+            src={
+              isDarkMode
+                ? "https://i.imgur.com/nfCnQii.png"
+                : "https://i.imgur.com/nqm797X.png"
+            }
             alt={isDarkMode ? "Villain" : "Hero"}
             className="home-image"
           />

@@ -58,15 +58,28 @@ const App = () => {
     }
   }, [auth.id]);
 
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-  useEffect(() => {
-    if (isDarkMode) {
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    localStorage.setItem("darkMode", newMode ? "1" : "0");
+  if (newMode) {
       document.body.classList.add("dark-mode");
     } else {
       document.body.classList.remove("dark-mode");
     }
-  }, [isDarkMode]);
-
+  };
+  useEffect(() => {
+    const isDarkModeEnabled = localStorage.getItem("darkMode") === "1";
+    setIsDarkMode(isDarkModeEnabled);
+  
+    if (isDarkModeEnabled) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, []);
+  
+  
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
@@ -229,6 +242,7 @@ const App = () => {
         logout={logout}
         toggleDarkMode={toggleDarkMode}
         isDarkMode={isDarkMode}
+        
       />
       <main>
         <Routes>
