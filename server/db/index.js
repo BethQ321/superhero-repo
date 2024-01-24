@@ -142,22 +142,22 @@ await client.query(alterLineItemsTable);
   ]);
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
-      username: "moe",
-      password: "m_password",
-      Fname: "FirstName",
-      Lname: "LastName",
+      username: "TheBatman",
+      password: "ilovejoker",
+      Fname: "Bruce",
+      Lname: "Wayne",
       phone: "555-555-5555",
-      email: "email1@email.com",
-      is_admin: false,
-      is_vip: false,
+      email: "Bats64@hotmail.com",
+      is_admin: true,
+      is_vip: true,
     }),
     createUser({
-      username: "lucy",
-      password: "l_password",
-      Fname: "FirstName",
-      Lname: "LastName",
+      username: "Superman",
+      password: "ilovelois",
+      Fname: "Clark",
+      Lname: "Kent",
       phone: "555-555-5555",
-      email: "emai2l@email.com",
+      email: "krypton23@aol.com",
       is_admin: false,
       is_vip: false,
     }),
@@ -342,7 +342,7 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/p5XGoXb.png",
       description:
         "Harmless and biodegradable for most, but for that special someone will put them on even then playing field. Just spray any item and let dry for 2 hours before use, Not recomended for direct use due to short range",
-      vip_only: false,
+      vip_only: true,
       class: "tech",
     }),
     createProduct({
@@ -351,7 +351,7 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/LTC503R.png",
       description:
         "A handheld orb that can create miniature black holes, capable of absorbing or repelling matter in a localized area.",
-      vip_only: false,
+      vip_only: true,
       class: "mystic",
     }),
     createProduct({
@@ -587,7 +587,7 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/dz5TCCz.jpg",
       description:
         "Gauntlets that can generate magnetic fields, providing heroes with the ability to control metal objects or create magnetic pathways.",
-      vip_only: false,
+      vip_only: true,
       class: "tech",
     }),
     createProduct({
@@ -632,7 +632,7 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/DSDJrqh.jpg",
       description:
         "Contact lenses with augmented reality displays, providing vital information, analysis, and mission updates directly to the wearer's eyes.",
-      vip_only: false,
+      vip_only: true,
       class: "tech",
     }),
     createProduct({
@@ -663,12 +663,20 @@ await client.query(alterLineItemsTable);
       class: "tech",
     }),
     createProduct({
-      name: "",
+      name: "Zombie Defense Vehicle",
       price: 100,
-      image: "",
-      description: "",
+      image: "https://i.imgur.com/jEEmZwd.png",
+      description: "A heavily modified, rugged vehicle outfitted with reinforced armor, spike-studded exteriors, and an array of weapons like machine guns or flamethrowers, designed to navigate and survive in a post-apocalyptic world overrun by zombies.",
       vip_only: false,
-      class: "",
+      class: "vehicle",
+    }),
+    createProduct({
+      name: "Satellite Laser Cannon",
+      price: 100,
+      image: "https://i.imgur.com/adGUg4F.png",
+      description: "A powerful, high-tech weapon controlled from space, capable of precise, high-energy strikes or interventions on Earth.",
+      vip_only: true,
+      class: "tech",
     }),
   ]);
   let orders = await fetchOrders(ethyl.id);
