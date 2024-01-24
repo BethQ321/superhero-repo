@@ -19,6 +19,17 @@ const SingleProduct = ({
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
+const [selectedRating, setSelectedRating] = useState("");
+
+const handleRatingFilterChange = (e) => {
+  setSelectedRating(e.target.value);
+}
+
+  const resetFilter = () => {
+    setSelectedRating("");
+  }
+
+
   const params = useParams();
   const productId = params.id;
 
@@ -79,7 +90,11 @@ const SingleProduct = ({
     return <div>Loading product...</div>;
     
   }
-
+  
+  const filteredReviews = reviews
+  .filter((review) => review.product_id === productId)
+  .filter((review) => selectedRating === "" || review.rating === parseInt(selectedRating));
+  
   return (
     
     <div>
@@ -157,7 +172,7 @@ const SingleProduct = ({
       style={{ fontSize: '16px', width: '100px', textAlign: "center", paddingTop: '2px', paddingBottom: '2px' }} 
     >
       <option value="">Select</option>
-      <option value="1">1</option>
+      <option value="1">1 </option>
       <option value="2">2</option>
       <option value="3">3</option>
       <option value="4">4</option>
@@ -173,10 +188,25 @@ const SingleProduct = ({
 
       <div>
         <h3>Reviews</h3>
+        {/* Drop down menus */}
+        <div>
+          <label htmlFor="ratingFilter">Sort by Rating:</label>
+          <select
+            id="raitingFilter"
+            value={selectedRating}
+            onChange={handleRatingFilterChange}
+            >
+            <option value="">View By Star</option>
+            <option value="1">1 Star Only</option>
+            <option value="2">2 Star Only</option>
+            <option value="3">3 Star Only</option>
+            <option value="4">4 Star Only</option>
+            <option value="5">5 Star Only</option>
+            </select>
+            <button onClick={resetFilter}>View All Reviews</button>
+        </div>
         <ul className="reviews-list">
-          {reviews
-            .filter((review) => review.product_id === productId)
-            .map((review) => (
+          {filteredReviews.map((review) => (
               <li key={review.id} className="review-box">
                 <div className="review-title">
                   <h3>{review.review_title}</h3>
