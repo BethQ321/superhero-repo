@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
-const Navigations = ({ auth, products, orders, cartCount, logout, toggleDarkMode, isDarkMode }) => {
+const Navigations = ({ auth, products, orders, cartCount, logout, isDarkMode, toggleDarkMode }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  //const [isDarkMode, setIsDarkMode] = useState(false);
   const dropdownRef = useRef(null);
   const isLoggedIn = auth && auth.id;
 
@@ -19,6 +20,21 @@ const Navigations = ({ auth, products, orders, cartCount, logout, toggleDarkMode
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
+  // const toggleDarkMode = () => {
+  //   const newMode = !isDarkMode;
+  //   setIsDarkMode(newMode);
+  //   localStorage.setItem("darkMode", newMode ? "1" : "0");
+  
+  //   // Add this line to toggle the dark mode class on the body element
+  //   document.body.classList.toggle("dark-mode");
+  // };
+  
+
+  // useEffect(() => {
+  //   const storedMode = localStorage.getItem("darkMode");
+  //   setIsDarkMode(storedMode === "1");
+  // }, []);
+
 
   const handleOutsideClick = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
