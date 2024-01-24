@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import api from "./api/index"; // Ensure this is the correct path
-
+import api from "./api/index"; 
 const SingleProduct = ({
   auth,
   products,
@@ -19,32 +18,21 @@ const SingleProduct = ({
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
-const [selectedRating, setSelectedRating] = useState("");
-
-const handleRatingFilterChange = (e) => {
-  setSelectedRating(e.target.value);
-}
-
-  const resetFilter = () => {
-    setSelectedRating("");
-  }
-
-
-  const params = useParams();
-  const productId = params.id;
-
+  const [selectedRating, setSelectedRating] = useState("");
+  const [sortMethod, setSortMethod] = useState("newest first");
   const [reviewForm, setReviewForm] = useState({
     name: "",
-    product_id: productId,
+    product_id: "",
     review_title: "",
     reviewText: "",
     rating: "",
   });
-
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState("");
-  
+
+  const params = useParams();
+  const productId = params.id;
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -78,25 +66,53 @@ const handleRatingFilterChange = (e) => {
           reviewText: "",
           rating: "",
         });
-        setSubmissionMessage("Thank you for submitting your review."); // Set the message on successful submission
+        setSubmissionMessage("Thank you for submitting your review.");
       });
     } catch (error) {
       console.error("Review submission error:", error);
       setError(error.message);
     }
   };
-  
+
+  const handleRatingFilterChange = (e) => {
+    setSelectedRating(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSortMethod(e.target.value);
+  };
+
+  const resetFilter = () => {
+    setSelectedRating("");
+  };
+
+  const sortedReviews = () => {
+    let sorted = [...reviews];
+    switch (sortMethod) {
+      case "newest first":
+        return sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      case "oldest first":
+        return sorted.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      case "highest rating first":
+        return sorted.sort((a, b) => b.rating - a.rating);
+      case "lowest rating first":
+        return sorted.sort((a, b) => a.rating - b.rating);
+      default:
+        return sorted;
+    }
+  };
+
+  const filteredReviews = () => {
+    return sortedReviews().filter(review => 
+      selectedRating === "" || parseInt(review.rating) === parseInt(selectedRating)
+    );
+  };
+
   if (!oneProduct) {
     return <div>Loading product...</div>;
-    
   }
-  
-  const filteredReviews = reviews
-  .filter((review) => review.product_id === productId)
-  .filter((review) => selectedRating === "" || review.rating === parseInt(selectedRating));
-  
+
   return (
-    
     <div>
       <h2>{oneProduct.name}</h2>
       <div className="Sproduct-container">
@@ -188,42 +204,56 @@ const handleRatingFilterChange = (e) => {
 
       <div>
         <h3>Reviews</h3>
-        {/* Drop down menus */}
+        {/* Sort by drop down menu */}
         <div>
-          <label htmlFor="ratingFilter">Sort by Rating:</label>
-          <select
-            id="raitingFilter"
-            value={selectedRating}
-            onChange={handleRatingFilterChange}
-            >
-            <option value="">View By Star</option>
-            <option value="1">1 Star Only</option>
-            <option value="2">2 Star Only</option>
-            <option value="3">3 Star Only</option>
-            <option value="4">4 Star Only</option>
-            <option value="5">5 Star Only</option>
-            </select>
-            <button onClick={resetFilter}>View All Reviews</button>
+          <label htmlFor="sortMethod">Sort by:</label>
+          <select 
+          id="sortMethod"
+          value={sortMethod}
+          onChange={handleSortChange}
+          >
+            <option value="newest first">Sort by Newest</option>
+            <option value="oldest first">Sort by Olders</option>
+            <option value="highest rating first">Sort by Highest Reviews</option>
+            <option value="lowest rating first">Sort by Lowest Reviews</option>
+          </select>
+        {/* Ratings drop down menus */}
+        <div>
+  <label htmlFor="ratingFilter">View Rating:</label>
+  <select
+    id="ratingFilter"
+    value={selectedRating}
+    onChange={handleRatingFilterChange}
+  >
+    <option value="">View By Star</option>
+    <option value="1">1 Star Only</option>
+    <option value="2">2 Star Only</option>
+    <option value="3">3 Star Only</option>
+    <option value="4">4 Star Only</option>
+    <option value="5">5 Star Only</option>
+  </select>
+  <button onClick={resetFilter}>View All Reviews</button>
+</div>
+<ul className="reviews-list">
+        {filteredReviews().map((review) => (
+          <li key={review.id} className="review-box">
+      <div className="review-title">
+        <h3>{review.review_title}</h3>
+        <div className="name">
+          <p>Written On: {formatDate(review.created_at)}</p>
         </div>
-        <ul className="reviews-list">
-          {filteredReviews.map((review) => (
-              <li key={review.id} className="review-box">
-                <div className="review-title">
-                  <h3>{review.review_title}</h3>
-                <div className="name">
-                  <p>Written On: {formatDate(review.created_at)}</p>
-                  </div>
-                </div>
-                <div className="name">
-                  <p>Rating: {review.rating}/5 | Review By: {review.name}</p>
-                </div>
-                <div className="review-text">
-                  <p>Review: {review.reviewtext}</p>
-                </div>
-              </li>
-            ))}
-        </ul>
       </div>
+      <div className="name">
+        <p>Rating: {review.rating}/5 | Review By: {review.name}</p>
+      </div>
+      <div className="review-text">
+        <p>Review: {review.reviewText}</p> 
+      </div>
+    </li>
+  ))}
+</ul>
+      </div>
+    </div>
     </div>
   );
 };
