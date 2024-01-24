@@ -1,129 +1,154 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Home = ({ auth }) => {
+const Home = ({ auth, isDarkMode }) => {
   const isLoggedIn = auth && auth.id;
   const username = auth ? auth.username : "";
-  
+
   return (
     <div className="home-container">
       {isLoggedIn ? (
-        <div>
+        <>
           {auth.is_vip ? (
             <>
-              <h1 className="home-title">Welcome, {username}!</h1>
-              <img
-                className="homepage-image"
-                src="https://i.imgur.com/yoJLg9c.png"
-                width="150px"
-              />
-           
-              <h2 className="home-subtitle">VIP Hero!</h2>
-             
-          <h3>S.H.I.E.L.D. Shop Salutes Your Heroic Excellence!</h3>
-              <p>
-                You're not just a user; you're a VIP, and that means you're part
-                of an elite league of heroes. As a VIP member, you enjoy
-                unprecedented privileges and access to the most exclusive hero
-                resources. Here's what awaits you in your VIP experience:
-              </p>
-              <p>
-                🌟 VIP Exclusives: Gain access to a treasure trove of
-                limited-edition superhero gear and gadgets, available only to
-                our VIP community.
-              </p>
-              <p>
-                🚀 VIP Preview: Be the very first to preview and acquire
-                cutting-edge superhero equipment and life-saving devices, often
-                before they are unveiled to the public.
-              </p>
-              <p>
-                📦 White Glove Service: Enjoy priority shipping, dedicated
-                customer support, and a VIP concierge to assist you with all
-                your hero needs.
-              </p>
-              <p>
-                Your VIP membership is a testament to your dedication to heroism
-                and excellence. S.H.I.E.L.D. Shop is honored to have you as a
-                distinguished VIP member.
-              </p>
-              <p>
-                Embrace your heroic legacy and explore the S.H.I.E.L.D. Shop
-                now, where heroism knows no bounds, and you are at the forefront
-                of the hero revolution!
-              </p>
+              {isDarkMode ? (
+                <>
+                  <h1 className="home-title">Welcome, {username}!</h1>
+                  <img
+                    className="homepage-image"
+                    src="https://i.imgur.com/yoJLg9c.png"
+                    alt="Villain"
+                    width="150px"
+                  />
+                  <h2 className="home-subtitle">VIP Villain!</h2>
+                  <p>
+                    Embrace your dark side and wreak havoc with our sinister
+                    collection of Villainous tools and gadgets. You're not just
+                    a user; you're a Villain, and that means you're part of an
+                    elite league of chaos creators. As a Villain, you enjoy
+                    exclusive access to the most destructive devices. Here's
+                    what awaits you in your Villainous experience:
+                  </p>
+                  {/* Add Villain-specific content here */}
+                </>
+              ) : (
+                <>
+                  <h1 className="home-title">Welcome, {username}!</h1>
+                  <img
+                    className="homepage-image"
+                    src="https://i.imgur.com/yoJLg9c.png"
+                    alt="Hero"
+                    width="150px"
+                  />
+                  <h2 className="home-subtitle">VIP Hero!</h2>
+                  <p>
+                    You're not just a user; you're a VIP, and that means
+                    you're part of an elite league of heroes. As a VIP member,
+                    you enjoy unprecedented privileges and access to the most
+                    exclusive hero resources. Here's what awaits you in your VIP
+                    experience:
+                  </p>
+                  {/* Add VIP-specific content here */}
+                </>
+              )}
             </>
           ) : (
             <>
-              <h1 className="home-title">Welcome, {username}!</h1>
-              <img
-                className="homepage-image"
-                src="https://i.imgur.com/yoJLg9c.png"
-                width="150px"
-              />
-              {/* Non-VIP content */}
-              <p className="home-text">
-                Welcome to the S.H.I.E.L.D. Shop - Your Super Hero Inventive
-                Equipment and Life-saving Devices Headquarters!
-              </p>
-              <p className="home-text">
-                Unleash Your Inner Hero with S.H.I.E.L.D. Shop!
-              </p>
-              <p>
-                You're not just a visitor; you're a valued member of our hero
-                community. As a logged-in user, you have exclusive access to the
-                full spectrum of hero resources and benefits.
-              </p>
-              <p className="home-text">
-                Thank you for being a part of the S.H.I.E.L.D. Shop family. Your
-                dedication to heroism drives us to continuously provide you with
-                the best tools and resources to save the day.
-              </p>
-              <p className="home-text">
-                Embrace your inner hero like never before. Explore the
-                S.H.I.E.L.D. Shop now and continue your heroic journey!
-              </p>
+              {isDarkMode ? (
+                <>
+                  <h1 className="home-title">Welcome, {username}!</h1>
+                  <img
+                    className="homepage-image"
+                    src="https://i.imgur.com/yoJLg9c.png"
+                    alt="Villain"
+                    width="150px"
+                  />
+                  <p>
+                    Embrace your dark side and wreak havoc with our sinister
+                    collection of Villainous tools and gadgets. You're not just
+                    a user; you're a Villain, and that means you're part of an
+                    elite league of chaos creators. As a Villain, you enjoy
+                    exclusive access to the most destructive devices. Here's
+                    what awaits you in your Villainous experience:
+                  </p>
+                  {/* Add Villain-specific content here */}
+                </>
+              ) : (
+                <>
+                  <h1 className="home-title">Welcome, {username}!</h1>
+                  <img
+                    className="homepage-image"
+                    src="https://i.imgur.com/yoJLg9c.png"
+                    alt="Profile"
+                    width="150px"
+                  />
+                  {/* Non-VIP content */}
+                  <p className="home-text">
+                    Welcome to the S.H.I.E.L.D. Shop - Your Super Hero Inventive
+                    Equipment and Life-saving Devices Headquarters!
+                  </p>
+                  <p className="home-text">
+                    Unleash Your Inner Hero with S.H.I.E.L.D. Shop!
+                  </p>
+                  <p>
+                    You're not just a visitor; you're a valued member of our
+                    hero community. As a logged-in user, you have exclusive
+                    access to the full spectrum of hero resources and benefits.
+                  </p>
+                  <p className="home-text">
+                    Thank you for being a part of the S.H.I.E.L.D. Shop family.
+                    Your dedication to heroism drives us to continuously provide
+                    you with the best tools and resources to save the day.
+                  </p>
+                  <p className="home-text">
+                    Embrace your inner hero like never before. Explore the
+                    S.H.I.E.L.D. Shop now and continue your heroic journey!
+                  </p>
+                </>
+              )}
             </>
           )}
           <img
-            src="https://i.imgur.com/aWLFmXi.png"
-            alt="Hero Image"
+            src={isDarkMode ? "https://i.imgur.com/nfCnQii.png" : "https://i.imgur.com/nqm797X.png"}
+            alt={isDarkMode ? "Villain" : "Hero"}
             className="home-image"
           />
-        </div>
+        </>
       ) : (
-        /*not logged in*/
+        /* Not logged in */
         <>
-          <h1 className="home-title">S.H.I.E.L.D. Shop</h1>
-          <h3 className="home-subtitle">
-            {" "}
-            (Super Hero Inventive Equipment and Life-saving Devices)
-          </h3>
-          <p className="home-text">
-            Are you ready to step into a world of heroism and adventure? Welcome
-            to the S.H.I.E.L.D. Shop, where we provide you with the ultimate
-            arsenal of Super Hero Inventive Equipment and Life-saving Devices!
-          </p>
-          <p className="home-text">
-            S.H.I.E.L.D. stands for more than just an acronym; it represents a
-            commitment to excellence, innovation, and the relentless pursuit of
-            heroism. Whether you're a seasoned superhero, an up-and-coming
-            vigilante, or a fan of all things heroic, our store is your haven
-            for all your super-powered needs.
-          </p>
-          <p className="home-text">
-            Join the ranks of legendary heroes and make a difference in the
-            world. S.H.I.E.L.D. Shop is your partner in every heroic endeavor,
-            providing you with the gear and inspiration you need to shine.
-          </p>
-          <p className="home-text">
-            Start your journey to heroism today. Explore the S.H.I.E.L.D. Shop
-            now!
-          </p>
-
+          {isDarkMode ? (
+            <>
+              <h1 className="home-title">S.H.I.E.L.D. Shop</h1>
+              <h3 className="home-subtitle">
+                (Super Hero Inventive Equipment and Life-saving Devices)
+              </h3>
+              <p className="home-text">
+                Are you ready to step into a world of villainy and chaos?
+                Welcome to the S.H.I.E.L.D. Shop, where we provide you with the
+                ultimate arsenal of Super Villain Inventive Equipment and
+                Chaos-inducing Devices!
+              </p>
+              {/* Add Villain-specific content here */}
+            </>
+          ) : (
+            <>
+              <h1 className="home-title">S.H.I.E.L.D. Shop</h1>
+              <h3 className="home-subtitle">
+                (Super Hero Inventive Equipment and Life-saving Devices)
+              </h3>
+              <p className="home-text">
+                Are you ready to step into a world of heroism and adventure?
+                Welcome to the S.H.I.E.L.D. Shop, where we provide you with the
+                ultimate arsenal of Super Hero Inventive Equipment and
+                Life-saving Devices!
+              </p>
+              {/* Add Hero-specific content here */}
+            </>
+          )}
           <img
-            src="https://i.imgur.com/aWLFmXi.png"
-            alt="Hero Image"
+            src={isDarkMode ? "https://i.imgur.com/nfCnQii.png" : "https://i.imgur.com/nqm797X.png"}
+            alt={isDarkMode ? "Villain" : "Hero"}
             className="home-image"
           />
           <h3 className="home-subtitle">

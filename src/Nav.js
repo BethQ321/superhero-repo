@@ -6,9 +6,15 @@ const Navigations = ({ auth, products, orders, cartCount, logout, toggleDarkMode
   const dropdownRef = useRef(null);
   const isLoggedIn = auth && auth.id;
 
+  let displayedProducts = products;
+
+  if (!isDarkMode) {
+    displayedProducts = displayedProducts.filter((product) => product.class !== "villain");
+  }
+
   const vipProductsCount = auth.is_vip
-    ? products.length
-    : products.filter((product) => !product.vip_only).length;
+    ? displayedProducts.length
+    : displayedProducts.filter((product) => !product.vip_only).length;
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);

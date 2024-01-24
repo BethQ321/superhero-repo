@@ -262,7 +262,7 @@ await client.query(alterLineItemsTable);
       description:
         "This is an easily mounted high energy precision laser that fits most big sharks (not hammerheads). Excelent for shark tanks under trap doors in secret layers or castle dikes. ***Batteries and shark not included*** ",
       vip_only: false,
-      class: "weapon",
+      class: "villain",
     }),
     createProduct({
       name: "Lightsaber",
@@ -325,7 +325,7 @@ await client.query(alterLineItemsTable);
       description:
         "A cloak that can manipulate light and shadow, allowing the hero to blend into darkness or create illusions. Great for infiltration and the material is super slippery and does not catch on sharp objects, is very silent and is anti bacterial and odor to throw off scent",
       vip_only: false,
-      class: "suit",
+      class: "villain",
     }),
     createProduct({
       name: "Holographic Projector Ring",
@@ -343,7 +343,7 @@ await client.query(alterLineItemsTable);
       description:
         "Harmless and biodegradable for most, but for that special someone will put them on even then playing field. Just spray any item and let dry for 2 hours before use, Not recomended for direct use due to short range",
       vip_only: true,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Gravitational Singularity Sphere",
@@ -442,7 +442,7 @@ await client.query(alterLineItemsTable);
       description:
         "Goggles that allow the hero to enter and interact with the dream world, influencing the subconscious minds of others.",
       vip_only: false,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Dimensional Resonance Whistle",
@@ -516,7 +516,7 @@ await client.query(alterLineItemsTable);
       description:
         "A helmet that provides protection against mental attacks, such as telepathy or mind control.",
       vip_only: false,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Healing Serum",
@@ -588,7 +588,7 @@ await client.query(alterLineItemsTable);
       description:
         "Gauntlets that can generate magnetic fields, providing heroes with the ability to control metal objects or create magnetic pathways.",
       vip_only: true,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Wearable Exoskeleton",
@@ -651,7 +651,7 @@ await client.query(alterLineItemsTable);
       description:
         " Grenades that disintegrate or rearrange the molecular structure of objects, causing them to break down or transform.",
       vip_only: false,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Nano-Replicator Pen",
@@ -676,7 +676,7 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/adGUg4F.png",
       description: "A powerful, high-tech weapon controlled from space, capable of precise, high-energy strikes or interventions on Earth.",
       vip_only: true,
-      class: "tech",
+      class: "villain",
     }),
   ]);
   let orders = await fetchOrders(ethyl.id);
