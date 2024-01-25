@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
-const Navigations = ({ auth, products, orders, cartCount, logout, isDarkMode, toggleDarkMode }) => {
+const Navigations = ({
+  auth,
+  products,
+  orders,
+  cartCount,
+  logout,
+  isDarkMode,
+  toggleDarkMode,
+}) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   //const [isDarkMode, setIsDarkMode] = useState(false);
   const dropdownRef = useRef(null);
@@ -10,7 +18,9 @@ const Navigations = ({ auth, products, orders, cartCount, logout, isDarkMode, to
   let displayedProducts = products;
 
   if (!isDarkMode) {
-    displayedProducts = displayedProducts.filter((product) => product.class !== "villain");
+    displayedProducts = displayedProducts.filter(
+      (product) => product.class !== "villain"
+    );
   }
 
   const vipProductsCount = auth.is_vip
@@ -24,17 +34,15 @@ const Navigations = ({ auth, products, orders, cartCount, logout, isDarkMode, to
   //   const newMode = !isDarkMode;
   //   setIsDarkMode(newMode);
   //   localStorage.setItem("darkMode", newMode ? "1" : "0");
-  
+
   //   // Add this line to toggle the dark mode class on the body element
   //   document.body.classList.toggle("dark-mode");
   // };
-  
 
   // useEffect(() => {
   //   const storedMode = localStorage.getItem("darkMode");
   //   setIsDarkMode(storedMode === "1");
   // }, []);
-
 
   const handleOutsideClick = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -52,14 +60,18 @@ const Navigations = ({ auth, products, orders, cartCount, logout, isDarkMode, to
   return (
     <nav className="nav-container">
       {isLoggedIn ? (
-    <>
-      <NavLink to="/">
-        {auth.image ? (
-          <img className="profile-image" src={auth.image} alt="Profile" />
-        ) : (
-          <img className="profile-image" src="https://i.imgur.com/yoJLg9c.png" alt="Profile" />
-        )}
-      </NavLink>
+        <>
+          <NavLink to="/">
+            {auth.image ? (
+              <img className="profile-image" src={auth.image} alt="Profile" />
+            ) : (
+              <img
+                className="profile-image"
+                src="https://i.imgur.com/yoJLg9c.png"
+                alt="Profile"
+              />
+            )}
+          </NavLink>
           <NavLink to="/products">Products ({vipProductsCount})</NavLink>
           <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <NavLink to="/orders">
@@ -71,14 +83,12 @@ const Navigations = ({ auth, products, orders, cartCount, logout, isDarkMode, to
             <button onClick={toggleDropdown} className="dropdown-toggle">
               Menu
             </button>
-            <label className="dark-mode-switch">
-              <input
-                type="checkbox"
-                checked={isDarkMode}
-                onChange={toggleDarkMode}
-              />
+            <button
+              className="dark-modde-button"
+              onClick={toggleDarkMode}
+            >
               
-            </label>
+            </button>
           </div>
 
           {isDropdownVisible && (

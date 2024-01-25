@@ -141,8 +141,8 @@ nav a.active {
 }
 
 nav button {
-  background-color: #fff;
-  color: #007bff;
+  background-color: #282828;
+  color: #fff;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
@@ -151,7 +151,7 @@ nav button {
 }
 
 nav button:hover {
-  background-color: #0056b3;
+  background-color: #282828;
   color: #fff;
   transform: scale(1.05);
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
@@ -939,7 +939,9 @@ body.dark-mode {
 .dark-mode h1 {
   color: #E0E0E0;
 }
-.dark-mode-switch {
+.dark-mode-button {
+  background-color: #282828;
+  color: #282828;
   padding: 10px;
 }
 
@@ -1092,6 +1094,7 @@ color:#373737
 .back-button:hover {
   text-decoration: underline;
 }
+
 
 
 
