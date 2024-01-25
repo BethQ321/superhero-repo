@@ -6,7 +6,7 @@ const { isLoggedIn, isAdmin } = require("./middleware");
 
 app.put("/:id", isLoggedIn, async (req, res, next) => {
   try {
-
+    
     res.send(await updateOrder({ ...req.body, id: req.params.id }));
   } catch (ex) {
     next(ex);

@@ -49,6 +49,7 @@ const AllOrders = () => {
             <th>Order ID</th>
             <th>Created At</th>
             <th>User Username</th>
+            <th>Order Status</th>
             <th></th>
           </tr>
         </thead>
@@ -58,6 +59,7 @@ const AllOrders = () => {
               <td>{order.id}</td>
               <td>{order.created_at}</td>
               <td>{getUsernameForOrder(order)}</td>
+              <td>{order.status}</td>
               <td>
                 <button
                   className="button-style"

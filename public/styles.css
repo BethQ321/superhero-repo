@@ -809,9 +809,12 @@ nav a img {
 .dropdown-menu button {
   display: block;
   padding: 10px;
-  color: black;
+  color: #282828;
   text-decoration: none;
   border-bottom: 1px solid #ddd;
+}
+.dropdown-menu a:hover {
+  color: #fff;
 }
 
 .dropdown-menu a:last-child,

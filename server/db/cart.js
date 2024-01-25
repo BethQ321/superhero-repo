@@ -86,10 +86,10 @@ const deleteLineItem = async (lineItem) => {
 const updateOrder = async (order) => {
   const SQL = `
     UPDATE orders 
-    SET is_cart = $1 
-    WHERE id = $2 RETURNING *
+    SET is_cart = $1, status = $2
+   WHERE id = $3 RETURNING *
   `;
-  const response = await client.query(SQL, [order.is_cart, order.id]);
+  const response = await client.query(SQL, [order.is_cart, order.status, order.id]);
   return response.rows[0];
 };
 
@@ -104,7 +104,7 @@ const fetchAllOrders = async () => {
 
 
 
-const fetchOrders = async (userId) => {
+const fetchOrders = async (userId, status) => {
   const SQL = `
     SELECT * FROM orders
     WHERE user_id = $1
@@ -112,11 +112,12 @@ const fetchOrders = async (userId) => {
   let response = await client.query(SQL, [userId]);
   const cart = response.rows.find((row) => row.is_cart);
   if (!cart) {
+    
     await client.query(
       `
-      INSERT INTO orders(is_cart, id, user_id) VALUES(true, $1, $2)
+      INSERT INTO orders(is_cart, id, user_id, status) VALUES(true, $1, $2, $3)
       `,
-      [uuidv4(), userId]
+      [uuidv4(), userId, status]
     );
     response = await client.query(SQL, [userId]);
     return response.rows;

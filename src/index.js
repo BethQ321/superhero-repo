@@ -145,7 +145,7 @@ const App = () => {
         user_id: userId,
       });
 
-      await updateOrder({ ...cart, is_cart: false });
+      await updateOrder({ ...cart, is_cart: false, status: "processing" });
 
       setShipping({
         user_id: userId,
