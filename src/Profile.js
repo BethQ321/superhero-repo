@@ -2,42 +2,37 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const Profile = ({ auth, setAuth }) => {
-  // Function to get headers for axios request
   const getHeaders = () => {
     return {
       headers: {
-        authorization: window.localStorage.getItem('token')
-      }
+        authorization: window.localStorage.getItem("token"),
+      },
     };
   };
 
-  // State for the edited user data
   const [editedUser, setEditedUser] = useState({
-    id: '',
-    fname: '',
-    lname: '',
-    email: '',
-    phone: '',
-    image: '',
+    id: "",
+    fname: "",
+    lname: "",
+    email: "",
+    phone: "",
+    image: "",
   });
   useEffect(() => {
     setEditedUser({
       id: auth.id,
-      fname: auth.fname || '',
-      lname: auth.lname || '',
-      email: auth.email || '',
-      phone: auth.phone || '',
-      image: auth.image || '',
+      fname: auth.fname || "",
+      lname: auth.lname || "",
+      email: auth.email || "",
+      phone: auth.phone || "",
+      image: auth.image || "",
     });
   }, [auth]);
 
-  // State to track if the user is in editing mode
   const [isEditing, setIsEditing] = useState(false);
 
-  // Reference for the file input
   const imageInputRef = useRef();
 
-  // Handle change in form inputs
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedUser({
@@ -46,7 +41,6 @@ const Profile = ({ auth, setAuth }) => {
     });
   };
 
-  // Handle change in image input
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -58,18 +52,15 @@ const Profile = ({ auth, setAuth }) => {
     }
   };
 
-  // Handle saving the edited user data
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      console.log(editedUser)
-      // API call to update user
+      console.log(editedUser);
       await axios.put(`/api/update/${editedUser.id}`, editedUser);
-        
-        window.location.reload();
-      
-      setIsEditing(false); // Close the form after saving
-      // Optionally update global auth state here
+
+      window.location.reload();
+
+      setIsEditing(false);
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -85,7 +76,9 @@ const Profile = ({ auth, setAuth }) => {
         )}
       </div>
       <h1>Edit User</h1>
-      <button className="save-button" onClick={() => setIsEditing(true)}>Edit</button>
+      <button className="save-button" onClick={() => setIsEditing(true)}>
+        Edit
+      </button>
 
       {isEditing && (
         <div className="profile-box">
@@ -140,7 +133,9 @@ const Profile = ({ auth, setAuth }) => {
                 onChange={handleImageChange}
               />
             </label>
-            <button type="submit" className="save-button">Save</button>
+            <button type="submit" className="save-button">
+              Save
+            </button>
           </form>
         </div>
       )}

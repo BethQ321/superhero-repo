@@ -69,10 +69,9 @@ const createLineItem = async (lineItem) => {
     lineItem.order_id,
     uuidv4(),
   ]);
-  console.log(response.rows)
+  console.log(response.rows);
   return response.rows[0];
 };
-
 
 const deleteLineItem = async (lineItem) => {
   await ensureCart(lineItem);
@@ -86,10 +85,14 @@ const deleteLineItem = async (lineItem) => {
 const updateOrder = async (order) => {
   const SQL = `
     UPDATE orders 
-    SET is_cart = $1 
-    WHERE id = $2 RETURNING *
+    SET is_cart = $1, status = $2
+   WHERE id = $3 RETURNING *
   `;
-  const response = await client.query(SQL, [order.is_cart, order.id]);
+  const response = await client.query(SQL, [
+    order.is_cart,
+    order.status,
+    order.id,
+  ]);
   return response.rows[0];
 };
 
@@ -100,11 +103,9 @@ const fetchAllOrders = async () => {
   `;
   const response = await client.query(SQL);
   return response.rows;
-}
+};
 
-
-
-const fetchOrders = async (userId) => {
+const fetchOrders = async (userId, status) => {
   const SQL = `
     SELECT * FROM orders
     WHERE user_id = $1
@@ -114,9 +115,9 @@ const fetchOrders = async (userId) => {
   if (!cart) {
     await client.query(
       `
-      INSERT INTO orders(is_cart, id, user_id) VALUES(true, $1, $2)
+      INSERT INTO orders(is_cart, id, user_id, status) VALUES(true, $1, $2, $3)
       `,
-      [uuidv4(), userId]
+      [uuidv4(), userId, status]
     );
     response = await client.query(SQL, [userId]);
     return response.rows;
@@ -124,14 +125,17 @@ const fetchOrders = async (userId) => {
   return response.rows;
 };
 
-const deleteOrder = async (orderId) => {
+const updateOrderStatus = async (orderId, newStatus) => {
   const SQL = `
-    DELETE FROM orders
-    WHERE id = $1
+    UPDATE orders
+    SET status = $1
+    WHERE id = $2
+    RETURNING *
   `;
-  await client.query(SQL, [orderId]);
-};
 
+  const response = await client.query(SQL, [newStatus, orderId]);
+  return response.rows[0];
+};
 
 module.exports = {
   fetchLineItems,
@@ -140,6 +144,6 @@ module.exports = {
   deleteLineItem,
   updateOrder,
   fetchOrders,
-  deleteOrder,
-  fetchAllOrders
+  updateOrderStatus,
+  fetchAllOrders,
 };
