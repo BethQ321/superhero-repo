@@ -178,7 +178,7 @@ const Products = ({
     );
       
           return (
-            <li key={product.id}>
+            <li className="product-box" key={product.id}>
               <Link to={`/products/${product.id}`} className="product-link">
                 <div className="product-name">
                   {product.vip_only ? `VIP Item!` : ""}

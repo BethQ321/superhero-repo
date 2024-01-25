@@ -874,10 +874,21 @@ nav a img {
   padding: 5px 10px;
   cursor: pointer;
 }
+.product-list{
+  display: flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0.5rem;
 
+
+}
+.product-box {
+  width: 500px;
+}
 .product-link {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   text-align: center;
   display: block;
@@ -898,8 +909,8 @@ nav a img {
 }
 
 .product-description {
-  max-width: 400px;
-  word-wrap: break-word;
+  max-width: 400px; 
+  word-wrap: break-word; 
 }
 
 .product-actions {
@@ -910,8 +921,10 @@ nav a img {
 
 .button-group {
   display: flex;
-  gap: 5px;
+  flex-direction: column;
+  gap: 5px; 
   align-items: center;
+
 }
 
 .wishlist-error {
