@@ -48,7 +48,7 @@ const App = () => {
     zip_code: "",
   });
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     if (auth.id) {
       setShipping((prevShipping) => ({
@@ -62,7 +62,7 @@ const App = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
     localStorage.setItem("darkMode", newMode ? "1" : "0");
-  if (newMode) {
+    if (newMode) {
       document.body.classList.add("dark-mode");
     } else {
       document.body.classList.remove("dark-mode");
@@ -71,15 +71,14 @@ const App = () => {
   useEffect(() => {
     const isDarkModeEnabled = localStorage.getItem("darkMode") === "1";
     setIsDarkMode(isDarkModeEnabled);
-  
+
     if (isDarkModeEnabled) {
       document.body.classList.add("dark-mode");
     } else {
       document.body.classList.remove("dark-mode");
     }
   }, []);
-  
-  
+
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
   };
@@ -145,7 +144,7 @@ const App = () => {
         user_id: userId,
       });
 
-      await updateOrder({ ...cart, is_cart: false, status: "processing" });
+      await updateOrder({ ...cart, is_cart: false, status: "Processing" });
 
       setShipping({
         user_id: userId,
@@ -242,11 +241,13 @@ const App = () => {
         logout={logout}
         toggleDarkMode={toggleDarkMode}
         isDarkMode={isDarkMode}
-        
       />
       <main>
         <Routes>
-          <Route path="/" element={<Home auth={auth} isDarkMode={isDarkMode} />} />
+          <Route
+            path="/"
+            element={<Home auth={auth} isDarkMode={isDarkMode} />}
+          />
           <Route
             path="/products"
             element={

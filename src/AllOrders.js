@@ -67,14 +67,12 @@ const AllOrders = () => {
                     onChange={(e) =>
                       handleUpdateOrderStatus(order.id, e.target.value)
                     }
-                    value={order.status || ''}
+                    value={order.status || ""}
                   >
-                    <option value="">
-                      Change Status
-                    </option>
-                    <option value="shipped">Shipped</option>
-                    <option value="delivered">Delivered</option>
-                    <option value="refunded">Refunded</option>
+                    <option value="">Change Status</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Refunded">Refunded</option>
                   </select>
                 </div>
               </td>

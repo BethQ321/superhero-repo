@@ -1,4 +1,9 @@
-const { fetchOrders, updateOrder, fetchAllOrders, updateOrderStatus } = require("../db/cart");
+const {
+  fetchOrders,
+  updateOrder,
+  fetchAllOrders,
+  updateOrderStatus,
+} = require("../db/cart");
 
 const express = require("express");
 const app = express.Router();
@@ -6,7 +11,6 @@ const { isLoggedIn, isAdmin } = require("./middleware");
 
 app.put("/:id", isLoggedIn, async (req, res, next) => {
   try {
-
     res.send(await updateOrder({ ...req.body, id: req.params.id }));
   } catch (ex) {
     next(ex);
@@ -39,8 +43,5 @@ app.put("/status/:id", isLoggedIn, isAdmin, async (req, res, next) => {
     next(ex);
   }
 });
-
-
-
 
 module.exports = app;
