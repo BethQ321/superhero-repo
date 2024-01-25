@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import api from "./api/index";
-
+import api from "./api/index"; 
 const SingleProduct = ({
   auth,
   products,
@@ -14,10 +13,9 @@ const SingleProduct = ({
   createLineItem,
 }) => {
   const formatDate = (dateString) => {
-    const options = { month: "2-digit", day: "2-digit", year: "numeric" };
+    const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
+  }
   const [selectedRating, setSelectedRating] = useState("");
   const [sortMethod, setSortMethod] = useState("newest first");
   const [reviewForm, setReviewForm] = useState({
@@ -32,7 +30,6 @@ const SingleProduct = ({
   const [submissionMessage, setSubmissionMessage] = useState("");
   const params = useParams();
   const productId = params.id;
-
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -42,17 +39,13 @@ const SingleProduct = ({
         setError(error.message);
       }
     };
-
     fetchReviews();
   }, [productId]);
-
   const oneProduct = products.find((product) => product.id === productId);
   const cartItem = cartItems.find((item) => item.product_id === oneProduct?.id);
-
   const handleAddToCart = () => {
     createLineItem(oneProduct);
   };
-
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -72,22 +65,15 @@ const SingleProduct = ({
       setError(error.message);
     }
   };
-
-
-  if (!oneProduct) {
-    return <div>Loading product...</div>;
   const handleRatingFilterChange = (e) => {
     setSelectedRating(e.target.value);
   };
-
   const handleSortChange = (e) => {
     setSortMethod(e.target.value);
   };
-
   const resetFilter = () => {
     setSelectedRating("");
   };
-
   const sortedReviews = () => {
     let sorted = [...reviews];
     switch (sortMethod) {
@@ -103,7 +89,6 @@ const SingleProduct = ({
         return sorted;
     }
   };
-
   const filteredReviews = () => {
     return sortedReviews().filter(review => 
       selectedRating === "" || parseInt(review.rating) === parseInt(selectedRating)
@@ -119,24 +104,15 @@ const SingleProduct = ({
       <h2>{oneProduct.name}</h2>
       <div className="Sproduct-container">
         <div>
-          <img
-            src={oneProduct.image}
-            className="Sproduct-image"
-            alt={oneProduct.name}
-          />
+          <img src={oneProduct.image} className="Sproduct-image" alt={oneProduct.name} />
         </div>
         <div className="Sproduct-description">
           {oneProduct.description}
-
           <div>
             {cartItem ? (
               <div>
-                <button onClick={() => updateLineItem(cartItem)}>
-                  Add One!
-                </button>
-                <button onClick={() => handleDecrement(cartItem)}>
-                  Remove One!
-                </button>
+                <button onClick={() => updateLineItem(cartItem)}>Add One!</button>
+                <button onClick={() => handleDecrement(cartItem)}>Remove One!</button>
               </div>
             ) : (
               <button onClick={handleAddToCart}>Add to Cart</button>
@@ -146,9 +122,8 @@ const SingleProduct = ({
       </div>
       <br />
       <Link to="/products">Back to Products</Link>
-      <h2 style={{ textAlign: "center" }}>Write A Review </h2>
+      <h2  style={{ textAlign: "center" }}>Write A Review </h2>
       <form onSubmit={handleReviewSubmit}>
-
   <div>
     <label htmlFor="name">Reviewer:</label>
     <input
@@ -160,7 +135,6 @@ const SingleProduct = ({
       required
     />
   </div>
-
   <div>
     <label htmlFor="reviewTitle">Review Title:</label>
     <input
@@ -211,73 +185,8 @@ const SingleProduct = ({
     {submissionMessage && <div style={{ color: 'green', marginTop: '10px' }}>{submissionMessage}</div>} 
   </div>
 </form>
-
-        <div>
-          <label htmlFor="reviewTitle">Review Title:</label>
-          <input
-            type="text"
-            id="reviewTitle"
-            name="reviewTitle"
-            value={reviewForm.review_title}
-            onChange={(e) =>
-              setReviewForm({ ...reviewForm, review_title: e.target.value })
-            }
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="reviewText">Review:</label>
-          <textarea
-            id="reviewText"
-            name="reviewText"
-            value={reviewForm.reviewText}
-            onChange={(e) =>
-              setReviewForm({ ...reviewForm, reviewText: e.target.value })
-            }
-            required
-            style={{ marginBottom: "10px", width: "100%", height: "100px" }}
-          />
-        </div>
-        <div>
-          <label htmlFor="rating">Rating (0-5):</label>
-          <select
-            id="rating"
-            name="rating"
-            value={reviewForm.rating}
-            onChange={(e) =>
-              setReviewForm({ ...reviewForm, rating: parseInt(e.target.value) })
-            }
-            style={{
-              fontSize: "16px",
-              width: "100px",
-              textAlign: "center",
-              paddingTop: "2px",
-              paddingBottom: "2px",
-            }}
-          >
-            <option value="">Select</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <button type="submit" style={{ width: "150px", marginTop: "10px" }}>
-            Submit Review
-          </button>
-          {submissionMessage && (
-            <div style={{ color: "green", marginTop: "10px" }}>
-              {submissionMessage}
-            </div>
-          )}
-        </div>
-      </form>
-
       <div>
         <h3>Reviews</h3>
-
         {/* Sort by drop down menu */}
         <div>
           <label htmlFor="sortMethod">Sort by:</label>
@@ -331,5 +240,4 @@ const SingleProduct = ({
     </div>
   );
 };
-
 export default SingleProduct;
