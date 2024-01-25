@@ -43,27 +43,39 @@ const Products = ({
       console.error("Error adding product to wishlist:", error);
     }
   };
-
   const filterProductsByClass = (selectedClass) => {
-    if (selectedClass === "All") {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter(
-        (product) => product.class === selectedClass
-      );
-      setFilteredProducts(filtered);
+    let filtered = products;
+  
+    if (selectedClass !== "All") {
+      filtered = filtered.filter((product) => product.class === selectedClass);
     }
+  
+    if (!auth.is_vip) {
+      filtered = filtered.filter((product) => !product.vip_only);
+    }
+  
+    if (!auth.id) { // Check if the user is not logged in
+      filtered = filtered.filter((product) => !product.vip_only);
+    }
+  
+    if (!isDarkMode) { // Check if it's not dark mode
+      filtered = filtered.filter((product) => product.class !== "villain");
+    }
+  
+    setFilteredProducts(filtered);
   };
+  
+ 
 
   useEffect(() => {
     let updatedFilteredProducts = products;
-
+  
     if (selectedClass !== "All") {
       updatedFilteredProducts = updatedFilteredProducts.filter(
         (product) => product.class === selectedClass
       );
     }
-
+  
     if (!auth.is_vip) {
       updatedFilteredProducts = updatedFilteredProducts.filter(
         (product) => !product.vip_only
@@ -73,9 +85,23 @@ const Products = ({
         (product) => product.vip_only
       );
     }
-
+  
+    if (!auth.id) { // Check if the user is not logged in
+      updatedFilteredProducts = updatedFilteredProducts.filter(
+        (product) => !product.vip_only
+      );
+    }
+  
+    if (!isDarkMode) { // Check if it's not dark mode
+      updatedFilteredProducts = updatedFilteredProducts.filter(
+        (product) => product.class !== "villain"
+      );
+    }
+  
     setFilteredProducts(updatedFilteredProducts);
-  }, [selectedClass, showVipOnly, products, auth]);
+  }, [selectedClass, showVipOnly, products, auth, isDarkMode]);
+  
+  
 
   const handleVipCheckboxChange = () => {
     setShowVipOnly(!showVipOnly);
@@ -94,6 +120,7 @@ const Products = ({
       filterProductsByClass(selectedClass);
     }
   }, [selectedClass, showVipOnly, products]);
+
   return (
     <div className="product-container">
       <h2>Products</h2>
@@ -108,46 +135,48 @@ const Products = ({
         <button onClick={handleShowAllClick}>Show All</button>
       </div>
 
-      <div className="product-filter">
-        <label>Filter by Class:</label>
-        <select
-          value={selectedClass}
-          onChange={(e) => setSelectedClass(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="suit">Suit</option>
-          <option value="vehicle">Vehicle</option>
-          <option value="mystic">Mystic</option>
-          <option value="tech">Tech</option>
-          <option value="weapon">Weapon</option>
-          {isDarkMode && <option value="villain">Villain</option>}
-        </select>
-        <br></br>
+      {auth.id && ( 
+        <div className="product-filter">
+          <label>Filter by Class:</label>
+          <select
+            value={selectedClass}
+            onChange={(e) => setSelectedClass(e.target.value)}
+          >
+            <option value="All">All</option>
+            <option value="suit">Suit</option>
+            <option value="vehicle">Vehicle</option>
+            <option value="mystic">Mystic</option>
+            <option value="tech">Tech</option>
+            <option value="weapon">Weapon</option>
+            {isDarkMode && <option value="villain">Villain</option>}
+          </select>
+          <br></br>
 
-        {auth.is_vip ? (
-          <label>
-            <input
-              type="checkbox"
-              checked={showVipOnly}
-              onChange={handleVipCheckboxChange}
-            />
-            Show VIP Items Only
-          </label>
-        ) : null}
-      </div>
-
-      <ul className="product-list">
-        {filteredProducts.map((product) => {
-          if (
-            !auth.id ||
-            (product.vip_only && !auth.is_vip) ||
-            (!isDarkMode && product.class === "villain")
-          ) {
-            return null;
-          }
-          const cartItem = cartItems.find(
-            (lineItem) => lineItem.product_id === product.id
-          );
+          {auth.is_vip ? (
+            <label>
+              <input
+                type="checkbox"
+                checked={showVipOnly}
+                onChange={handleVipCheckboxChange}
+              />
+              Show VIP Items Only
+            </label>
+          ) : null}
+        </div>
+      )}
+<ul className="product-list">
+  {filteredProducts.map((product) => {
+    if (
+      (!auth.id &&
+        (product.vip_only || product.class === "villain")) ||
+      (!isDarkMode && product.class === "villain")
+    ) {
+      return null;
+    }
+    const cartItem = cartItems.find(
+      (lineItem) => lineItem.product_id === product.id
+    );
+      
           return (
             <li key={product.id}>
               <Link to={`/products/${product.id}`} className="product-link">
@@ -169,10 +198,20 @@ const Products = ({
               </div>
               <div className="product-actions">
                 {auth.id ? (
-                  cartItem ? (
+                  cartItems.find(
+                    (lineItem) => lineItem.product_id === product.id
+                  ) ? (
                     <div className="button-group">
                       <Link to={`/cart`}>View Cart</Link>
-                      <button onClick={() => updateLineItem(cartItem)}>
+                      <button
+                        onClick={() =>
+                          updateLineItem(
+                            cartItems.find(
+                              (lineItem) => lineItem.product_id === product.id
+                            )
+                          )
+                        }
+                      >
                         Add Another
                       </button>
                     </div>
@@ -205,7 +244,23 @@ const Products = ({
                       )}
                     </div>
                   )
-                ) : null}
+                ) : (
+                  <div>
+                    <div className="button-group">
+                      <button className="add-to-cart" disabled>
+                        Add to Cart
+                      </button>
+                      <button className="add-to-wishlist" disabled>
+                        Add to Wishlist
+                      </button>
+                    </div>
+                    {wishlistErrors && wishlistErrors[product.id] && (
+                      <div className="wishlist-error">
+                        {wishlistErrors[product.id]}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </li>
           );
