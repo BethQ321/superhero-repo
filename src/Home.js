@@ -13,9 +13,15 @@ const Home = ({ auth }) => {
               <h1 className="home-title">Welcome, {username}!</h1>
               <img
                 className="homepage-image"
+                
                 src="https://i.imgur.com/yoJLg9c.png"
                 width="150px"
               />
+              <img
+              className="profile-image"
+              src={auth.image}
+              alt="Profile"
+            />
               <h2 className="home-subtitle">VIP Hero!</h2>
               <h3>S.H.I.E.L.D. Shop Salutes Your Heroic Excellence!</h3>
               <p>

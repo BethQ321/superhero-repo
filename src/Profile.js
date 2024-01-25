@@ -65,8 +65,10 @@ const Profile = ({ auth, setAuth }) => {
       console.log(editedUser)
       // API call to update user
       await axios.put(`/api/update/${editedUser.id}`, editedUser);
+      window.location.reload()
       setIsEditing(false); // Close the form after saving
       // Optionally update global auth state here
+      window.location.reload()
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -78,9 +80,10 @@ const Profile = ({ auth, setAuth }) => {
         {editedUser.image ? (
           <img src={editedUser.image} alt="Profile" />
         ) : (
-          "No image"
+          auth.image
         )}
       </div>
+      
       <h1>Edit User</h1>
       <button className="save-button" onClick={() => setIsEditing(true)}>Edit</button>
 

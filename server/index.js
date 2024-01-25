@@ -4,6 +4,11 @@ const app = express();
 app.use(express.json({limit: "200mb"}));
 const path = require("path");
 
+
+// const mongoose = require ("mongoose")
+// mongoose.connect(url)
+// const uri = process.env.ATLAS_URI;
+
 app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "../public/index.html"))
 );
