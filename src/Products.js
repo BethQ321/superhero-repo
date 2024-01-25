@@ -18,7 +18,7 @@ const Products = ({
   searchQuery,
   formatPrice,
   addToWishList,
-  isDarkMode
+  isDarkMode,
 }) => {
   const [selectedClass, setSelectedClass] = useState("All");
   const [showVipOnly, setShowVipOnly] = useState(false);
@@ -27,23 +27,22 @@ const Products = ({
 
   const addProductToWishlist = async (product) => {
     try {
-        setWishlistErrors({ ...wishlistErrors, [product.id]: '' });
+      setWishlistErrors({ ...wishlistErrors, [product.id]: "" });
 
-        const response = await axios.post(
-            "/api/wishList",
-            { productId: product.id },
-            api.getHeaders()
-        );
-        setWishlistStatus({ ...wishlistStatus, [product.id]: true });
+      const response = await axios.post(
+        "/api/wishList",
+        { productId: product.id },
+        api.getHeaders()
+      );
+      setWishlistStatus({ ...wishlistStatus, [product.id]: true });
     } catch (error) {
-        setWishlistErrors({
-            ...wishlistErrors,
-            [product.id]: 'Item is already on your wishlist'
-        });
-        console.error("Error adding product to wishlist:", error);
+      setWishlistErrors({
+        ...wishlistErrors,
+        [product.id]: "Item is already on your wishlist",
+      });
+      console.error("Error adding product to wishlist:", error);
     }
-};
-
+  };
 
   const filterProductsByClass = (selectedClass) => {
     if (selectedClass === "All") {
@@ -77,7 +76,6 @@ const Products = ({
 
     setFilteredProducts(updatedFilteredProducts);
   }, [selectedClass, showVipOnly, products, auth]);
-
 
   const handleVipCheckboxChange = () => {
     setShowVipOnly(!showVipOnly);
@@ -135,12 +133,16 @@ const Products = ({
             />
             Show VIP Items Only
           </label>
-        ) : null }
-              </div>
+        ) : null}
+      </div>
 
-              <ul className="product-list">
+      <ul className="product-list">
         {filteredProducts.map((product) => {
-          if ((!auth.id || (product.vip_only && !auth.is_vip)) || (!isDarkMode && product.class === "villain")) {
+          if (
+            !auth.id ||
+            (product.vip_only && !auth.is_vip) ||
+            (!isDarkMode && product.class === "villain")
+          ) {
             return null;
           }
           const cartItem = cartItems.find(
@@ -159,50 +161,52 @@ const Products = ({
                 />
               </Link>
               <div className="product-description">
-                <Link to={`/products/${product.id}`}>{product.name}</Link><br /><br />
-                {formatPrice(product.price)}<br />  {product.description}
+                <Link to={`/products/${product.id}`}>{product.name}</Link>
+                <br />
+                <br />
+                {formatPrice(product.price)}
+                <br /> {product.description}
               </div>
               <div className="product-actions">
-              {auth.id ? (
-    cartItem ? (
-      <div className="button-group">
-        <Link to={`/cart`}>View Cart</Link>
-        <button onClick={() => updateLineItem(cartItem)}>
-          Add Another
-        </button>
-      </div>
-    ) : (
-      <div>
-        <div className="button-group">
-          <button
-            className="add-to-cart"
-            onClick={() => createLineItem(product)}
-          >
-            Add to Cart
-          </button>
-          {wishlistStatus[product.id] ? (
-            <div className="wishlist-added">
-              Added to Wishlist
-            </div>
-          ) : (
-            <button
-              className="add-to-wishlist"
-              onClick={() => addProductToWishlist(product)}
-            >
-              Add to Wishlist
-            </button>
-          )}
-        </div>
-        {wishlistErrors && wishlistErrors[product.id] && (
-          <div className="wishlist-error">
-            {wishlistErrors[product.id]}
-          </div>
-        )}
-      </div>
-    )
-  ) : null}              
-     </div>
-
+                {auth.id ? (
+                  cartItem ? (
+                    <div className="button-group">
+                      <Link to={`/cart`}>View Cart</Link>
+                      <button onClick={() => updateLineItem(cartItem)}>
+                        Add Another
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="button-group">
+                        <button
+                          className="add-to-cart"
+                          onClick={() => createLineItem(product)}
+                        >
+                          Add to Cart
+                        </button>
+                        {wishlistStatus[product.id] ? (
+                          <div className="wishlist-added">
+                            Added to Wishlist
+                          </div>
+                        ) : (
+                          <button
+                            className="add-to-wishlist"
+                            onClick={() => addProductToWishlist(product)}
+                          >
+                            Add to Wishlist
+                          </button>
+                        )}
+                      </div>
+                      {wishlistErrors && wishlistErrors[product.id] && (
+                        <div className="wishlist-error">
+                          {wishlistErrors[product.id]}
+                        </div>
+                      )}
+                    </div>
+                  )
+                ) : null}
+              </div>
             </li>
           );
         })}

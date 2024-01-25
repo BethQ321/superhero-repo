@@ -1,6 +1,11 @@
 const client = require("./client");
 
-const { fetchProducts, createProduct, createReview, createShippingAddress} = require("./products");
+const {
+  fetchProducts,
+  createProduct,
+  createReview,
+  createShippingAddress,
+} = require("./products");
 
 const { createUser, authenticate, findUserByToken } = require("./auth");
 
@@ -15,19 +20,19 @@ const {
 
 const { fetchUsers } = require("./users");
 
-const loadImage = (filePath) => {   //
+const loadImage = (filePath) => {
+  //
   return new Promise((resolve, reject) => {
-    const fullPath = path.join(__dirname, filePath)
-    fs.readFile(fullPath, 'base64', (err, result) => {
-      if(err){
-        reject(err)
-      }else{
-        resolve(`data:image/png;base64,${result}`)
+    const fullPath = path.join(__dirname, filePath);
+    fs.readFile(fullPath, "base64", (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(`data:image/png;base64,${result}`);
       }
-    })
-  })
-}
-
+    });
+  });
+};
 
 const seed = async () => {
   const SQL = `
@@ -128,17 +133,14 @@ const seed = async () => {
   ON DELETE CASCADE;
 `;
 
-await client.query(alterLineItemsTable);
+  await client.query(alterLineItemsTable);
 
-
-
-  const [batman]  = await Promise.all([ 
+  const [batman] = await Promise.all([
     createShippingAddress({
       street_address: "batman",
       city: "gotham",
       state: "michigan",
       zip_code: 123,
-    
     }),
   ]);
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
@@ -473,7 +475,6 @@ await client.query(alterLineItemsTable);
       class: "suit",
     }),
     createProduct({
-
       name: "Elemental Fusion Crystal",
       price: 60000,
       image: "https://i.imgur.com/tO4PWc0.png",
@@ -483,7 +484,6 @@ await client.query(alterLineItemsTable);
       class: "mystic",
     }),
     createProduct({
-
       name: "Dimensional Anchor Gloves",
       price: 72500,
       image: "https://i.imgur.com/0EcMpsj.png",
@@ -667,7 +667,8 @@ await client.query(alterLineItemsTable);
       name: "Zombie Defense Vehicle",
       price: 100,
       image: "https://i.imgur.com/jEEmZwd.png",
-      description: "A heavily modified, rugged vehicle outfitted with reinforced armor, spike-studded exteriors, and an array of weapons like machine guns or flamethrowers, designed to navigate and survive in a post-apocalyptic world overrun by zombies.",
+      description:
+        "A heavily modified, rugged vehicle outfitted with reinforced armor, spike-studded exteriors, and an array of weapons like machine guns or flamethrowers, designed to navigate and survive in a post-apocalyptic world overrun by zombies.",
       vip_only: false,
       class: "vehicle",
     }),
@@ -675,7 +676,8 @@ await client.query(alterLineItemsTable);
       name: "Satellite Laser Cannon",
       price: 100,
       image: "https://i.imgur.com/adGUg4F.png",
-      description: "A powerful, high-tech weapon controlled from space, capable of precise, high-energy strikes or interventions on Earth.",
+      description:
+        "A powerful, high-tech weapon controlled from space, capable of precise, high-energy strikes or interventions on Earth.",
       vip_only: true,
       class: "villain",
     }),

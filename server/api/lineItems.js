@@ -27,7 +27,6 @@ app.post("/", isLoggedIn, async (req, res, next) => {
   }
 });
 
-
 app.put("/:id", isLoggedIn, async (req, res, next) => {
   try {
     //TODO make sure the order's user_id is req.user.id

@@ -86,9 +86,7 @@ const Navigations = ({
             <button
               className="dark-modde-button"
               onClick={toggleDarkMode}
-            >
-              
-            </button>
+            ></button>
           </div>
 
           {isDropdownVisible && (

@@ -1,15 +1,17 @@
-const express = require('express');
-const { addToWishlist, fetchWishlist, removeFromWishlist } = require('../db/wishList.js');
+const express = require("express");
+const {
+  addToWishlist,
+  fetchWishlist,
+  removeFromWishlist,
+} = require("../db/wishList.js");
 
-const { isLoggedIn } = require('./middleware'); 
+const { isLoggedIn } = require("./middleware");
 
 const router = express.Router();
 
-
 router.use(isLoggedIn);
 
-
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const items = await fetchWishlist(req.user.id);
     res.json(items);
@@ -18,8 +20,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     console.log("Request body for POST /wishlist:", req.body);
     const { productId } = req.body;
@@ -30,8 +31,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-
-router.delete('/:id', async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     await removeFromWishlist(req.params.id);
     res.status(204).end();
@@ -41,4 +41,3 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 module.exports = router;
-
