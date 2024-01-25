@@ -476,7 +476,8 @@ body {
 
 .reviews-list {
   list-style: none;
-  padding: 0;
+  padding: 0px;
+  margin: 0px;
 }
 
 .review-box {
@@ -489,6 +490,8 @@ body {
 .sproduct-container {
   display: flex;
   flex-direction: row;
+  height: 500px;
+  flex: 1;
 }
 
 
@@ -514,13 +517,15 @@ body {
   background-color: #eee;
   padding: 20px;
   background-color: gainsboro;
-  margin-right: 5%;
+  margin-right: 2%;
+  height: 500px;
 }
 
 .Sproduct-info {
-  width: 100%;
+  width: 50%;
   height: 100px;
   background-color: rgb(124, 124, 124);
+  flex: 1;
 }
 
 
@@ -1178,3 +1183,38 @@ color:#373737
   font-weight: bold;
   
  }
+
+
+
+/* Stuff for single product page styling */
+
+.singleProduct-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap if necessary */
+}
+
+.product-container, .product-and-form-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  margin-right: 0px;
+  padding-right: 0px;
+}
+
+.reviews-container {
+ flex: 1;
+ margin-left: 0px;
+ padding-left: 0px;
+
+}
+
+.review-form {
+  width: 100%;
+}
+
+.scrollable-content {
+  overflow-y: auto; 
+  height: calc(50vh);
+}
+
+/* End of Stuff for single product page styling */

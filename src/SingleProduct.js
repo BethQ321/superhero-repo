@@ -113,13 +113,14 @@ const SingleProduct = ({
   }
 
   return (
-    <div>
-      <h2>{oneProduct.name}</h2>
+    <div className="singleProduct-container">
+      <div className="product-and-form-container">
       <div className="Sproduct-container">
         <div>
           <img src={oneProduct.image} className="Sproduct-image" alt={oneProduct.name} />
         </div>
         <div className="Sproduct-description">
+        <h2>{oneProduct.name}</h2>
           {oneProduct.description}
 
           <div>
@@ -132,10 +133,10 @@ const SingleProduct = ({
               <button onClick={handleAddToCart}>Add to Cart</button>
             )}
           </div>
+      <Link to="/products">Back to Products</Link>
         </div>
       </div>
-      <br />
-      <Link to="/products">Back to Products</Link>
+      <div className="review-form">
       <h2  style={{ textAlign: "center" }}>Write A Review </h2>
       <form onSubmit={handleReviewSubmit}>
   <div>
@@ -200,12 +201,13 @@ const SingleProduct = ({
     {submissionMessage && <div style={{ color: 'green', marginTop: '10px' }}>{submissionMessage}</div>} 
   </div>
 </form>
+</div>
+</div>
 
-
-      <div>
+      <div className='reviews-container'>
         <h3>Reviews</h3>
         {/* Sort by drop down menu */}
-        <div>
+       
           <label htmlFor="sortMethod">Sort by:</label>
           <select 
           id="sortMethod"
@@ -234,6 +236,7 @@ const SingleProduct = ({
   </select>
   <button onClick={resetFilter}>View All Reviews</button>
 </div>
+<div className="scrollable-content">
 <ul className="reviews-list">
         {filteredReviews().map((review) => (
           <li key={review.id} className="review-box">
@@ -252,7 +255,7 @@ const SingleProduct = ({
     </li>
   ))}
 </ul>
-      </div>
+  </div> 
     </div>
     </div>
   );
