@@ -125,12 +125,16 @@ const fetchOrders = async (userId, status) => {
   return response.rows;
 };
 
-const deleteOrder = async (orderId) => {
+const updateOrderStatus = async (orderId, newStatus) => {
   const SQL = `
-    DELETE FROM orders
-    WHERE id = $1
+    UPDATE orders
+    SET status = $1
+    WHERE id = $2
+    RETURNING *
   `;
-  await client.query(SQL, [orderId]);
+  
+  const response = await client.query(SQL, [newStatus, orderId]);
+  return response.rows[0];
 };
 
 
@@ -141,6 +145,6 @@ module.exports = {
   deleteLineItem,
   updateOrder,
   fetchOrders,
-  deleteOrder,
+  updateOrderStatus,
   fetchAllOrders
 };

@@ -29,13 +29,14 @@ const AllOrders = () => {
     return user ? user.username : "Unknown";
   };
 
-  const handleDeleteOrder = async (orderId) => {
-    console.log("Deleting order with ID:", orderId);
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
     try {
-      await api.deleteOrder(orderId);
-      window.location.reload();
+      if (newStatus !== "") {
+        await api.updateOrderStatus(orderId, newStatus);
+        window.location.reload();
+      }
     } catch (error) {
-      console.error("Error deleting order:", error);
+      console.error("Error updating order status:", error);
     }
   };
 
@@ -50,7 +51,7 @@ const AllOrders = () => {
             <th>Created At</th>
             <th>User Username</th>
             <th>Order Status</th>
-            <th></th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -61,12 +62,21 @@ const AllOrders = () => {
               <td>{getUsernameForOrder(order)}</td>
               <td>{order.status}</td>
               <td>
-                <button
-                  className="button-style"
-                  onClick={() => handleDeleteOrder(order.id)}
-                >
-                  Delete
-                </button>{" "}
+                <div className="status-dropdown">
+                  <select
+                    onChange={(e) =>
+                      handleUpdateOrderStatus(order.id, e.target.value)
+                    }
+                    value={order.status || ''}
+                  >
+                    <option value="">
+                      Change Status
+                    </option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="refunded">Refunded</option>
+                  </select>
+                </div>
               </td>
             </tr>
           ))}
