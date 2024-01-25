@@ -14,11 +14,10 @@ const Cart = ({
   handleShippingAndOrder,
   shipping,
   setShipping,
-  handleShippingChange
+  handleShippingChange,
 }) => {
   const navigate = useNavigate();
   const userId = auth.id;
-
 
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
@@ -57,7 +56,10 @@ const Cart = ({
         <div className="cart-actions">
           {/* shipping address form */}
           <p>Please fill in your shipping address below</p>
-          <p>We cannot guarantee 24h delivery time if not on the surface of the Earth</p>
+          <p>
+            We cannot guarantee 24h delivery time if not on the surface of the
+            Earth
+          </p>
           <form>
             <p>Street Address</p>
             <input
@@ -115,6 +117,5 @@ const Cart = ({
     </div>
   );
 };
-
 
 export default Cart;

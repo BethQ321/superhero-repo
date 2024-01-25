@@ -29,9 +29,7 @@ const fetchReviews = async () => {
   return response.rows;
 };
 
-
 const fetchShippingAddress = async () => {
-  
   const SQL = `
     SELECT *
     FROM shipping_address
@@ -78,24 +76,23 @@ const createReview = async (review) => {
   return response.rows[0];
 };
 
-
-const createShippingAddress = async(shipping, userId)=> {
+const createShippingAddress = async (shipping, userId) => {
   const SQL = `
     INSERT INTO shipping_address (id, user_id, street_address, city, state, zip_code) 
     VALUES($1, $2, $3, $4, $5, $6) 
     RETURNING *
   `;
-  
-  const response = await client.query(SQL, [ 
-    uuidv4(), 
+
+  const response = await client.query(SQL, [
+    uuidv4(),
     userId,
-    shipping.street_address, 
-    shipping.city, 
-    shipping.state, 
+    shipping.street_address,
+    shipping.city,
+    shipping.state,
     shipping.zip_code,
   ]);
   return response.rows[0];
-}
+};
 const updateProduct = async (productId, name, description, price) => {
   try {
     const SQL = `
@@ -141,14 +138,12 @@ const fetchProductById = async (productId) => {
     FROM products
     WHERE id = $1
     `;
-    const response = await client.query(SQL, [productId])
+    const response = await client.query(SQL, [productId]);
     return response.rows[0];
   } catch (error) {
     throw error;
   }
-}
-
-
+};
 
 module.exports = {
   fetchProducts,

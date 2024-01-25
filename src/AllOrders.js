@@ -29,13 +29,14 @@ const AllOrders = () => {
     return user ? user.username : "Unknown";
   };
 
-  const handleDeleteOrder = async (orderId) => {
-    console.log("Deleting order with ID:", orderId);
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
     try {
-      await api.deleteOrder(orderId);
-      window.location.reload();
+      if (newStatus !== "") {
+        await api.updateOrderStatus(orderId, newStatus);
+        window.location.reload();
+      }
     } catch (error) {
-      console.error("Error deleting order:", error);
+      console.error("Error updating order status:", error);
     }
   };
 
@@ -49,7 +50,8 @@ const AllOrders = () => {
             <th>Order ID</th>
             <th>Created At</th>
             <th>User Username</th>
-            <th></th>
+            <th>Order Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -58,13 +60,21 @@ const AllOrders = () => {
               <td>{order.id}</td>
               <td>{order.created_at}</td>
               <td>{getUsernameForOrder(order)}</td>
+              <td>{order.status}</td>
               <td>
-                <button
-                  className="button-style"
-                  onClick={() => handleDeleteOrder(order.id)}
-                >
-                  Delete
-                </button>{" "}
+                <div className="status-dropdown">
+                  <select
+                    onChange={(e) =>
+                      handleUpdateOrderStatus(order.id, e.target.value)
+                    }
+                    value={order.status || ""}
+                  >
+                    <option value="">Change Status</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Refunded">Refunded</option>
+                  </select>
+                </div>
               </td>
             </tr>
           ))}

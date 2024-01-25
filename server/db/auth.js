@@ -72,7 +72,7 @@ const createUser = async (user) => {
       user.email,
       user.phone,
       user.is_admin || false, //default state of false
-      user.is_vip || false, //default state of false 
+      user.is_vip || false, //default state of false
     ]);
 
     return response.rows[0];
@@ -92,7 +92,6 @@ const createUser = async (user) => {
   }
 };
 
-
 const updateUserProfile = async (id, fname, lname, email, phone, image) => {
   try {
     const SQL = `
@@ -101,19 +100,12 @@ const updateUserProfile = async (id, fname, lname, email, phone, image) => {
       WHERE id = $1
     `;
     await client.query(SQL, [id, fname, lname, email, phone, image]);
-    console.log("updateUserProfile works")
+    console.log("updateUserProfile works");
   } catch (error) {
-    console.error('Error updating profile in DB/Auth:', error);
+    console.error("Error updating profile in DB/Auth:", error);
     throw error;
   }
 };
-
-
-
-
-
-
-
 
 module.exports = {
   createUser,

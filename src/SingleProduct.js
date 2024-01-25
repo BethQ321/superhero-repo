@@ -12,12 +12,10 @@ const SingleProduct = ({
   handleDecrement,
   createLineItem,
 }) => {
-
   const formatDate = (dateString) => {
     const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
-
   const [selectedRating, setSelectedRating] = useState("");
   const [sortMethod, setSortMethod] = useState("newest first");
   const [reviewForm, setReviewForm] = useState({
@@ -30,10 +28,8 @@ const SingleProduct = ({
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState("");
-
   const params = useParams();
   const productId = params.id;
-
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -43,17 +39,13 @@ const SingleProduct = ({
         setError(error.message);
       }
     };
-
     fetchReviews();
   }, [productId]);
-
   const oneProduct = products.find((product) => product.id === productId);
   const cartItem = cartItems.find((item) => item.product_id === oneProduct?.id);
-
   const handleAddToCart = () => {
     createLineItem(oneProduct);
   };
-
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -73,19 +65,15 @@ const SingleProduct = ({
       setError(error.message);
     }
   };
-
   const handleRatingFilterChange = (e) => {
     setSelectedRating(e.target.value);
   };
-
   const handleSortChange = (e) => {
     setSortMethod(e.target.value);
   };
-
   const resetFilter = () => {
     setSelectedRating("");
   };
-
   const sortedReviews = () => {
     let sorted = [...reviews];
     switch (sortMethod) {
@@ -101,7 +89,6 @@ const SingleProduct = ({
         return sorted;
     }
   };
-
   const filteredReviews = () => {
     return sortedReviews().filter(review => 
       selectedRating === "" || parseInt(review.rating) === parseInt(selectedRating)
@@ -122,7 +109,6 @@ const SingleProduct = ({
         <div className="Sproduct-description">
         <h2>{oneProduct.name}</h2>
           {oneProduct.description}
-
           <div>
             {cartItem ? (
               <div>
@@ -150,7 +136,6 @@ const SingleProduct = ({
       required
     />
   </div>
-
   <div>
     <label htmlFor="reviewTitle">Review Title:</label>
     <input
@@ -201,10 +186,12 @@ const SingleProduct = ({
     {submissionMessage && <div style={{ color: 'green', marginTop: '10px' }}>{submissionMessage}</div>} 
   </div>
 </form>
+
 </div>
 </div>
 
       <div className='reviews-container'>
+
         <h3>Reviews</h3>
         {/* Sort by drop down menu */}
        
@@ -260,5 +247,4 @@ const SingleProduct = ({
     </div>
   );
 };
-
 export default SingleProduct;
