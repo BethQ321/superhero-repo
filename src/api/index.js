@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 const getHeaders = () => {
   return {
     headers: {
@@ -15,27 +13,24 @@ const fetchProducts = async (setProducts) => {
   setProducts(response.data);
 };
 
-
 const fetchShippingAddress = async (setShipping) => {
   const response = await axios.get("/api/shippingaddress", getHeaders());
   setShipping(response.data);
 };
 
-
 const fetchEditProducts = async (setEditProducts) => {
   const response = await axios.get("/api/products/edit");
   setEditProducts(response.data);
-}; 
+};
 
 const fetchOrders = async (setOrders) => {
-
   const response = await axios.get("/api/orders", getHeaders());
   setOrders(response.data);
 };
 
 const fetchAllOrders = async (setAllOrders) => {
   const response = await axios.get("/api/orders/all", getHeaders());
-  console.log(response.data)
+  console.log(response.data);
   setAllOrders(response.data);
 };
 
@@ -48,7 +43,6 @@ const fetchReviews = async (setReviews) => {
   const response = await axios.get("/api/reviews");
   setReviews(response.data);
 };
-
 
 const createLineItem = async ({ product, cart, lineItems, setLineItems }) => {
   const response = await axios.post(
@@ -78,18 +72,19 @@ const createReview = async (productId, review, setReview) => {
   setReview(response.data);
 };
 
-  const createShippingAddress = async( shipping, street_address, setShipping) => {
-    const response = await axios.post("/api/shippingaddress", {
+const createShippingAddress = async (shipping, street_address, setShipping) => {
+  const response = await axios.post(
+    "/api/shippingaddress",
+    {
       street_address: street_address,
       city: shipping.city,
       state: shipping.state,
       zip_code: shipping.zip_code,
-    }, getHeaders()
-    );
-  }
+    },
+    getHeaders()
+  );
+};
 
-
-  
 const updateLineItem = async ({ lineItem, cart, lineItems, setLineItems }) => {
   const response = await axios.put(
     `/api/lineItems/${lineItem.id}`,
@@ -112,7 +107,6 @@ const updateDownLineItem = async ({
   lineItems,
   setLineItems,
 }) => {
-  // Subtracting one from the existing quantity
   lineItem.quantity = lineItem.quantity - 1;
 
   const response = await axios.put(
@@ -124,7 +118,6 @@ const updateDownLineItem = async ({
     getHeaders()
   );
 
-  // Update the line items in the state
   setLineItems(
     lineItems.map((item) =>
       item.id === response.data.id ? response.data : item
@@ -145,7 +138,6 @@ const removeFromCart = async ({ lineItem, lineItems, setLineItems }) => {
   );
   setLineItems(lineItems.filter((_lineItem) => _lineItem.id !== lineItem.id));
 };
-
 
 const attemptLoginWithToken = async (setAuth) => {
   const token = window.localStorage.getItem("token");
@@ -169,16 +161,18 @@ const deleteProduct = async (productId) => {
   }
 };
 
-const deleteOrder = async (orderId) => {
+const updateOrderStatus = async (orderId, newStatus) => {
   try {
-    await axios.delete(`/api/orders/${orderId}`, getHeaders());
+    await axios.put(
+      `/api/orders/status/${orderId}`,
+      { status: newStatus },
+      getHeaders()
+    );
   } catch (error) {
-    console.error("Error deleting product2:", error);
+    console.error("Error updating status:", error);
     throw error;
   }
 };
-
-
 
 const login = async ({ credentials, setAuth }) => {
   const response = await axios.post("/api/login", credentials);
@@ -191,9 +185,6 @@ const logout = (setAuth) => {
   window.localStorage.removeItem("token");
   setAuth({});
 };
-
-
-
 
 const api = {
   login,
@@ -213,10 +204,9 @@ const api = {
   fetchShippingAddress,
   getHeaders,
   deleteProduct,
-  deleteOrder,
+  updateOrderStatus,
   fetchAllOrders,
   fetchEditProducts,
-
 };
 
 export default api;

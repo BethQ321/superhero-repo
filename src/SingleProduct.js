@@ -12,12 +12,10 @@ const SingleProduct = ({
   handleDecrement,
   createLineItem,
 }) => {
-
   const formatDate = (dateString) => {
     const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
-
   const [selectedRating, setSelectedRating] = useState("");
   const [sortMethod, setSortMethod] = useState("newest first");
   const [reviewForm, setReviewForm] = useState({
@@ -30,10 +28,8 @@ const SingleProduct = ({
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState("");
-
   const params = useParams();
   const productId = params.id;
-
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -43,17 +39,13 @@ const SingleProduct = ({
         setError(error.message);
       }
     };
-
     fetchReviews();
   }, [productId]);
-
   const oneProduct = products.find((product) => product.id === productId);
   const cartItem = cartItems.find((item) => item.product_id === oneProduct?.id);
-
   const handleAddToCart = () => {
     createLineItem(oneProduct);
   };
-
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -73,19 +65,15 @@ const SingleProduct = ({
       setError(error.message);
     }
   };
-
   const handleRatingFilterChange = (e) => {
     setSelectedRating(e.target.value);
   };
-
   const handleSortChange = (e) => {
     setSortMethod(e.target.value);
   };
-
   const resetFilter = () => {
     setSelectedRating("");
   };
-
   const sortedReviews = () => {
     let sorted = [...reviews];
     switch (sortMethod) {
@@ -101,7 +89,6 @@ const SingleProduct = ({
         return sorted;
     }
   };
-
   const filteredReviews = () => {
     return sortedReviews().filter(review => 
       selectedRating === "" || parseInt(review.rating) === parseInt(selectedRating)
@@ -109,19 +96,19 @@ const SingleProduct = ({
   };
 
   if (!oneProduct) {
-    return <div>Loading product...</div>;
+    return <div>Error when loading, please log in.</div>;
   }
 
   return (
-    <div>
-      <h2>{oneProduct.name}</h2>
+    <div className="singleProduct-container">
+      <div className="product-and-form-container">
       <div className="Sproduct-container">
         <div>
           <img src={oneProduct.image} className="Sproduct-image" alt={oneProduct.name} />
         </div>
         <div className="Sproduct-description">
+        <h2>{oneProduct.name}</h2>
           {oneProduct.description}
-
           <div>
             {cartItem ? (
               <div>
@@ -132,10 +119,10 @@ const SingleProduct = ({
               <button onClick={handleAddToCart}>Add to Cart</button>
             )}
           </div>
+      <Link to="/products">Back to Products</Link>
         </div>
       </div>
-      <br />
-      <Link to="/products">Back to Products</Link>
+      <div className="review-form">
       <h2  style={{ textAlign: "center" }}>Write A Review </h2>
       <form onSubmit={handleReviewSubmit}>
   <div>
@@ -149,7 +136,6 @@ const SingleProduct = ({
       required
     />
   </div>
-
   <div>
     <label htmlFor="reviewTitle">Review Title:</label>
     <input
@@ -201,11 +187,14 @@ const SingleProduct = ({
   </div>
 </form>
 
+</div>
+</div>
 
-      <div>
+      <div className='reviews-container'>
+
         <h3>Reviews</h3>
         {/* Sort by drop down menu */}
-        <div>
+       
           <label htmlFor="sortMethod">Sort by:</label>
           <select 
           id="sortMethod"
@@ -234,6 +223,7 @@ const SingleProduct = ({
   </select>
   <button onClick={resetFilter}>View All Reviews</button>
 </div>
+<div className="scrollable-content">
 <ul className="reviews-list">
         {filteredReviews().map((review) => (
           <li key={review.id} className="review-box">
@@ -252,10 +242,9 @@ const SingleProduct = ({
     </li>
   ))}
 </ul>
-      </div>
+  </div> 
     </div>
     </div>
   );
 };
-
 export default SingleProduct;
