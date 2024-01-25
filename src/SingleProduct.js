@@ -109,7 +109,7 @@ const SingleProduct = ({
   };
 
   if (!oneProduct) {
-    return <div>Loading product...</div>;
+    return <div>Error when loading, please log in.</div>;
   }
 
   return (
