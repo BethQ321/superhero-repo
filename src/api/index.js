@@ -169,11 +169,11 @@ const deleteProduct = async (productId) => {
   }
 };
 
-const deleteOrder = async (orderId) => {
+const updateOrderStatus = async (orderId, newStatus) => {
   try {
-    await axios.delete(`/api/orders/${orderId}`, getHeaders());
+    await axios.put(`/api/orders/status/${orderId}`, { status: newStatus }, getHeaders());
   } catch (error) {
-    console.error("Error deleting product2:", error);
+    console.error("Error updating status:", error);
     throw error;
   }
 };
@@ -213,7 +213,7 @@ const api = {
   fetchShippingAddress,
   getHeaders,
   deleteProduct,
-  deleteOrder,
+  updateOrderStatus,
   fetchAllOrders,
   fetchEditProducts,
 
