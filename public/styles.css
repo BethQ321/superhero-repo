@@ -921,8 +921,10 @@ nav a img {
 
 .button-group {
   display: flex;
+  flex-direction: column;
   gap: 5px; 
   align-items: center;
+
 }
 
 .wishlist-error {
