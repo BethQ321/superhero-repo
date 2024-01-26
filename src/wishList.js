@@ -116,12 +116,14 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
                 <button
                   className="add-to-cart"
                   onClick={() => handleAddToCartFromWishlist(item)}
+                  style={{border:"2px solid #373737"}}
                 >
                   Add to Cart
                 </button>
                 <button
                   className="remove-from-wishlist"
                   onClick={() => handleRemove(item.wishlist_id)}
+                  style={{border:"2px solid #373737"}}
                 >
                   Remove
                 </button>

@@ -33,14 +33,17 @@ const SingleProduct = ({
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`/api/reviews?productId=${productId}`);
+        const response = await axios.get(`/api/reviews`, { params: { productId } });
         setReviews(response.data);
       } catch (error) {
+        console.error("Error fetching reviews:", error);
         setError(error.message);
       }
     };
+  
     fetchReviews();
   }, [productId]);
+  
   const oneProduct = products.find((product) => product.id === productId);
   const cartItem = cartItems.find((item) => item.product_id === oneProduct?.id);
   const handleAddToCart = () => {
@@ -91,9 +94,11 @@ const SingleProduct = ({
   };
   const filteredReviews = () => {
     return sortedReviews().filter(review => 
-      selectedRating === "" || parseInt(review.rating) === parseInt(selectedRating)
+      review.product_id === productId &&
+      (selectedRating === "" || parseInt(review.rating) === parseInt(selectedRating))
     );
   };
+  
 
   if (!oneProduct) {
     return <div>Error when loading, please log in.</div>;
@@ -221,7 +226,7 @@ const SingleProduct = ({
         id="ratingFilter"
         value={selectedRating}
         onChange={handleRatingFilterChange}
-        style={{ fontSize: '15px', paddingTop: '3px', paddingBottom: '3px', textAlign: 'center'}}
+        style={{ fontSize: '15px', paddingTop: '3px', paddingBottom: '3px', textAlign: 'center', paddingLeft: '6px', paddingRight: '6px'}}
       >
         <option value="">View By Star</option>
         <option value="1">1 Star Only</option>
@@ -231,7 +236,7 @@ const SingleProduct = ({
         <option value="5">5 Star Only</option>
       </select>
     </div>
-    <button onClick={resetFilter} style={{ fontSize: '14px' }}>View All Reviews</button>
+    <button onClick={resetFilter} style={{ fontSize: '14px', border:"2px solid #373737" }}>View All Reviews</button>
   </div>
 <div className="scrollable-content">
 <ul className="reviews-list">
@@ -258,3 +263,4 @@ const SingleProduct = ({
   );
 };
 export default SingleProduct;
+

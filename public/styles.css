@@ -359,7 +359,8 @@ nav button:hover {
   margin: 0 auto;
   padding: 20px;
   display: flex;
-
+  justify-content: center;
+  /* margin-right: 25; */
 }
 
 .product-search {
@@ -456,6 +457,7 @@ nav button:hover {
   width: 200px;
   height: auto;
   border-radius: 1.5rem;
+  justify-content: center;
 }
 
 .product-description {
@@ -842,7 +844,6 @@ body.dark-mode {
   background-color: #282828;
   color: #fff;
   padding: 6px 12px;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
@@ -851,7 +852,10 @@ body.dark-mode {
   display: inline-block;
   text-align: center;
   font-size: 16px;
+  border: none;
 }
+
+
 
 .dark-mode button:hover {
   background-color: #373737;
