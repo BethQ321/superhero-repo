@@ -91,7 +91,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       ) : wishList.length === 0 ? (
         <p>No items in your wish list.</p>
       ) : (
-        <ul className="product-list">
+        <ul className="product-list" style={{ marginRight:"20px"}}>
           {wishList.map((item) => (
             <li className="product-box" key={item.wishlist_id}>
               <Link to={`/products/${item.product_id}`} className="product-link">

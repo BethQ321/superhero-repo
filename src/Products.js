@@ -119,7 +119,7 @@ const Products = ({
   }, [selectedClass, showVipOnly, products]);
 
   return (
-    <div className="product-container">
+    <div className="product-container" style={{marginRight: "20px"}}>
       <h2>Products</h2>
 
       <div className="product-search">
@@ -162,7 +162,7 @@ const Products = ({
           ) : null}
         </div>
       )}
-      <ul className="product-list">
+      <ul className="product-list" style={{ overflowY:"auto", height: "calc(78vh)"}}>
         {filteredProducts.map((product) => {
           if (
             (!auth.id && (product.vip_only || product.class === "villain")) ||
