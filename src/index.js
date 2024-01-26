@@ -26,7 +26,7 @@ import EditProducts from "./EditProducts";
 import AllOrders from "./AllOrders";
 import axios from "axios";
 import EditSingleProduct from "./EditSingleProduct";
-
+import Forums from "./Forums";
 
 
 const App = () => {
@@ -225,6 +225,7 @@ const App = () => {
   return (
     <div>
       <Nav
+        //Forms ={Forms}
         auth={auth}
         products={products}
         orders={orders}
@@ -236,6 +237,7 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home auth={auth} />} />
+          <Route path="/Forums" element={<Forums auth={auth} />} />
           <Route
             path="/products"
             element={
