@@ -129,7 +129,7 @@ const Products = ({
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button onClick={handleShowAllClick}>Show All</button>
+        <button onClick={handleShowAllClick} style={{border:"2px solid #373737"}}>Show All</button>
       </div>
 
       {auth.id && (
@@ -200,11 +200,13 @@ const Products = ({
                   ) ? (
                     <div className="button-group">
                       <Link to={`/cart`}>View Cart</Link>
-                      <button
+                      <button 
+                      style={{border:"2px solid #373737"}}
                         onClick={() =>
                           updateLineItem(
                             cartItems.find(
                               (lineItem) => lineItem.product_id === product.id
+                              
                             )
                           )
                         }
@@ -214,10 +216,11 @@ const Products = ({
                     </div>
                   ) : (
                     <div>
-                      <div className="button-group">
+                      <div className="button-group" >
                         <button
                           className="add-to-cart"
                           onClick={() => createLineItem(product)}
+                          style={{border:"2px solid #373737"}}
                         >
                           Add to Cart
                         </button>
@@ -229,6 +232,7 @@ const Products = ({
                           <button
                             className="add-to-wishlist"
                             onClick={() => addProductToWishlist(product)}
+                            style={{border:"2px solid #373737"}}
                           >
                             Add to Wishlist
                           </button>
