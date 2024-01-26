@@ -82,6 +82,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       console.error("Error removing item from wishlist:", error);
     }
   };
+
   return (
     <div className="product-container">
       <h2>Wish List</h2>
@@ -92,24 +93,26 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
       ) : (
         <ul className="product-list">
           {wishList.map((item) => (
-            <li key={item.wishlist_id}>
-              <Link to={`/products/${item.product_id}`}>
+            <li className="product-box" key={item.wishlist_id}>
+              <Link to={`/products/${item.product_id}`} className="product-link">
                 <img
                   className="productImage"
                   src={item.product_image}
                   alt={item.product_name}
                 />
               </Link>
-              <p>
+              <br/>
+              <div className="product-description">
                 <Link to={`/products/${item.product_id}`}>
                   {item.product_name}
                 </Link>
                 <br />
-                <br />${item.product_price}:
                 <br />
-                {item.product_description}
-              </p>
-              <div className="wishlist-item-actions">
+                ${item.product_price}
+                <br />
+                
+              </div>
+              <div className="product-actions">
                 <button
                   className="add-to-cart"
                   onClick={() => handleAddToCartFromWishlist(item)}
@@ -123,7 +126,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
                   Remove
                 </button>
                 {addToCartErrors && addToCartErrors[item.wishlist_id] && (
-                  <div className="error">
+                  <div className="wishlist-error">
                     {addToCartErrors[item.wishlist_id]}
                   </div>
                 )}
