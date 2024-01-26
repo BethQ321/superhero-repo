@@ -207,7 +207,7 @@ const seed = async () => {
     createUser({
       username: "devin",
       password: "d123",
-      Fname: "FirstName",
+      Fname: "Devin",
       Lname: "LastName",
       phone: "555-555-5555",
       email: "email7@email.com",
