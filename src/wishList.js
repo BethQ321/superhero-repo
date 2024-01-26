@@ -85,12 +85,13 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
 
   return (
     <div className="product-container">
-      <h2>Wish List</h2>
+      <h2 style={{marginBottom: "15px"}}>Wish List</h2>
       {isLoading ? (
         <p>Loading wish list...</p>
       ) : wishList.length === 0 ? (
         <p>No items in your wish list.</p>
       ) : (
+        <div style={{ overflowY:"auto", height: "calc(85vh)"}}>
         <ul className="product-list" style={{ marginRight:"20px"}}>
           {wishList.map((item) => (
             <li className="product-box" key={item.wishlist_id}>
@@ -136,6 +137,7 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
             </li>
           ))}
         </ul>
+        </div>
       )}
     </div>
   );
