@@ -5,15 +5,15 @@ const Forums = ({auth}) => {
   const [messages, setMessages] = useState([]);  //holds chat messages
   const [messageInput, setMessageInput] = useState(''); //for new incoming messages
   const [name, setName] = useState(''); //display user name
-  const socket = io('http://localhost:5502'); // Socket
+  const socket = io('http://localhost:5501', { transports: ['websocket'] }); // Socket
 
   useEffect(() => {
     
     // Incoming chat messages
     socket.on('chat-message', (data) => {
       setMessages((prevMessages) => [...prevMessages, data]);
+      console.log("socket on",data)
     });
-
 
     // For user connected - Doesn't work
     socket.on('user-connected', (userName) => {
@@ -26,13 +26,16 @@ const Forums = ({auth}) => {
     });
 
     
-    setName(auth.username);
+    setName((prevName) => prevName || auth.username);
 
     return () => {
       
       socket.disconnect();
     };
-  }, [auth.username, socket]); 
+  }, [auth.username]); 
+
+  
+
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +44,8 @@ const Forums = ({auth}) => {
     if (messageInput.trim() !== '') {
       const newMessage = { name, message: messageInput };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
+      
+      console.log("socket submit",newMessage)
 
       // Send message to server
       socket.emit('send-chat-message', newMessage);
@@ -48,22 +53,21 @@ const Forums = ({auth}) => {
       setMessageInput('');
     }
   };
+  
 
   return (
     <div>
       <div id="message-container">
-        {/*Each bit of the array */}
-        {messages.map((message, index) => (
-          <div key={index}>
-            {message.system ? (
-              <span style={{ color: 'gray' }}>{message.system}</span>
-            ) : (
-              <span>{`${message.name}: ${message.message}`}</span>
-            )}
-          </div>
-        ))}
+    {messages.map((message, index) => (
+  <div key={index}>
+    {message.message && message.message.name ? (
+      <span>{`${message.message.name}: ${message.message.message}`}</span>
+    ) : null}
+  </div>
+))}
+
       </div>
-      {/* */}
+      
       <form id="send-container" onSubmit={handleFormSubmit}>
         <input
           type="text"
