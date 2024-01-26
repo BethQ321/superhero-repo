@@ -621,6 +621,8 @@ nav button:hover {
   background-color: gainsboro;
   margin-right: 2%;
   height: 500px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .Sproduct-info {
@@ -853,12 +855,16 @@ body.dark-mode {
 .dark-mode .registration-complete-container,
 .dark-mode .orders-container,
 .dark-mode .admin-container,
-.dark-mode .edit-product-form {
+.dark-mode .edit-product-form,
+.dark-mode .review-box {
   background-color: #242424;
   color: #e0e0e0;
   border-color: #373737;
   transition: background-color 1s, color 1s;
 }
+
+
+
 
 .dark-mode .orders-container {
   background-color: #242424;
@@ -1041,13 +1047,48 @@ body.dark-mode {
   flex: 1;
   margin-left: 0px;
   padding-left: 0px;
+  padding-top: 15px;
+
 }
 
 .review-form {
   width: 100%;
+  flex: 1;
 }
 
 .scrollable-content {
   overflow-y: auto;
-  height: calc(50vh);
+  height: calc(80vh);
+  padding-right: 15px;
+}
+
+.review-name {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.review-title {
+  text-align: center;
+}
+
+.review-text {
+  font-size: 16px;
+  margin-top: 8px;
+  font-style: bold;
+}
+
+.rating-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rating-row label, 
+.rating-row select {
+  width: auto;  
+  margin-right: 10px;  
+  flex-grow: 0; 
+  flex-shrink: 0; 
+  font-size: 16px;
+
 }
