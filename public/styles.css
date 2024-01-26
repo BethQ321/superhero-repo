@@ -901,7 +901,9 @@ body.dark-mode {
   color: #e0e0e0;
 }
 
-
+.dark-mode nav button:hover {
+  background-color: #1f1f1f;
+}
 
 .dark-mode nav a.active {
   color: darkgoldenrod;
