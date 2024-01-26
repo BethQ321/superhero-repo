@@ -205,6 +205,9 @@ button:hover {
   font-weight: bold;
   margin-right: 10px;
   transition: color 0.3s ease;
+  object-fit: contain;
+  margin-left: 10px;
+
 }
 
 .product-list li a:hover,
@@ -464,7 +467,7 @@ nav button:hover {
   justify-content: center;
   margin: auto;
   box-sizing: border-box;
-  padding: 0;
+  object-fit: contain;
 }
 
 .product-description {
@@ -632,7 +635,7 @@ nav button:hover {
 .Sproduct-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .Sproduct-description {
