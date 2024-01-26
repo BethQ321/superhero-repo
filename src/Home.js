@@ -157,7 +157,7 @@ const Home = ({ auth, isDarkMode }) => {
             alt={isDarkMode ? "Villain" : "Hero"}
             className="home-image"
           />
-          <h3 className="home-subtitle">
+          <h3 className="home-subtitle" style={{marginTop: "25px"}}>
             Please,{" "}
             <Link to="/Login" className="a-link">
               Login
