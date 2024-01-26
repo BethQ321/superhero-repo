@@ -64,20 +64,20 @@ const Navigations = ({
           <NavLink to="/">
             {auth.image ? (
               <img className="profile-image" src={auth.image} alt="Profile" />
-            ) : (
-              <img
+              ) : (
+                <img
                 className="profile-image"
                 src="https://i.imgur.com/yoJLg9c.png"
                 alt="Profile"
-              />
-            )}
+                />
+                )}
           </NavLink>
+                <span className="user-greeting">Welcome {auth.fname}!</span>
           <NavLink to="/products">Products ({vipProductsCount})</NavLink>
           <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <NavLink to="/orders">
             Orders ({orders.filter((order) => !order.is_cart).length})
           </NavLink>
-          <span className="user-greeting">Welcome {auth.username}!</span>
 
           <div className="menu-and-dark-mode">
             <button onClick={toggleDropdown} className="dropdown-toggle">
