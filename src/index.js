@@ -53,23 +53,33 @@ const App = () => {
 
   useEffect(() => {
     if (auth.id) {
-      setShipping(prevShipping => ({
+      setShipping((prevShipping) => ({
         ...prevShipping,
-        user_id: auth.id
+        user_id: auth.id,
       }));
     }
   }, [auth.id]);
-  
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-  }, [isDarkMode]);
 
-  
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    localStorage.setItem("darkMode", newMode ? "1" : "0");
+    if (newMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  };
+  useEffect(() => {
+    const isDarkModeEnabled = localStorage.getItem("darkMode") === "1";
+    setIsDarkMode(isDarkModeEnabled);
+
+    if (isDarkModeEnabled) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, []);
 
   const attemptLoginWithToken = async () => {
     await api.attemptLoginWithToken(setAuth);
@@ -99,7 +109,7 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
-  
+
   // useEffect(() => {
   //   const fetchShippingAddress = async () => {
   //     try {
@@ -122,7 +132,7 @@ const App = () => {
   const updateDownLineItem = async (lineItem) => {
     await api.updateLineItem({ lineItem, cart, lineItems, setLineItems });
   };
-  
+
   const updateOrder = async (order) => {
     await api.updateOrder({ order, setOrders });
   };
@@ -136,7 +146,7 @@ const App = () => {
         user_id: userId,
       });
 
-      await updateOrder({ ...cart, is_cart: false });
+      await updateOrder({ ...cart, is_cart: false, status: "Processing" });
 
       setShipping({
         user_id: userId,
@@ -151,8 +161,9 @@ const App = () => {
     }
   };
   const handleShippingChange = (e) => {
-    const { id, value } = e.target; 
-    setShipping({ ...shipping, [id]: value });}
+    const { id, value } = e.target;
+    setShipping({ ...shipping, [id]: value });
+  };
 
   const handleDecrement = async (lineItem) => {
     if (lineItem.quantity > 1) {
@@ -236,7 +247,10 @@ const App = () => {
       />
       <main>
         <Routes>
-          <Route path="/" element={<Home auth={auth} />} />
+          <Route
+            path="/"
+            element={<Home auth={auth} isDarkMode={isDarkMode} />}
+          />
           <Route path="/Forums" element={<Forums auth={auth} />} />
           <Route
             path="/products"
@@ -256,6 +270,7 @@ const App = () => {
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
                 addToWishList={addToWishList}
+                isDarkMode={isDarkMode}
               />
             }
           />
@@ -285,7 +300,6 @@ const App = () => {
                 shipping={shipping}
                 error={error}
                 setError={setError}
-
               />
             }
           />
@@ -353,12 +367,14 @@ const App = () => {
               <EditProducts products={products} formatPrice={formatPrice} />
             }
           />
-          <Route path="/edit-single-product/:productId" element={<EditSingleProduct formatPrice={formatPrice} />} />
+          <Route
+            path="/edit-single-product/:productId"
+            element={<EditSingleProduct formatPrice={formatPrice} />}
+          />
 
           <Route path="allorders" element={<AllOrders orders={orders} />} />
         </Routes>
       </main>
-    
     </div>
   );
 };

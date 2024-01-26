@@ -7,7 +7,8 @@
     "build": "webpack",
     "build:dev": "webpack --watch --mode=development",
     "start:dev": "JWT=michael nodemon server/index.js --ignore src/ --ignore dist/",
-    "start:dev:sync": "SYNC=true npm run start:dev"
+    "start:dev:sync": "SYNC=true npm run start:dev",
+    "seed": "node seed.js"
   },
   "keywords": [],
   "author": "",

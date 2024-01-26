@@ -18,6 +18,7 @@ const Products = ({
   searchQuery,
   formatPrice,
   addToWishList,
+  isDarkMode,
 }) => {
   const [selectedClass, setSelectedClass] = useState("All");
   const [showVipOnly, setShowVipOnly] = useState(false);
@@ -26,33 +27,43 @@ const Products = ({
 
   const addProductToWishlist = async (product) => {
     try {
-        setWishlistErrors({ ...wishlistErrors, [product.id]: '' });
+      setWishlistErrors({ ...wishlistErrors, [product.id]: "" });
 
-        const response = await axios.post(
-            "/api/wishList",
-            { productId: product.id },
-            api.getHeaders()
-        );
-        setWishlistStatus({ ...wishlistStatus, [product.id]: true });
+      const response = await axios.post(
+        "/api/wishList",
+        { productId: product.id },
+        api.getHeaders()
+      );
+      setWishlistStatus({ ...wishlistStatus, [product.id]: true });
     } catch (error) {
-        setWishlistErrors({
-            ...wishlistErrors,
-            [product.id]: 'Item is already on your wishlist'
-        });
-        console.error("Error adding product to wishlist:", error);
+      setWishlistErrors({
+        ...wishlistErrors,
+        [product.id]: "Item is already on your wishlist",
+      });
+      console.error("Error adding product to wishlist:", error);
     }
-};
-
+  };
 
   const filterProductsByClass = (selectedClass) => {
-    if (selectedClass === "All") {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter(
-        (product) => product.class === selectedClass
-      );
-      setFilteredProducts(filtered);
+    let filtered = products;
+
+    if (selectedClass !== "All") {
+      filtered = filtered.filter((product) => product.class === selectedClass);
     }
+
+    if (!auth.is_vip) {
+      filtered = filtered.filter((product) => !product.vip_only);
+    }
+
+    if (!auth.id) {
+      filtered = filtered.filter((product) => !product.vip_only);
+    }
+
+    if (!isDarkMode) {
+      filtered = filtered.filter((product) => product.class !== "villain");
+    }
+
+    setFilteredProducts(filtered);
   };
 
   useEffect(() => {
@@ -74,9 +85,20 @@ const Products = ({
       );
     }
 
-    setFilteredProducts(updatedFilteredProducts);
-  }, [selectedClass, showVipOnly, products, auth]);
+    if (!auth.id) {
+      updatedFilteredProducts = updatedFilteredProducts.filter(
+        (product) => !product.vip_only
+      );
+    }
 
+    if (!isDarkMode) {
+      updatedFilteredProducts = updatedFilteredProducts.filter(
+        (product) => product.class !== "villain"
+      );
+    }
+
+    setFilteredProducts(updatedFilteredProducts);
+  }, [selectedClass, showVipOnly, products, auth, isDarkMode]);
 
   const handleVipCheckboxChange = () => {
     setShowVipOnly(!showVipOnly);
@@ -95,8 +117,9 @@ const Products = ({
       filterProductsByClass(selectedClass);
     }
   }, [selectedClass, showVipOnly, products]);
+
   return (
-    <div className="product-container">
+    <div className="product-container" style={{marginRight: "20px"}}>
       <h2>Products</h2>
 
       <div className="product-search">
@@ -106,98 +129,140 @@ const Products = ({
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button onClick={handleShowAllClick}>Show All</button>
+        <button onClick={handleShowAllClick} style={{border:"2px solid #373737"}}>Show All</button>
       </div>
 
-      <div className="product-filter">
-        <label>Filter by Class:</label>
-        <select
-          value={selectedClass}
-          onChange={(e) => setSelectedClass(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="suit">Suit</option>
-          <option value="vehicle">Vehicle</option>
-          <option value="mystic">Mystic</option>
-          <option value="tech">Tech</option>
-        </select>
-        <br></br>
+      {auth.id && (
+        <div className="filter-container">
+          <div className="product-filter">
+            <label>Filter by Class:</label>
+            <select
+              value={selectedClass}
+              onChange={(e) => setSelectedClass(e.target.value)}
+            >
+              <option value="All">All</option>
+              <option value="suit">Suit</option>
+              <option value="vehicle">Vehicle</option>
+              <option value="mystic">Mystic</option>
+              <option value="tech">Tech</option>
+              <option value="weapon">Weapon</option>
+              {isDarkMode && <option value="villain">Villain</option>}
+            </select>
+          </div>
 
-        {auth.is_vip && (
-          <label>
-            <input
-              type="checkbox"
-              checked={showVipOnly}
-              onChange={handleVipCheckboxChange}
-            />
-            Show VIP Items Only
-          </label>
-        )}
-      </div>
-
-      <ul className="product-list">
+          {auth.is_vip ? (
+            <label className="vip-label">
+              <input
+                type="checkbox"
+                checked={showVipOnly}
+                onChange={handleVipCheckboxChange}
+              />
+              Show VIP Items Only
+            </label>
+          ) : null}
+        </div>
+      )}
+      <ul className="product-list" style={{ overflowY:"auto", height: "calc(78vh)"}}>
         {filteredProducts.map((product) => {
+          if (
+            (!auth.id && (product.vip_only || product.class === "villain")) ||
+            (!isDarkMode && product.class === "villain")
+          ) {
+            return null;
+          }
           const cartItem = cartItems.find(
-            (item) => item.product_id === product.id
+            (lineItem) => lineItem.product_id === product.id
           );
 
           return (
-            <li key={product.id}>
+            <li className="product-box" key={product.id}>
               <Link to={`/products/${product.id}`} className="product-link">
-                <div className="product-name">
-                  {product.vip_only ? `VIP Item!` : ""}
-                </div>
                 <img
                   className="productImage"
                   src={product.image}
                   alt={product.name}
                 />
               </Link>
+              <br />
               <div className="product-description">
-                <Link to={`/products/${product.id}`}>{product.name}</Link><br /><br />
-                {formatPrice(product.price)}<br />  {product.description}
+                <Link to={`/products/${product.id}`}>
+                  {product.vip_only ? `VIP Item!` : ""}<br/>
+                  {product.name} 
+                </Link>
+                <br />
+                <br />
+                {formatPrice(product.price)}
               </div>
               <div className="product-actions">
-              {auth.id ? (
-    cartItem ? (
-      <div className="button-group">
-        <Link to={`/cart`}>View Cart</Link>
-        <button onClick={() => updateLineItem(cartItem)}>
-          Add Another
-        </button>
-      </div>
-    ) : (
-      <div>
-        <div className="button-group">
-          <button
-            className="add-to-cart"
-            onClick={() => createLineItem(product)}
-          >
-            Add to Cart
-          </button>
-          {wishlistStatus[product.id] ? (
-            <div className="wishlist-added">
-              Added to Wishlist
-            </div>
-          ) : (
-            <button
-              className="add-to-wishlist"
-              onClick={() => addProductToWishlist(product)}
-            >
-              Add to Wishlist
-            </button>
-          )}
-        </div>
-        {wishlistErrors && wishlistErrors[product.id] && (
-          <div className="wishlist-error">
-            {wishlistErrors[product.id]}
-          </div>
-        )}
-      </div>
-    )
-  ) : null}              
-     </div>
-
+                {auth.id ? (
+                  cartItems.find(
+                    (lineItem) => lineItem.product_id === product.id
+                  ) ? (
+                    <div className="button-group">
+                      <Link to={`/cart`}>View Cart</Link>
+                      <button 
+                      style={{border:"2px solid #373737"}}
+                        onClick={() =>
+                          updateLineItem(
+                            cartItems.find(
+                              (lineItem) => lineItem.product_id === product.id
+                              
+                            )
+                          )
+                        }
+                      >
+                        Add Another
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="button-group" >
+                        <button
+                          className="add-to-cart"
+                          onClick={() => createLineItem(product)}
+                          style={{border:"2px solid #373737"}}
+                        >
+                          Add to Cart
+                        </button>
+                        {wishlistStatus[product.id] ? (
+                          <div className="wishlist-added">
+                            Added to Wishlist
+                          </div>
+                        ) : (
+                          <button
+                            className="add-to-wishlist"
+                            onClick={() => addProductToWishlist(product)}
+                            style={{border:"2px solid #373737"}}
+                          >
+                            Add to Wishlist
+                          </button>
+                        )}
+                      </div>
+                      {wishlistErrors && wishlistErrors[product.id] && (
+                        <div className="wishlist-error">
+                          {wishlistErrors[product.id]}
+                        </div>
+                      )}
+                    </div>
+                  )
+                ) : (
+                  <div>
+                    <div className="button-group">
+                      <button className="add-to-cart" disabled>
+                        Add to Cart
+                      </button>
+                      <button className="add-to-wishlist" disabled>
+                        Add to Wishlist
+                      </button>
+                    </div>
+                    {wishlistErrors && wishlistErrors[product.id] && (
+                      <div className="wishlist-error">
+                        {wishlistErrors[product.id]}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </li>
           );
         })}

@@ -36,12 +36,12 @@ const AddProduct = () => {
       setSuccessMessage("Product successfully added!");
     } catch (error) {
       console.error("Error creating product:", error);
-      setSuccessMessage("")
+      setSuccessMessage("");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="add-product-form"onSubmit={handleSubmit}>
       <label>
         Product name:
         <input
@@ -96,9 +96,14 @@ const AddProduct = () => {
         />
       </label>
       <button type="submit">Add Product</button>
-      {successMessage && <span className="success-message">{successMessage}</span>}
-      <br></br><br></br>
-      <Link to="/admin" className="back-button">Back to Admin</Link>
+      {successMessage && (
+        <span className="success-message">{successMessage}</span>
+      )}
+      <br></br>
+      <br></br>
+      <Link to="/admin" className="nav-link">
+        Back to Admin
+      </Link>
     </form>
   );
 };

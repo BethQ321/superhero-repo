@@ -68,7 +68,7 @@ const AdminUsers = ({ auth }) => {
           ))}
         </tbody>
       </table>
-      <Link to="/admin" className="back-button">
+      <Link to="/admin" className="nav-link">
         Back to Admin
       </Link>
     </div>

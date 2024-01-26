@@ -1,6 +1,11 @@
 const client = require("./client");
 
-const { fetchProducts, createProduct, createReview, createShippingAddress} = require("./products");
+const {
+  fetchProducts,
+  createProduct,
+  createReview,
+  createShippingAddress,
+} = require("./products");
 
 const { createUser, authenticate, findUserByToken } = require("./auth");
 
@@ -15,23 +20,23 @@ const {
 
 const { fetchUsers } = require("./users");
 
-const loadImage = (filePath) => {   //
+const loadImage = (filePath) => {
+  //
   return new Promise((resolve, reject) => {
-    const fullPath = path.join(__dirname, filePath)
-    fs.readFile(fullPath, 'base64', (err, result) => {
-      if(err){
-        reject(err)
-      }else{
-        resolve(`data:image/png;base64,${result}`)
+    const fullPath = path.join(__dirname, filePath);
+    fs.readFile(fullPath, "base64", (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(`data:image/png;base64,${result}`);
       }
-    })
-  })
-}
-
+    });
+  });
+};
 
 const seed = async () => {
   const SQL = `
-  DROP TABLE IF EXISTS review;
+  DROP TABLE IF EXISTS review; 
     DROP TABLE IF EXISTS wishlist;
     DROP TABLE IF EXISTS line_items;
     -- Drop tables with dependencies last
@@ -75,8 +80,8 @@ const seed = async () => {
       product_id VARCHAR(500) NOT NULL,
       review_title VARCHAR(30),
       reviewText VARCHAR(1000),
-      rating INTEGER DEFAULT 1
-      
+      rating INTEGER DEFAULT 1,
+      created_at TIMESTAMP DEFAULT now() 
       );
     
       CREATE TABLE shipping_address(
@@ -92,7 +97,8 @@ const seed = async () => {
         id UUID PRIMARY KEY,
         created_at TIMESTAMP DEFAULT now(),
         is_cart BOOLEAN NOT NULL DEFAULT true,
-        user_id UUID REFERENCES users(id) NOT NULL
+        user_id UUID REFERENCES users(id) NOT NULL,
+        status VARCHAR(20)
         
       );
 
@@ -127,37 +133,34 @@ const seed = async () => {
   ON DELETE CASCADE;
 `;
 
-await client.query(alterLineItemsTable);
+  await client.query(alterLineItemsTable);
 
-
-
-  const [batman]  = await Promise.all([ 
+  const [batman] = await Promise.all([
     createShippingAddress({
       street_address: "batman",
       city: "gotham",
       state: "michigan",
       zip_code: 123,
-    
     }),
   ]);
   const [moe, lucy, ethyl, jonas, matthew, billy, devin] = await Promise.all([
     createUser({
-      username: "moe",
-      password: "m_password",
-      Fname: "FirstName",
-      Lname: "LastName",
+      username: "TheBatman",
+      password: "ilovejoker",
+      Fname: "Bruce",
+      Lname: "Wayne",
       phone: "555-555-5555",
-      email: "email1@email.com",
-      is_admin: false,
-      is_vip: false,
+      email: "Bats64@hotmail.com",
+      is_admin: true,
+      is_vip: true,
     }),
     createUser({
-      username: "lucy",
-      password: "l_password",
-      Fname: "FirstName",
-      Lname: "LastName",
+      username: "Superman",
+      password: "ilovelois",
+      Fname: "Clark",
+      Lname: "Kent",
       phone: "555-555-5555",
-      email: "emai2l@email.com",
+      email: "krypton23@aol.com",
       is_admin: false,
       is_vip: false,
     }),
@@ -204,7 +207,7 @@ await client.query(alterLineItemsTable);
     createUser({
       username: "devin",
       password: "d123",
-      Fname: "FirstName",
+      Fname: "Devin",
       Lname: "LastName",
       phone: "555-555-5555",
       email: "email7@email.com",
@@ -262,7 +265,7 @@ await client.query(alterLineItemsTable);
       description:
         "This is an easily mounted high energy precision laser that fits most big sharks (not hammerheads). Excelent for shark tanks under trap doors in secret layers or castle dikes. ***Batteries and shark not included*** ",
       vip_only: false,
-      class: "weapon",
+      class: "villain",
     }),
     createProduct({
       name: "Lightsaber",
@@ -325,7 +328,7 @@ await client.query(alterLineItemsTable);
       description:
         "A cloak that can manipulate light and shadow, allowing the hero to blend into darkness or create illusions. Great for infiltration and the material is super slippery and does not catch on sharp objects, is very silent and is anti bacterial and odor to throw off scent",
       vip_only: false,
-      class: "suit",
+      class: "villain",
     }),
     createProduct({
       name: "Holographic Projector Ring",
@@ -342,8 +345,8 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/p5XGoXb.png",
       description:
         "Harmless and biodegradable for most, but for that special someone will put them on even then playing field. Just spray any item and let dry for 2 hours before use, Not recomended for direct use due to short range",
-      vip_only: false,
-      class: "tech",
+      vip_only: true,
+      class: "villain",
     }),
     createProduct({
       name: "Gravitational Singularity Sphere",
@@ -351,7 +354,7 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/LTC503R.png",
       description:
         "A handheld orb that can create miniature black holes, capable of absorbing or repelling matter in a localized area.",
-      vip_only: false,
+      vip_only: true,
       class: "mystic",
     }),
     createProduct({
@@ -442,7 +445,7 @@ await client.query(alterLineItemsTable);
       description:
         "Goggles that allow the hero to enter and interact with the dream world, influencing the subconscious minds of others.",
       vip_only: false,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Dimensional Resonance Whistle",
@@ -472,7 +475,6 @@ await client.query(alterLineItemsTable);
       class: "suit",
     }),
     createProduct({
-
       name: "Elemental Fusion Crystal",
       price: 60000,
       image: "https://i.imgur.com/tO4PWc0.png",
@@ -482,7 +484,6 @@ await client.query(alterLineItemsTable);
       class: "mystic",
     }),
     createProduct({
-
       name: "Dimensional Anchor Gloves",
       price: 72500,
       image: "https://i.imgur.com/0EcMpsj.png",
@@ -516,7 +517,7 @@ await client.query(alterLineItemsTable);
       description:
         "A helmet that provides protection against mental attacks, such as telepathy or mind control.",
       vip_only: false,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Healing Serum",
@@ -587,8 +588,8 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/dz5TCCz.jpg",
       description:
         "Gauntlets that can generate magnetic fields, providing heroes with the ability to control metal objects or create magnetic pathways.",
-      vip_only: false,
-      class: "tech",
+      vip_only: true,
+      class: "villain",
     }),
     createProduct({
       name: "Wearable Exoskeleton",
@@ -632,7 +633,7 @@ await client.query(alterLineItemsTable);
       image: "https://i.imgur.com/DSDJrqh.jpg",
       description:
         "Contact lenses with augmented reality displays, providing vital information, analysis, and mission updates directly to the wearer's eyes.",
-      vip_only: false,
+      vip_only: true,
       class: "tech",
     }),
     createProduct({
@@ -651,7 +652,7 @@ await client.query(alterLineItemsTable);
       description:
         " Grenades that disintegrate or rearrange the molecular structure of objects, causing them to break down or transform.",
       vip_only: false,
-      class: "tech",
+      class: "villain",
     }),
     createProduct({
       name: "Nano-Replicator Pen",
@@ -663,12 +664,22 @@ await client.query(alterLineItemsTable);
       class: "tech",
     }),
     createProduct({
-      name: "",
+      name: "Zombie Defense Vehicle",
       price: 100,
-      image: "",
-      description: "",
+      image: "https://i.imgur.com/jEEmZwd.png",
+      description:
+        "A heavily modified, rugged vehicle outfitted with reinforced armor, spike-studded exteriors, and an array of weapons like machine guns or flamethrowers, designed to navigate and survive in a post-apocalyptic world overrun by zombies.",
       vip_only: false,
-      class: "",
+      class: "vehicle",
+    }),
+    createProduct({
+      name: "Satellite Laser Cannon",
+      price: 100,
+      image: "https://i.imgur.com/adGUg4F.png",
+      description:
+        "A powerful, high-tech weapon controlled from space, capable of precise, high-energy strikes or interventions on Earth.",
+      vip_only: true,
+      class: "villain",
     }),
   ]);
   let orders = await fetchOrders(ethyl.id);

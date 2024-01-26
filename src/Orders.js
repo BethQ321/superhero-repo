@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
-
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
 
-
-   const [shippingInfo, setShippingInfo] = useState([]);
+  const [shippingInfo, setShippingInfo] = useState([]);
 
   useEffect(() => {
     const fetchShippingAddress = async () => {
@@ -19,7 +17,7 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
         setError(error.message);
       }
     };
-  
+
     fetchShippingAddress();
   }, []);
 
@@ -45,15 +43,15 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
     <div className="orders-container">
       <h2 className="orders-header">Orders</h2>
       <ul className="orders-list">
-      {orders
+        {orders
           .filter((order) => !order.is_cart)
           .map((order) => {
-            const orderShippingInfo =shippingInfo.find(shippingInfo => shippingInfo.user_id === order.user_id);
+            const orderShippingInfo = shippingInfo.find(
+              (shippingInfo) => shippingInfo.user_id === order.user_id
+            );
             return (
               <li key={order.id} className="order-item">
                 <div className="order-details">
-                  
-                
                   {orderShippingInfo && (
                     <div className="shipping-info">
                       <h4>Shipping Address</h4>
@@ -61,14 +59,19 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                       <div>City: {orderShippingInfo.city}</div>
                       <div>State: {orderShippingInfo.state}</div>
                       <div>Zip Code: {orderShippingInfo.zip_code}</div>
-                      <br/>
-                      <div className="order-date">Order created @
-                      <div >{new Date(order.created_at).toLocaleString()}</div>
-                  </div>
+                      <br />
+                      <div className="order-info">
+                        Order created @
+                        <div>{new Date(order.created_at).toLocaleString()}</div>
+                        <br />
+                        <div>Order ID: {order.id}</div>
+                        <br />
+                        <div>Status:{order.status}</div>
+                      </div>
                     </div>
                   )}
-                </div>  
-              
+                </div>
+
                 <ul className="order-items-list">
                   {lineItems
                     .filter((lineItem) => lineItem.order_id === order.id)
@@ -78,12 +81,12 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                       );
                       return (
                         <li key={lineItem.id} className="order-item">
-                          <div className="order-item-name">
+                          <div className="order-item-text">
                             {product
                               ? `${lineItem.quantity} x ${product.name}: `
                               : ""}
                           </div>
-                          <div className="order-item-price">
+                          <div className="order-item-text">
                             {product
                               ? formatPrice(lineItem.quantity * product.price)
                               : ""}
@@ -91,19 +94,16 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                         </li>
                       );
                     })}
-                    <div className="order-total">
+                  <div className="order-total">
                     Total Price: {calculateOrderTotal(order)}
-                </div>
+                  </div>
                 </ul>
-                
               </li>
             );
           })}
-      </ul>  
+      </ul>
     </div>
-      );
-      }      
-
-
+  );
+};
 
 export default Orders;

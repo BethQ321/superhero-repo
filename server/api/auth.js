@@ -1,4 +1,9 @@
-const { authenticate, findUserByToken, createUser, updateUserProfile, } = require("../db/auth");
+const {
+  authenticate,
+  findUserByToken,
+  createUser,
+  updateUserProfile,
+} = require("../db/auth");
 
 const express = require("express");
 const app = express.Router();
@@ -33,45 +38,36 @@ app.get("/me", isLoggedIn, (req, res, next) => {
   }
 });
 
-
- app.put("/:id", async (req, res, next) => {
-
+app.put("/:id", async (req, res, next) => {
   const id = req.params.id;
   const { fname, lname, email, phone, image } = req.body;
 
-
   try {
     await updateUserProfile(id, fname, lname, email, phone, image);
-        res.status(200).send('Profile updated successfully');
-    
+    res.status(200).send("Profile updated successfully");
   } catch (error) {
-    console.error('Error updating profile in api/auth:', error);
+    console.error("Error updating profile in api/auth:", error);
     next(error);
   }
 });
 
 app.put("/:id", async (req, res, next) => {
-  //console.log("api/auth 2 " , req.body)
-   const {id} =req.params;
-   
+  const { id } = req.params;
+
   try {
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
     const phone = req.body.phone;
     const image = req.body.image;
-    //const userId = req.user.id;
 
     await updateUserProfile(id, fname, lname, email, phone, image);
 
-    console.log("api/id works")
+    console.log("api/id works");
   } catch (error) {
-    console.error('Error updating profile in api/auth/ID:', error);
-    next(error)
+    console.error("Error updating profile in api/auth/ID:", error);
+    next(error);
   }
 });
-
-
-
 
 module.exports = app;

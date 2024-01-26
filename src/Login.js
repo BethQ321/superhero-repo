@@ -34,23 +34,24 @@ const Login = ({ login }) => {
   }, [flash]);
 
   return (
-    <div className={`login-container ${flash ? "flash-effect" : ""}`}>
-      <form className="login-form" onSubmit={_login}>
+    <div className={`form-container ${flash ? "flash-effect" : ""}`}>
+      <form className="form-layout" onSubmit={_login}>
         <input
-          className="login-input"
+        type="text"
+          className="form-input"
           placeholder="Username"
           value={username}
           onChange={(ev) => setUsername(ev.target.value)}
         />
         <input
-          className="login-input"
+          className="form-input"
           type="password"
           placeholder="Password"
           value={password}
           onChange={(ev) => setPassword(ev.target.value)}
         />
-        {error && <div className="login-error">{error}</div>}
-        <button className="login-button" disabled={!username || !password}>
+        {error && <div className="error">{error}</div>}
+        <button disabled={!username || !password}>
           Login
         </button>
       </form>

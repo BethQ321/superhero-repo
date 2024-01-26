@@ -1,7 +1,7 @@
 // EditSingleProduct.js
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const EditSingleProduct = ({ formatPrice }) => {
   const { productId } = useParams();
@@ -9,12 +9,12 @@ const EditSingleProduct = ({ formatPrice }) => {
   const [editSuccess, setEditSuccess] = useState(false);
 
   const [product, setProduct] = useState({
-    id: '',
-    name: '',
-    description: '',
+    id: "",
+    name: "",
+    description: "",
     class: "",
     image: "",
-    price: ''
+    price: "",
   });
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const EditSingleProduct = ({ formatPrice }) => {
         const response = await axios.get(`/api/products/${productId}`);
         setProduct(response.data);
       } catch (error) {
-        console.error('Error fetching product:', error);
+        console.error("Error fetching product:", error);
       }
     };
 
@@ -44,7 +44,7 @@ const EditSingleProduct = ({ formatPrice }) => {
       await axios.put(`/api/products/${product.id}`, product);
       setEditSuccess(true);
     } catch (error) {
-      console.error('Error updating product:', error);
+      console.error("Error updating product:", error);
       setEditSuccess(false);
     }
   };
@@ -52,41 +52,55 @@ const EditSingleProduct = ({ formatPrice }) => {
   return (
     <div>
       <h2>Edit Product</h2>
-      <form>
+      <form className="add-product-form">
         <label>
           Name:
-          <input type="text" name="name" value={product.name} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="name"
+            value={product.name}
+            onChange={handleInputChange}
+          />
         </label>
         <label>
           Description:
-          <textarea name="description" value={product.description} onChange={handleInputChange} />
+          <textarea
+            name="description"
+            value={product.description}
+            onChange={handleInputChange}
+          />
         </label>
         <label>
-    Image URL:
-    <input
-      type="text"
-      name="image"
-      value={product.image}
-      onChange={handleInputChange}
-    />
-  </label>
-  <label>
-    Class:
-    <input
-      type="text"
-      name="class"
-      value={product.class}
-      onChange={handleInputChange}
-    />
-  </label>
+          Image URL:
+          <input
+            type="text"
+            name="image"
+            value={product.image}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Class:
+          <input
+            type="text"
+            name="class"
+            value={product.class}
+            onChange={handleInputChange}
+          />
+        </label>
         <label>
           Price:
-          <input type="number" name="price" value={product.price} onChange={handleInputChange} />
+          <input
+            type="number"
+            name="price"
+            value={product.price}
+            onChange={handleInputChange}
+          />
         </label>
         <button onClick={handleSave}>Save Changes</button>
         {editSuccess && <span>Product successfully updated!</span>}
         <br />
-        <button onClick={() => navigate('/editproducts')}>Back to Admin</button>
+        <button onClick={() => navigate("/editproducts")}>Back to Admin</button>
       </form>
     </div>
   );
