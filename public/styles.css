@@ -255,14 +255,26 @@ nav button:hover {
   background-color: #282828;
   transform: translateY(-2px);
 }
-
+.profile-flexcontainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .profile-image img {
-  border-radius: 50%;
+  border-radius: 70%;
   width: 300px;
   height: 300px;
   object-fit: cover;
   padding: 20px;
+  
 }
+
+.edituserbox{
+  flex-direction: row;
+  align-content: center;
+  margin: 1rem;
+}
+
 
 .user-gretting {
   font-weight: bold;
