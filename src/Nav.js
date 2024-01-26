@@ -42,7 +42,7 @@ const Navigations = ({
   // useEffect(() => {
   //   const storedMode = localStorage.getItem("darkMode");
   //   setIsDarkMode(storedMode === "1");
-  // }, []);
+  // }, []);f
 
   const handleOutsideClick = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

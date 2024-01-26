@@ -100,15 +100,17 @@ const SingleProduct = ({
   }
 
   return (
-    <div className="singleProduct-container">
-      <div className="product-and-form-container">
+    <div className="singleProduct-container" >
+      <div className="product-and-form-container" style={{paddingTop: "15px"}}>
       <div className="Sproduct-container">
         <div>
           <img src={oneProduct.image} className="Sproduct-image" alt={oneProduct.name} />
         </div>
-        <div className="Sproduct-description">
-        <h2>{oneProduct.name}</h2>
-          {oneProduct.description}
+        <div className="Sproduct-description" style={{position:"relative", paddingTop: "7px"}}>
+           <Link to="/products" className="nav-link" style={{  position: "absolute", bottom: "15px", right: "15px"}}>
+            All Products</Link>
+        <h2 style={{textAlign: "center", paddingBottom: "20px", color: "black", fontSize: "32px", paddingTop: "0px", marginTop: "0px"}}>{oneProduct.name}</h2>
+          <div style={{paddingBottom:"15px"}}>{oneProduct.description}</div>
           <div>
             {cartItem ? (
               <div>
@@ -119,7 +121,6 @@ const SingleProduct = ({
               <button onClick={handleAddToCart}>Add to Cart</button>
             )}
           </div>
-      <Link to="/products" className="nav-link">All Products</Link>
         </div>
       </div>
       <div className="review-form">
@@ -162,82 +163,91 @@ const SingleProduct = ({
       style={{ marginBottom: '10px', width: "100%", height: '100px' }} 
     />
   </div>
-  <div>
-    <label htmlFor="rating">Rating (0-5):</label>
-    <select
-      id="rating"
-      name="rating"
-      value={reviewForm.rating}
-      onChange={(e) =>
-        setReviewForm({ ...reviewForm, rating: parseInt(e.target.value) })
-      }
-      style={{ fontSize: '16px', width: '100px', textAlign: "center", paddingTop: '2px', paddingBottom: '2px' }} 
-    >
-      <option value="">Select</option>
-      <option value="1">1 </option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-  </div>
-  <div style={{ display: 'flex', justifyContent: 'center' }}>
-    <button type="submit" style={{ width: '150px', marginTop: '10px' }}>Submit Review</button> 
-    {submissionMessage && <div style={{ color: 'green', marginTop: '10px' }}>{submissionMessage}</div>} 
-  </div>
+  <div className="rating-row">
+  <label style={{paddingTop: '8px'}} htmlFor="rating">Rating (0-5):</label>
+  <select
+    id="rating"
+    name="rating"
+    value={reviewForm.rating}
+    onChange={(e) =>
+      setReviewForm({ ...reviewForm, rating: parseInt(e.target.value) })
+    }
+  >
+    <option value="">Select</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</div>
+
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  {!submissionMessage ? (
+    <button type="submit" style={{ width: '150px', marginTop: '10px' }}>Submit Review</button>
+  ) : (
+    <div style={{ color: 'green', marginTop: '10px', textAlign: 'center' }}>{submissionMessage}</div>
+  )}
+</div>
+
 </form>
 
 </div>
 </div>
 
-      <div className='reviews-container'>
+<div className='reviews-container'>
+  <h3 style={{textAlign: 'center', fontSize: '28px', paddingBottom: '15px'}}>Reviews</h3>
+  {/* Sort by dropdown menu */}
+  <div>
+    <label htmlFor="sortMethod" style={{fontSize: '16px'}}>Sort by: </label>
+    <select 
+      id="sortMethod"
+      value={sortMethod}
+      onChange={handleSortChange}
+      style={{ fontSize: '14px', paddingTop: '3px', paddingBottom: '3px', textAlign: 'center'}}
+    >
+      <option value="newest first">Sort by Newest</option>
+      <option value="oldest first">Sort by Olders</option>
+      <option value="highest rating first">Sort by Highest Reviews</option>
+      <option value="lowest rating first">Sort by Lowest Reviews</option>
+    </select>
+  </div>
 
-        <h3>Reviews</h3>
-        {/* Sort by drop down menu */}
-       
-          <label htmlFor="sortMethod">Sort by:</label>
-          <select 
-          id="sortMethod"
-          value={sortMethod}
-          onChange={handleSortChange}
-          >
-            <option value="newest first">Sort by Newest</option>
-            <option value="oldest first">Sort by Olders</option>
-            <option value="highest rating first">Sort by Highest Reviews</option>
-            <option value="lowest rating first">Sort by Lowest Reviews</option>
-          </select>
-        {/* Ratings drop down menus */}
-        <div>
-  <label htmlFor="ratingFilter">View Rating:</label>
-  <select
-    id="ratingFilter"
-    value={selectedRating}
-    onChange={handleRatingFilterChange}
-  >
-    <option value="">View By Star</option>
-    <option value="1">1 Star Only</option>
-    <option value="2">2 Star Only</option>
-    <option value="3">3 Star Only</option>
-    <option value="4">4 Star Only</option>
-    <option value="5">5 Star Only</option>
-  </select>
-  <button onClick={resetFilter}>View All Reviews</button>
-</div>
+  {/* Ratings dropdown and View All Reviews button */}
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '30px' }}>
+    <div>
+      <label htmlFor="ratingFilter" style={{fontSize: '16px'}}>View By Rating: </label>
+      <select
+        id="ratingFilter"
+        value={selectedRating}
+        onChange={handleRatingFilterChange}
+        style={{ fontSize: '15px', paddingTop: '3px', paddingBottom: '3px', textAlign: 'center'}}
+      >
+        <option value="">View By Star</option>
+        <option value="1">1 Star Only</option>
+        <option value="2">2 Star Only</option>
+        <option value="3">3 Star Only</option>
+        <option value="4">4 Star Only</option>
+        <option value="5">5 Star Only</option>
+      </select>
+    </div>
+    <button onClick={resetFilter} style={{ fontSize: '14px' }}>View All Reviews</button>
+  </div>
 <div className="scrollable-content">
 <ul className="reviews-list">
         {filteredReviews().map((review) => (
           <li key={review.id} className="review-box">
       <div className="review-title">
         <h3>{review.review_title}</h3>
-        <div className="name">
-          <p>Written On: {formatDate(review.created_at)}</p>
         </div>
+        <div className="review-name">
+          <p>Written On: {formatDate(review.created_at)}</p>
       </div>
-      <div className="name">
+      <div className="review-name">
         <p>Rating: {review.rating}/5 | Review By: {review.name}</p>
       </div>
       <div className="review-text">
-        <p>Review: {review.reviewText}</p> 
+        <p>Review: {review.reviewtext}</p> 
       </div>
     </li>
   ))}
