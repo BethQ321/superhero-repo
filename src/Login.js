@@ -37,6 +37,7 @@ const Login = ({ login }) => {
     <div className={`form-container ${flash ? "flash-effect" : ""}`}>
       <form className="form-layout" onSubmit={_login}>
         <input
+        type="text"
           className="form-input"
           placeholder="Username"
           value={username}
