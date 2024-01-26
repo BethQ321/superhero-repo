@@ -165,8 +165,7 @@ const Products = ({
       <ul className="product-list">
         {filteredProducts.map((product) => {
           if (
-            (!auth.id &&
-              (product.vip_only || product.class === "villain")) ||
+            (!auth.id && (product.vip_only || product.class === "villain")) ||
             (!isDarkMode && product.class === "villain")
           ) {
             return null;
@@ -178,18 +177,18 @@ const Products = ({
           return (
             <li className="product-box" key={product.id}>
               <Link to={`/products/${product.id}`} className="product-link">
-                <div className="product-name">
-                  {product.vip_only ? `VIP Item!` : ""}
-                </div>
                 <img
                   className="productImage"
                   src={product.image}
                   alt={product.name}
                 />
               </Link>
-              <br/>
+              <br />
               <div className="product-description">
-                <Link to={`/products/${product.id}`}>{product.name}</Link>
+                <Link to={`/products/${product.id}`}>
+                  {product.vip_only ? `VIP Item!` : ""}<br/>
+                  {product.name} 
+                </Link>
                 <br />
                 <br />
                 {formatPrice(product.price)}
