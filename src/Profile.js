@@ -76,14 +76,14 @@ const Profile = ({ auth, setAuth }) => {
         )}
       </div>
       <h1>Edit User</h1>
-      <button className="save-button" onClick={() => setIsEditing(true)}>
+      <button onClick={() => setIsEditing(true)}>
         Edit
       </button>
 
       {isEditing && (
         <div className="profile-box">
           <h2>Edit User</h2>
-          <form className="profile-form" onSubmit={handleSave}>
+          <form className="form-layout" onSubmit={handleSave}>
             <label>
               First Name:
               <input

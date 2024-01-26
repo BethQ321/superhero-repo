@@ -41,7 +41,7 @@ const AddProduct = () => {
   };
 
   return (
-    <form className="add-product-form" onSubmit={handleSubmit}>
+    <form className="add-product-form"onSubmit={handleSubmit}>
       <label>
         Product name:
         <input
@@ -101,7 +101,7 @@ const AddProduct = () => {
       )}
       <br></br>
       <br></br>
-      <Link to="/admin" className="back-button">
+      <Link to="/admin" className="nav-link">
         Back to Admin
       </Link>
     </form>

@@ -119,7 +119,7 @@ const SingleProduct = ({
               <button onClick={handleAddToCart}>Add to Cart</button>
             )}
           </div>
-      <Link to="/products">Back to Products</Link>
+      <Link to="/products" className="nav-link">All Products</Link>
         </div>
       </div>
       <div className="review-form">

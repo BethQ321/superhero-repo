@@ -60,7 +60,7 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                       <div>State: {orderShippingInfo.state}</div>
                       <div>Zip Code: {orderShippingInfo.zip_code}</div>
                       <br />
-                      <div className="order-date">
+                      <div className="order-info">
                         Order created @
                         <div>{new Date(order.created_at).toLocaleString()}</div>
                         <br />
@@ -81,12 +81,12 @@ const Orders = ({ orders, products, lineItems, shipping, error, setError }) => {
                       );
                       return (
                         <li key={lineItem.id} className="order-item">
-                          <div className="order-item-name">
+                          <div className="order-item-text">
                             {product
                               ? `${lineItem.quantity} x ${product.name}: `
                               : ""}
                           </div>
-                          <div className="order-item-price">
+                          <div className="order-item-text">
                             {product
                               ? formatPrice(lineItem.quantity * product.price)
                               : ""}

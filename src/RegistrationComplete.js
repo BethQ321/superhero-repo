@@ -12,7 +12,7 @@ const RegistrationComplete = () => {
       />
       <h3>
         Please,{" "}
-        <Link to="/Login" className="registration-complete-link">
+        <Link to="/Login" className="a-link">
           Login!
         </Link>
       </h3>
