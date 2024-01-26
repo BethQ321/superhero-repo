@@ -35,17 +35,17 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="form-container">
       <h2>Register</h2>
-      {error && <div className="register-error">{error}</div>}
-      <form className="register-form" onSubmit={handleSubmit}>
+      {error && <div className="error">{error}</div>}
+      <form className="form-layout" onSubmit={handleSubmit}>
         <input
           type="text"
           value={Fname}
           onChange={(event) => setFirstName(event.target.value)}
           placeholder="First Name"
           required
-          className="register-input"
+          className="form-input"
         />
         <input
           type="text"
@@ -53,7 +53,7 @@ const Register = () => {
           onChange={(event) => setLastName(event.target.value)}
           placeholder="Last Name"
           required
-          className="register-input"
+          className="form-input"
         />
         <input
           type="tel"
@@ -61,7 +61,7 @@ const Register = () => {
           onChange={(event) => setPhone(event.target.value)}
           placeholder="Phone"
           required
-          className="register-input"
+          className="form-input"
         />
         <input
           type="email"
@@ -69,7 +69,7 @@ const Register = () => {
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email"
           required
-          className="register-input"
+          className="form-input"
         />
         <input
           type="text"
@@ -77,7 +77,7 @@ const Register = () => {
           onChange={(event) => setUsername(event.target.value)}
           placeholder="Username"
           required
-          className="register-input"
+          className="form-input"
         />
         <input
           type="password"
@@ -85,9 +85,9 @@ const Register = () => {
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
           required
-          className="register-input"
+          className="form-input"
         />
-        <button type="submit" className="register-button">
+        <button type="submit">
           Register
         </button>
       </form>

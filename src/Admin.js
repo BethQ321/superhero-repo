@@ -5,16 +5,16 @@ const Admin = () => {
   return (
     <div className="admin-container">
       <h1 className="admin-title">Administrator</h1>
-      <NavLink className="admin-nav-link" to="/addproduct">
+      <NavLink className="nav-link" to="/addproduct">
         Add Product
       </NavLink>
-      <NavLink className="admin-nav-link" to="/allusers">
+      <NavLink className="nav-link" to="/allusers">
         Users
       </NavLink>
-      <NavLink className="admin-nav-link" to="/editproducts">
+      <NavLink className="nav-link" to="/editproducts">
         Edit Products
       </NavLink>
-      <NavLink className="admin-nav-link" to="/allorders">
+      <NavLink className="nav-link" to="/allorders">
         Orders
       </NavLink>
     </div>

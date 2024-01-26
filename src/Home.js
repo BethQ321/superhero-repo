@@ -21,7 +21,7 @@ const Home = ({ auth, isDarkMode }) => {
                     width="150px"
                   />
                   <h2 className="home-subtitle">VIP Villain!</h2>
-                  <p>
+                  <p className="home-text">
                     Embrace your dark side and wreak havoc with our sinister
                     collection of Villainous tools and gadgets. You're not just
                     a user; you're a Villain, and that means you're part of an
@@ -41,7 +41,7 @@ const Home = ({ auth, isDarkMode }) => {
                     width="150px"
                   />
                   <h2 className="home-subtitle">VIP Hero!</h2>
-                  <p>
+                  <p className="home-text">
                     You're not just a user; you're a VIP, and that means you're
                     part of an elite league of heroes. As a VIP member, you
                     enjoy unprecedented privileges and access to the most
@@ -62,7 +62,7 @@ const Home = ({ auth, isDarkMode }) => {
                     alt="Villain"
                     width="150px"
                   />
-                  <p>
+                  <p className="home-text">
                     Embrace your dark side and wreak havoc with our sinister
                     collection of Villainous tools and gadgets. You're not just
                     a user; you're a Villain, and that means you're part of an
@@ -159,11 +159,11 @@ const Home = ({ auth, isDarkMode }) => {
           />
           <h3 className="home-subtitle">
             Please,{" "}
-            <Link to="/Login" className="home-link">
+            <Link to="/Login" className="a-link">
               Login
             </Link>{" "}
             in or{" "}
-            <Link to="/Register" className="home-link">
+            <Link to="/Register" className="a-link">
               Register
             </Link>
           </h3>
