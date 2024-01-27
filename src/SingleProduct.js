@@ -112,8 +112,6 @@ const SingleProduct = ({
           <img src={oneProduct.image} className="Sproduct-image" alt={oneProduct.name} />
         </div>
         <div className="Sproduct-description" style={{position:"relative", paddingTop: "7px"}}>
-           <Link to="/products" className="nav-link" style={{  position: "absolute", bottom: "15px", right: "15px"}}>
-            All Products</Link>
         <h2 style={{textAlign: "center", paddingBottom: "20px", color: "black", fontSize: "32px", paddingTop: "0px", marginTop: "0px"}}>{oneProduct.name}</h2>
           <div style={{paddingBottom:"15px"}}>{oneProduct.description}</div>
           <div>
@@ -125,6 +123,8 @@ const SingleProduct = ({
             ) : (
               <button onClick={handleAddToCart}>Add to Cart</button>
             )}
+           <Link to="/products" className="nav-link" >
+            All Products</Link>
           </div>
         </div>
       </div>
