@@ -93,7 +93,9 @@ const Navigations = ({
             <div ref={dropdownRef} className="dropdown-menu active">
               <NavLink to="/wishList">Wishlist</NavLink>
               <NavLink to="/profile">Profile Settings</NavLink>
+              <NavLink to="/Forums">Forums</NavLink>
               {auth.is_admin && <NavLink to="/admin">Admin</NavLink>}
+              
               <button onClick={logout}>Logout</button>
             </div>
           )}
