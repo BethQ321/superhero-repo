@@ -17,11 +17,11 @@ const init = async () => {
   await client.connect();
   console.log("connected to database");
   if (process.env.SYNC) {
-    await seed();
     console.log("create your tables and seed data");
   }
+  await seed();
 
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 5501;
 
   app.listen(port, () => {
     console.log(`listening on port ${port}`);
