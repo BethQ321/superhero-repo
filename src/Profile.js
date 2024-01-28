@@ -69,7 +69,7 @@ const Profile = ({ auth, setAuth }) => {
   return (
     <>
     <div className="profile-flexcontainer">
-      <div className="profile-image">
+      <div className="xprofile-image">
         {editedUser.image ? (
           <img src={editedUser.image} alt="Profile" />
         ) : (
@@ -78,11 +78,9 @@ const Profile = ({ auth, setAuth }) => {
       </div>
       <div className="edituserbox">
       <h1>Edit User Profile</h1>
-      <button onClick={() => setIsEditing(true)}>
-        Edit
-      </button>
+      
 
-      {isEditing && (
+      
         <div className="profile-box">
           <form className="form-layout" onSubmit={handleSave}>
             <label>
@@ -139,7 +137,7 @@ const Profile = ({ auth, setAuth }) => {
             </button>
           </form>
         </div>
-      )}
+      
       </div>
       </div>
     </>

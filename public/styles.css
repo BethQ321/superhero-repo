@@ -263,7 +263,7 @@ nav button:hover {
   flex-direction: row;
   justify-content: center;
 }
-.profile-image img {
+.xprofile-image img {
   border-radius: 70%;
   width: 300px;
   height: 300px;
@@ -1142,6 +1142,8 @@ body.dark-mode {
 
 
 
+
+
 .Fbody {
   padding: 0;
   margin: 0;
@@ -1149,9 +1151,12 @@ body.dark-mode {
   justify-content: center;
 }
 
+
+
 .message-container div {
   background-color: #CCC;
   padding: 5px;
+  
 }
 
 .message-container div:nth-child(2n) {
@@ -1172,6 +1177,58 @@ body.dark-mode {
   flex-grow: 1;
 }
 
+/* Add these styles to your existing styles */
+
+#message-container {
+  max-width: 1200px;
+  width: 80%;
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+#message-container div {
+  background-color: #CCC;
+  padding: 5px;
+  margin-bottom: 5px; /* Add margin between messages */
+}
+
+#message-container div:nth-child(2n) {
+  background-color: #FFF;
+}
+
+#send-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%); /* Center the container horizontally */
+  padding: 10px;
+  background-color: white;
+  max-width: 1200px;
+  width: 80%;
+  display: flex;
+  box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.1); /* Add a shadow at the bottom */
+}
+
+#message-input {
+  flex-grow: 1;
+  margin-right: 10px; /* Add margin between input and button */
+}
+
+#send-button {
+  padding: 8px;
+}
+
+
+
+.message {
+  display: flex;
+  align-items: center;
+}
+
+.profile-image {
+  width: 30px; /* Adjust the width as needed */
+  height: 30px; /* Adjust the height as needed */
+  margin-right: 10px; /* Add margin between image and message text */
+}
 
 
 
