@@ -39,6 +39,7 @@ const init = async () => {
   await client.connect();
   console.log("connected to database");
   if (process.env.SYNC) {
+
     console.log("Create your tables and seed data");
   }
   await seed();
