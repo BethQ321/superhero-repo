@@ -116,7 +116,7 @@ const SingleProduct = ({
         </div>
         <div className="Sproduct-description" style={{position:"relative", paddingTop: "7px"}}>
         <h2 style={{textAlign: "center", paddingBottom: "20px", color: "black", fontSize: "32px", paddingTop: "0px", marginTop: "0px"}}>{oneProduct.name}</h2>
-          <div style={{paddingBottom:"15px"}}>{oneProduct.description}</div>
+          <div style={{paddingBottom:"15px", overflowY: "auto", height: "33%", marginBottom: "10px"}}>{oneProduct.description}</div>
           <Link to="/products" className="nav-link" style={{  position: "absolute", bottom: "15px", right: "15px"}}>
             All Products</Link>
           <div>
