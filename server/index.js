@@ -10,6 +10,8 @@ app.use(cors({
   origin: 'http://localhost:5501',
 }));
 const users = {};
+
+
 io.on('connection', socket => {
   socket.on('new-user', name => {
     users[socket.id] = name
@@ -25,6 +27,7 @@ io.on('connection', socket => {
     delete users[socket.id]
   })
 })
+
 app.use(cors());
 app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "../public/index.html"))

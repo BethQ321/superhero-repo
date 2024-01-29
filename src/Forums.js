@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client'; //to connect to 
+import axios from "axios";
 
 const Forums = ({auth}) => {
   const [messages, setMessages] = useState([]);  //holds chat messages
@@ -7,34 +8,40 @@ const Forums = ({auth}) => {
   const [name, setName] = useState(''); //display user name
   const socket = io('http://localhost:5501', { transports: ['websocket'] }); // Socket
 
+
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    
-    // Incoming chat messages
-    socket.on('chat-message', (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-      console.log("socket on",data)
-    });
-
-    // For user connected - Doesn't work
-    socket.on('user-connected', (userName) => {
-      setMessages((prevMessages) => [...prevMessages, { system: `${userName} connected` }]);
-    });
-
-    // Event listener for user disconnected
-    socket.on('user-disconnected', (userName) => {
-      setMessages((prevMessages) => [...prevMessages, { system: `${userName} disconnected` }]);
-    });
-
-    
-    setName((prevName) => prevName || auth.username);
-
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("/api/users");
+        setUsers(response.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+  
+    const initialize = async () => {
+      await fetchUsers();
+      // Continue with the rest of the logic once fetchUsers is completed
+      socket.on('chat-message', (data) => {
+        setMessages((prevMessages) => [...prevMessages, data]);
+      });
+  
+      socket.on('user-connected', (userName) => {
+        setMessages((prevMessages) => [...prevMessages, { system: `${userName} connected` }]);
+      });
+  
+      setName((prevName) => prevName || auth.username);
+    };
+  
+    initialize();
+  
     return () => {
-      
       socket.disconnect();
     };
-  }, [auth.username]); 
-
-  
+  }, [auth.username]);
 
 
   const handleFormSubmit = (e) => {
@@ -53,21 +60,40 @@ const Forums = ({auth}) => {
       setMessageInput('');
     }
   };
-  
 
   return (
     <div>
-      <div id="message-container">
-    {messages.map((message, index) => (
-  <div key={index}>
-    {message.message && message.message.name ? (
-      <span>{`${message.message.name}: ${message.message.message}`}</span>
-    ) : null}
-  </div>
-))}
 
+<div id="message-container">
+{console.log("All Users:", users)}
+{messages.map((message, index) => (
+  <div key={index} className="message">
+    {message.message && message.message.name ? (
+      <>
+        {users.map((user) => {
+          console.log("User's name in users:", user.username); // Log the username
+          if (user.username === message.message.name) {
+            console.log("Matching user found:", user); // Log matching user
+            return (
+              <img
+                key={user.username}
+                src={user.image}
+                alt="Profile"
+                className="profile-image"
+              />
+            );
+          }
+          return null;
+        })}
+        <span>{`${message.message.name}: ${message.message.message}`}</span>
+      </>
+    ) : (
+              <div>{message.system}</div>
+            )}
+  </div>
+        ))}
       </div>
-      
+
       <form id="send-container" onSubmit={handleFormSubmit}>
         <input
           type="text"
@@ -77,6 +103,8 @@ const Forums = ({auth}) => {
         />
         <button type="submit" id="send-button"> Send </button>
       </form>
+
+
     </div>
   );
 };
