@@ -117,6 +117,8 @@ const SingleProduct = ({
         <div className="Sproduct-description" style={{position:"relative", paddingTop: "7px"}}>
         <h2 style={{textAlign: "center", paddingBottom: "20px", color: "black", fontSize: "32px", paddingTop: "0px", marginTop: "0px"}}>{oneProduct.name}</h2>
           <div style={{paddingBottom:"15px"}}>{oneProduct.description}</div>
+          <Link to="/products" className="nav-link" style={{  position: "absolute", bottom: "15px", right: "15px"}}>
+            All Products</Link>
           <div>
             {cartItem ? (
               <div>
@@ -129,7 +131,7 @@ const SingleProduct = ({
 
             <div>
               {wishlistStatus[oneProduct.id] ? (
-                <div className="wishlist-added" style={{paddingTop:"10px"}}>Added to Wishlist</div>
+                <div className="wishlist-added" style={{paddingTop:"10px", textAlign: "center"}}>Added to Wishlist</div>
             ) : (
                 wishlistErrors && wishlistErrors[oneProduct.id] ? (
                 <div className="wishlist-error">{wishlistErrors[oneProduct.id]}</div>
@@ -143,8 +145,6 @@ const SingleProduct = ({
                   )
                     )}
             </div>
-           <Link to="/products" className="nav-link" >
-            All Products</Link>
 
           </div>
         </div>
