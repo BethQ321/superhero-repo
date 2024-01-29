@@ -29,9 +29,9 @@ const Forums = ({auth}) => {
         setMessages((prevMessages) => [...prevMessages, data]);
       });
   
-      socket.on('user-connected', (userName) => {
-        setMessages((prevMessages) => [...prevMessages, { system: `${userName} connected` }]);
-      });
+      // socket.on('user-connected', (userName) => {
+      //   setMessages((prevMessages) => [...prevMessages, { system: `${userName} connected` }]);
+      // });
   
       setName((prevName) => prevName || auth.username);
     };
@@ -65,15 +65,16 @@ const Forums = ({auth}) => {
     <div>
 
 <div id="message-container">
-{console.log("All Users:", users)}
+{//console.log("All Users:", users)
+}
 {messages.map((message, index) => (
   <div key={index} className="message">
     {message.message && message.message.name ? (
       <>
         {users.map((user) => {
-          console.log("User's name in users:", user.username); // Log the username
+          //console.log("User's name in users:", user.username); // Log the username
           if (user.username === message.message.name) {
-            console.log("Matching user found:", user); // Log matching user
+            //console.log("Matching user found:", user); // Log matching user
             return (
               <img
                 key={user.username}
@@ -87,9 +88,7 @@ const Forums = ({auth}) => {
         })}
         <span>{`${message.message.name}: ${message.message.message}`}</span>
       </>
-    ) : (
-              <div>{message.system}</div>
-            )}
+    )  : null}
   </div>
         ))}
       </div>
