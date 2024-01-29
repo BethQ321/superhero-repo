@@ -7,7 +7,7 @@ const http = require('http').createServer(app);
 const cors = require('cors');
 const io = require('socket.io')(http);
 app.use(cors({
-  origin: 'http://localhost:5501',
+  origin: 'https://shield-shop.onrender.com/',
 }));
 const users = {};
 
