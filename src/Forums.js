@@ -6,7 +6,7 @@ const Forums = ({auth}) => {
   const [messages, setMessages] = useState([]);  //holds chat messages
   const [messageInput, setMessageInput] = useState(''); //for new incoming messages
   const [name, setName] = useState(''); //display user name
-  const socket = io('http://localhost:5501', { transports: ['websocket'] }); // Socket
+  const socket = io('https://shield-shop.onrender.com', { transports: ['websocket'] }); // Socket
 
 
   const [users, setUsers] = useState([]);
