@@ -37,7 +37,7 @@ const App = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [wishList, setWishList] = useState([]); //wishlist state
+  const [wishList, setWishList] = useState([]); 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
   const userId = auth.id;
@@ -132,18 +132,6 @@ const App = () => {
     }
   }, [auth]);
 
-  // useEffect(() => {
-  //   const fetchShippingAddress = async () => {
-  //     try {
-  //       const response = await axios.get(`/db/products`);
-  //       setShipping(response.data);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     }
-  //   };
-
-  //   fetchShippingAddress();
-  // }, []);
 
   const createLineItem = async (product) => {
     await api.createLineItem({ product, cart, lineItems, setLineItems });
@@ -196,11 +184,9 @@ const App = () => {
       await api.removeFromCart({ lineItem, lineItems, setLineItems });
     }
   };
-  // format price
   const formatPrice = (price) => {
     return `$${(price / 100).toFixed(2)}`;
   };
-  // search feature
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -210,7 +196,6 @@ const App = () => {
     );
     setFilteredProducts(filtered);
   };
-  // show all button
   const handleShowAllClick = () => {
     if (auth.is_vip) {
       setFilteredProducts(products);
@@ -220,7 +205,6 @@ const App = () => {
     setSearchQuery("");
   };
   useEffect(() => {
-    // Filter products based on user's is_vip status and search query
     const filtered = products.filter((product) => {
       if (!auth.is_vip && product.vip_only) {
         return false;
@@ -246,7 +230,6 @@ const App = () => {
     api.logout(setAuth);
     navigate("/");
   };
-  //wishlist
   const removeFromList = (itemId) => {
     setWishList((currentWishList) =>
       currentWishList.filter((item) => item.id !== itemId)
@@ -258,7 +241,6 @@ const App = () => {
   return (
     <div>
       <Nav
-        //Forms ={Forms}
         auth={auth}
         products={products}
         orders={orders}

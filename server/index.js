@@ -7,7 +7,7 @@ const http = require('http').createServer(app);
 const cors = require('cors');
 const io = require('socket.io')(http);
 app.use(cors({
-  origin: 'https://shield-shop.onrender.com/',
+  origin: 'https://shield-shop.onrender.com',
 }));
 const users = {};
 
@@ -40,9 +40,9 @@ const init = async () => {
   console.log("connected to database");
   if (process.env.SYNC) {
 
+    await seed();
     console.log("Create your tables and seed data");
   }
-  await seed();
   const port = process.env.PORT || 5501;
   http.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

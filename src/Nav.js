@@ -11,7 +11,6 @@ const Navigations = ({
   toggleDarkMode,
 }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  //const [isDarkMode, setIsDarkMode] = useState(false);
   const dropdownRef = useRef(null);
   const isLoggedIn = auth && auth.id;
 
@@ -30,19 +29,7 @@ const Navigations = ({
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
-  // const toggleDarkMode = () => {
-  //   const newMode = !isDarkMode;
-  //   setIsDarkMode(newMode);
-  //   localStorage.setItem("darkMode", newMode ? "1" : "0");
-
-  //   // Add this line to toggle the dark mode class on the body element
-  //   document.body.classList.toggle("dark-mode");
-  // };
-
-  // useEffect(() => {
-  //   const storedMode = localStorage.getItem("darkMode");
-  //   setIsDarkMode(storedMode === "1");
-  // }, []);f
+  
 
   const handleOutsideClick = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

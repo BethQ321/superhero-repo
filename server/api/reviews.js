@@ -11,8 +11,6 @@ app.get("/", async (req, res, next) => {
   }
 });
 
-// route for creating reviews for a specific product
-//third pass the new values into createReview
 app.post("/", async (req, res, next) => {
   try {
     const reviewData = req.body;

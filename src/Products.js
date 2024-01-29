@@ -25,27 +25,7 @@ const Products = ({
 }) => {
   const [selectedClass, setSelectedClass] = useState("All");
   const [showVipOnly, setShowVipOnly] = useState(false);
-  // const [wishlistErrors, setWishlistErrors] = useState({});
-  // const [wishlistStatus, setWishlistStatus] = useState({});
 
-  // const addProductToWishlist = async (product) => {
-  //   try {
-  //     setWishlistErrors({ ...wishlistErrors, [product.id]: "" });
-
-  //     const response = await axios.post(
-  //       "/api/wishList",
-  //       { productId: product.id },
-  //       api.getHeaders()
-  //     );
-  //     setWishlistStatus({ ...wishlistStatus, [product.id]: true });
-  //   } catch (error) {
-  //     setWishlistErrors({
-  //       ...wishlistErrors,
-  //       [product.id]: "Item is already on your wishlist",
-  //     });
-  //     console.error("Error adding product to wishlist:", error);
-  //   }
-  // };
 
   const filterProductsByClass = (selectedClass) => {
     let filtered = products;

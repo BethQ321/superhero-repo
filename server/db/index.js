@@ -155,16 +155,6 @@ const seed = async () => {
       is_vip: true,
     }),
     createUser({
-      username: "Superman",
-      password: "ilovelois",
-      Fname: "Clark",
-      Lname: "Kent",
-      phone: "555-555-5555",
-      email: "krypton23@aol.com",
-      is_admin: false,
-      is_vip: false,
-    }),
-    createUser({
       username: "ethyl",
       password: "1234",
       Fname: "FirstName",

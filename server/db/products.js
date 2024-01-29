@@ -57,7 +57,6 @@ const createProduct = async (product) => {
   return response.rows[0];
 };
 
-//fourth? add username
 const createReview = async (review) => {
   const SQL = `
     INSERT INTO review  (id, name, product_id, review_title, reviewText, rating) 

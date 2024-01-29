@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client'; //to connect to 
+import io from 'socket.io-client'; 
 import axios from "axios";
 
 const Forums = ({auth}) => {
-  const [messages, setMessages] = useState([]);  //holds chat messages
-  const [messageInput, setMessageInput] = useState(''); //for new incoming messages
-  const [name, setName] = useState(''); //display user name
-  const socket = io('https://shield-shop.onrender.com', { transports: ['websocket'] }); // Socket
+  const [messages, setMessages] = useState([]); 
+  const [messageInput, setMessageInput] = useState(''); 
+  const [name, setName] = useState(''); 
+  const socket = io('https://shield-shop.onrender.com', { transports: ['websocket'] }); 
 
 
   const [users, setUsers] = useState([]);
@@ -24,14 +24,10 @@ const Forums = ({auth}) => {
   
     const initialize = async () => {
       await fetchUsers();
-      // Continue with the rest of the logic once fetchUsers is completed
       socket.on('chat-message', (data) => {
         setMessages((prevMessages) => [...prevMessages, data]);
       });
   
-      // socket.on('user-connected', (userName) => {
-      //   setMessages((prevMessages) => [...prevMessages, { system: `${userName} connected` }]);
-      // });
   
       setName((prevName) => prevName || auth.username);
     };
@@ -47,14 +43,12 @@ const Forums = ({auth}) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
  
-    //iff not empty
     if (messageInput.trim() !== '') {
       const newMessage = { name, message: messageInput };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       
       console.log("socket submit",newMessage)
 
-      // Send message to server
       socket.emit('send-chat-message', newMessage);
 
       setMessageInput('');
@@ -65,16 +59,13 @@ const Forums = ({auth}) => {
     <div>
 
 <div id="message-container">
-{//console.log("All Users:", users)
-}
+
 {messages.map((message, index) => (
   <div key={index} className="message">
     {message.message && message.message.name ? (
       <>
         {users.map((user) => {
-          //console.log("User's name in users:", user.username); // Log the username
           if (user.username === message.message.name) {
-            //console.log("Matching user found:", user); // Log matching user
             return (
               <img
                 key={user.username}
