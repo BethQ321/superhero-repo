@@ -11,6 +11,9 @@ const SingleProduct = ({
   updateDownLineItem,
   handleDecrement,
   createLineItem,
+  addProductToWishlist,
+  wishlistErrors,
+  wishlistStatus
 }) => {
   const formatDate = (dateString) => {
     const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
@@ -125,6 +128,22 @@ const SingleProduct = ({
             ) : (
               <button onClick={handleAddToCart}>Add to Cart</button>
             )}
+            <div>
+              {wishlistStatus[oneProduct.id] ? (
+                <div className="wishlist-added" style={{paddingTop:"10px"}}>Added to Wishlist</div>
+            ) : (
+                wishlistErrors && wishlistErrors[oneProduct.id] ? (
+                <div className="wishlist-error">{wishlistErrors[oneProduct.id]}</div>
+            ) : (
+                <button
+                  className="add-to-wishlist"
+                    onClick={() => addProductToWishlist(oneProduct)}
+                    >
+                     Add to Wishlist
+                     </button>
+                  )
+                    )}
+            </div>
           </div>
         </div>
       </div>

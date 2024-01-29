@@ -39,6 +39,28 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
   const userId = auth.id;
+  const [wishlistErrors, setWishlistErrors] = useState({});
+  const [wishlistStatus, setWishlistStatus] = useState({});
+
+  const addProductToWishlist = async (product) => {
+    try {
+      setWishlistErrors({ ...wishlistErrors, [product.id]: "" });
+
+      const response = await axios.post(
+        "/api/wishList",
+        { productId: product.id },
+        api.getHeaders()
+      );
+      setWishlistStatus({ ...wishlistStatus, [product.id]: true });
+    } catch (error) {
+      setWishlistErrors({
+        ...wishlistErrors,
+        [product.id]: "Item is already on your wishlist",
+      });
+      console.error("Error adding product to wishlist:", error);
+    }
+  };
+
 
   const [shipping, setShipping] = useState({
     user_id: userId,
@@ -265,7 +287,9 @@ const App = () => {
                 handleSearchClick={handleSearchClick}
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
-                addToWishList={addToWishList}
+                addProductToWishlist={addProductToWishlist}
+                wishlistErrors={wishlistErrors} 
+                wishlistStatus={wishlistStatus} 
                 isDarkMode={isDarkMode}
               />
             }
@@ -282,6 +306,9 @@ const App = () => {
                 handleDecrement={handleDecrement}
                 updateDownLineItem={updateDownLineItem}
                 updateLineItem={updateLineItem}
+                addProductToWishlist={addProductToWishlist}
+                wishlistErrors={wishlistErrors} 
+                wishlistStatus={wishlistStatus} 
               />
             }
           />
