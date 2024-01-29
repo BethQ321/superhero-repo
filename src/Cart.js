@@ -54,7 +54,6 @@ const Cart = ({
       </ul>
       {cartLineItems.length ? (
         <div className="cart-actions">
-          {/* shipping address form */}
           <p>Please fill in your shipping address below</p>
           <p>
             We cannot guarantee 24h delivery time if not on the surface of the
@@ -98,7 +97,6 @@ const Cart = ({
               required
             />
           </form>
-          {/* shipping address form */}
           <button onClick={handleShippingAndOrder}>Create Order</button>
           <p className="cart-total">
             Total Price:{" "}

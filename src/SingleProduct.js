@@ -223,7 +223,6 @@ const SingleProduct = ({
 
 <div className='reviews-container'>
   <h3 style={{textAlign: 'center', fontSize: '28px', paddingBottom: '15px'}}>Reviews</h3>
-  {/* Sort by dropdown menu */}
   <div>
     <label htmlFor="sortMethod" style={{fontSize: '16px'}}>Sort by: </label>
     <select 
@@ -239,7 +238,6 @@ const SingleProduct = ({
     </select>
   </div>
 
-  {/* Ratings dropdown and View All Reviews button */}
   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '30px' }}>
     <div>
       <label htmlFor="ratingFilter" style={{fontSize: '16px'}}>View By Rating: </label>

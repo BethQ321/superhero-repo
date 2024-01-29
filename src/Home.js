@@ -29,7 +29,6 @@ const Home = ({ auth, isDarkMode }) => {
                     exclusive access to the most destructive devices. Here's
                     what awaits you in your Villainous experience:
                   </p>
-                  {/* Add Villain-specific content here */}
                 </>
               ) : (
                 <>
@@ -47,7 +46,6 @@ const Home = ({ auth, isDarkMode }) => {
                     enjoy unprecedented privileges and access to the most
                     exclusive hero resources.
                   </p>
-                  {/* Add VIP-specific content here */}
                 </>
               )}
             </>
@@ -69,7 +67,6 @@ const Home = ({ auth, isDarkMode }) => {
                     elite league of chaos creators. As a Villain, you enjoy
                     exclusive access to the most destructive devices.
                   </p>
-                  {/* Add Villain-specific content here */}
                 </>
               ) : (
                 <>
@@ -80,7 +77,6 @@ const Home = ({ auth, isDarkMode }) => {
                     alt="Profile"
                     width="150px"
                   />
-                  {/* Non-VIP content */}
                   <p className="home-text">
                     Welcome to the S.H.I.E.L.D. Shop - Your Super Hero Inventive
                     Equipment and Life-saving Devices Headquarters!
@@ -117,7 +113,6 @@ const Home = ({ auth, isDarkMode }) => {
           />
         </>
       ) : (
-        /* Not logged in */
         <>
           {isDarkMode ? (
             <>
@@ -131,7 +126,6 @@ const Home = ({ auth, isDarkMode }) => {
                 ultimate arsenal of Super Villain Inventive Equipment and
                 Chaos-inducing Devices!
               </p>
-              {/* Add Villain-specific content here */}
             </>
           ) : (
             <>
@@ -145,7 +139,6 @@ const Home = ({ auth, isDarkMode }) => {
                 ultimate arsenal of Super Hero Inventive Equipment and
                 Life-saving Devices!
               </p>
-              {/* Add Hero-specific content here */}
             </>
           )}
           <img

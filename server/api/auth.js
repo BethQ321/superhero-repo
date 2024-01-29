@@ -63,7 +63,6 @@ app.put("/:id", async (req, res, next) => {
 
     await updateUserProfile(id, fname, lname, email, phone, image);
 
-    console.log("api/id works");
   } catch (error) {
     console.error("Error updating profile in api/auth/ID:", error);
     next(error);

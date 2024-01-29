@@ -21,7 +21,6 @@ const findUserByToken = async (token) => {
 
     return response.rows[0];
   } catch (ex) {
-    console.log(ex);
     const error = Error("bad credentials");
     error.status = 401;
     throw error;
@@ -50,7 +49,6 @@ const authenticate = async (credentials) => {
     throw error;
   }
 
-  // Token generation should happen here, after verifying the user's credentials
   return jwt.sign({ id: response.rows[0].id }, process.env.JWT);
 };
 
@@ -71,8 +69,8 @@ const createUser = async (user) => {
       user.Lname,
       user.email,
       user.phone,
-      user.is_admin || false, //default state of false
-      user.is_vip || false, //default state of false
+      user.is_admin || false, 
+      user.is_vip || false, 
     ]);
 
     return response.rows[0];
@@ -100,9 +98,7 @@ const updateUserProfile = async (id, fname, lname, email, phone, image) => {
       WHERE id = $1
     `;
     await client.query(SQL, [id, fname, lname, email, phone, image]);
-    console.log("updateUserProfile works");
   } catch (error) {
-    console.error("Error updating profile in DB/Auth:", error);
     throw error;
   }
 };
