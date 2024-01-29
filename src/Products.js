@@ -17,32 +17,35 @@ const Products = ({
   vipProducts,
   searchQuery,
   formatPrice,
-  addToWishList,
   isDarkMode,
+  addProductToWishlist,
+  wishlistErrors,
+  wishlistStatus,
+  
 }) => {
   const [selectedClass, setSelectedClass] = useState("All");
   const [showVipOnly, setShowVipOnly] = useState(false);
-  const [wishlistErrors, setWishlistErrors] = useState({});
-  const [wishlistStatus, setWishlistStatus] = useState({});
+  // const [wishlistErrors, setWishlistErrors] = useState({});
+  // const [wishlistStatus, setWishlistStatus] = useState({});
 
-  const addProductToWishlist = async (product) => {
-    try {
-      setWishlistErrors({ ...wishlistErrors, [product.id]: "" });
+  // const addProductToWishlist = async (product) => {
+  //   try {
+  //     setWishlistErrors({ ...wishlistErrors, [product.id]: "" });
 
-      const response = await axios.post(
-        "/api/wishList",
-        { productId: product.id },
-        api.getHeaders()
-      );
-      setWishlistStatus({ ...wishlistStatus, [product.id]: true });
-    } catch (error) {
-      setWishlistErrors({
-        ...wishlistErrors,
-        [product.id]: "Item is already on your wishlist",
-      });
-      console.error("Error adding product to wishlist:", error);
-    }
-  };
+  //     const response = await axios.post(
+  //       "/api/wishList",
+  //       { productId: product.id },
+  //       api.getHeaders()
+  //     );
+  //     setWishlistStatus({ ...wishlistStatus, [product.id]: true });
+  //   } catch (error) {
+  //     setWishlistErrors({
+  //       ...wishlistErrors,
+  //       [product.id]: "Item is already on your wishlist",
+  //     });
+  //     console.error("Error adding product to wishlist:", error);
+  //   }
+  // };
 
   const filterProductsByClass = (selectedClass) => {
     let filtered = products;
@@ -194,74 +197,62 @@ const Products = ({
                 {formatPrice(product.price)}
               </div>
               <div className="product-actions">
-                {auth.id ? (
-                  cartItems.find(
-                    (lineItem) => lineItem.product_id === product.id
-                  ) ? (
-                    <div className="button-group">
-                      <Link to={`/cart`}>View Cart</Link>
-                      <button 
-                      style={{border:"2px solid #373737"}}
-                        onClick={() =>
-                          updateLineItem(
-                            cartItems.find(
-                              (lineItem) => lineItem.product_id === product.id
-                              
-                            )
-                          )
-                        }
-                      >
-                        Add Another
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="button-group" >
-                        <button
-                          className="add-to-cart"
-                          onClick={() => createLineItem(product)}
-                          style={{border:"2px solid #373737"}}
-                        >
-                          Add to Cart
-                        </button>
-                        {wishlistStatus[product.id] ? (
-                          <div className="wishlist-added">
-                            Added to Wishlist
-                          </div>
-                        ) : (
-                          <button
-                            className="add-to-wishlist"
-                            onClick={() => addProductToWishlist(product)}
-                            style={{border:"2px solid #373737"}}
-                          >
-                            Add to Wishlist
-                          </button>
-                        )}
-                      </div>
-                      {wishlistErrors && wishlistErrors[product.id] && (
-                        <div className="wishlist-error">
-                          {wishlistErrors[product.id]}
-                        </div>
-                      )}
-                    </div>
-                  )
-                ) : (
-                  <div>
-                    <div className="button-group">
-                      <button className="add-to-cart" disabled>
-                        Add to Cart
-                      </button>
-                      <button className="add-to-wishlist" disabled>
-                        Add to Wishlist
-                      </button>
-                    </div>
-                    {wishlistErrors && wishlistErrors[product.id] && (
-                      <div className="wishlist-error">
-                        {wishlistErrors[product.id]}
-                      </div>
-                    )}
-                  </div>
-                )}
+              {auth.id ? (
+  cartItems.find((lineItem) => lineItem.product_id === product.id) ? (
+    <div className="button-group" >
+      <Link to={`/cart`} style={{border:"2px solid #373737", paddingLeft:"10px", paddingRight:"10px", paddingTop:"5px", paddingBottom: "5px", borderRadius: "5px" }}>
+        View Cart</Link>
+      <button 
+        style={{border:"2px solid #373737"}}
+        onClick={() => updateLineItem(cartItems.find((lineItem) => lineItem.product_id === product.id))}
+      >
+        Add Another
+      </button>
+    </div>
+  ) : (
+    <div>
+      <div className="button-group" >
+        <button
+          className="add-to-cart"
+          onClick={() => createLineItem(product)}
+          style={{border:"2px solid #373737"}}
+        >
+          Add to Cart
+        </button>
+        {wishlistStatus[product.id] ? (
+          <div className="wishlist-added">
+            Added to Wishlist
+          </div>
+        ) : (
+          wishlistErrors && wishlistErrors[product.id] ? (
+            <div className="wishlist-error">
+              {wishlistErrors[product.id]}
+            </div>
+          ) : (
+            <button
+              className="add-to-wishlist"
+              onClick={() => addProductToWishlist(product)}
+              style={{border:"2px solid #373737"}}
+            >
+              Add to Wishlist
+            </button>
+          )
+        )}
+      </div>
+    </div>
+  )
+) : (
+  <div>
+    <div className="button-group">
+      <button className="add-to-cart" disabled>
+        Add to Cart
+      </button>
+      <button className="add-to-wishlist" disabled>
+        Add to Wishlist
+      </button>
+    </div>
+  </div>
+)}
               </div>
             </li>
           );
