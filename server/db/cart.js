@@ -66,7 +66,6 @@ const createLineItem = async (lineItem) => {
     lineItem.order_id,
     uuidv4(),
   ]);
-  console.log(response.rows);
   return response.rows[0];
 };
 
