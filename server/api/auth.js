@@ -1,5 +1,6 @@
 const {
   authenticate,
+  authenticateGit,
   findUserByToken,
   createUser,
   updateUserProfile,
@@ -33,6 +34,42 @@ app.post("/register", async (req, res, next) => {
 app.get("/me", isLoggedIn, (req, res, next) => {
   try {
     res.send(req.user);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+app.get("/github", async (req, res, next) => {
+  try {
+    const token = await authenticateGit(req.query.code);
+    res.send(`
+    <html>
+    <head>
+    <script>
+    window.localStorage.setItem('token', '${token}')
+    window.location = '/'
+    </script>
+    </head>
+    </html>
+    `)
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+app.get("/google", async (req, res, next) => {
+  try {
+    const token = await authenticateGoogle(req.query.code);
+    res.send(`
+    <html>
+    <head>
+    <script>
+    window.localStorage.setItem('token', '${token}')
+    window.location = '/'
+    </script>
+    </head>
+    </html>
+    `)
   } catch (ex) {
     next(ex);
   }
