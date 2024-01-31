@@ -3,6 +3,7 @@ const { v4 } = require("uuid");
 const uuidv4 = v4;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { default: axios } = require("axios");
 
 const findUserByToken = async (token) => {
   try {
@@ -26,6 +27,82 @@ const findUserByToken = async (token) => {
     throw error;
   }
 };
+
+const authenticateGit = async(code) => {
+  let response = await axios.post('https://github.com/login/oauth/access_token', {
+    client_id: process.env.GITHUB_CLIENT,
+    code,
+    client_secret: process.env.GITHUB_SECRET
+  },{
+    headers: {
+      accept: 'application/json'
+    }
+  })
+  response = await axios.get('https://api.github.com/user', {
+    headers: {
+      Authorization: `Bearer ${response.data.access_token}`
+    }
+  })
+  const login = response.data.login
+  let SQL = `
+  SELECT id 
+  FROM users 
+  WHERE username = $1
+  `
+  response = await client.query(SQL, [login])
+  if(!response.rows.length){
+    SQL = `
+    INSERT INTO users (id, username, is_Oauth)
+    VALUES ($1, $2, $3)
+    RETURNING *
+    `
+    response = await client.query(SQL, [uuidv4(), login, true])
+  }
+
+  return jwt.sign({ id: response.rows[0].id }, process.env.JWT);
+
+};
+
+
+const authenticateGoogle = async(code) => {
+  let response = await axios.post('https://github.com/login/oauth/access_token', {
+    client_id: process.env.GOOGLE_CLIENT,
+    code,
+    client_secret: process.env.GOOGLE_SECRET
+  },{
+    headers: {
+      accept: 'application/json'
+    }
+  })
+  response = await axios.get('https://api.github.com/user', {
+    headers: {
+      Authorization: `Bearer ${response.data.access_token}`
+    }
+  })
+  const login = response.data.login
+  let SQL = `
+  SELECT id 
+  FROM users 
+  WHERE username = $1
+  `
+  response = await client.query(SQL, [login])
+  if(!response.rows.length){
+    SQL = `
+    INSERT INTO users (id, username, is_Oauth)
+    VALUES ($1, $2, $3)
+    RETURNING *
+    `
+    response = await client.query(SQL, [uuidv4(), login, true])
+  }
+
+  return jwt.sign({ id: response.rows[0].id }, process.env.JWT);
+
+};
+
+// Authorization: Bearer OAUTH-TOKEN
+// GET https://api.github.com/user
+
+
 
 const authenticate = async (credentials) => {
   const SQL = `
@@ -107,5 +184,6 @@ module.exports = {
   createUser,
   updateUserProfile,
   authenticate,
+  authenticateGit,
   findUserByToken,
 };

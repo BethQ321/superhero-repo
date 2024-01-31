@@ -55,6 +55,8 @@ const Login = ({ login }) => {
           Login
         </button>
       </form>
+      <a className="nav-link"href={`https://github.com/login/oauth/authorize?client_id=${window.GITHUB_CLIENT}`}>Log in with Github</a>
+      
     </div>
   );
 };
