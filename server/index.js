@@ -50,9 +50,9 @@ const init = async () => {
   console.log("connected to database");
   if (process.env.SYNC) {
 
+    await seed();
+    console.log("Create your tables and seed data");
   }
-  await seed();
-  console.log("Create your tables and seed data");
   const port = process.env.PORT || 5501;
   http.listen(port, () => {
     console.log(`Server is running on port:${port}`);
