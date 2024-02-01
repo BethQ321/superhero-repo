@@ -28,81 +28,43 @@ const findUserByToken = async (token) => {
   }
 };
 
-const authenticateGit = async(code) => {
-  let response = await axios.post('https://github.com/login/oauth/access_token', {
-    client_id: process.env.GITHUB_CLIENT,
-    code,
-    client_secret: process.env.GITHUB_SECRET
-  },{
-    headers: {
-      accept: 'application/json'
+const authenticateGit = async (code) => {
+  let response = await axios.post(
+    "https://github.com/login/oauth/access_token",
+    {
+      client_id: process.env.GITHUB_CLIENT,
+      code,
+      client_secret: process.env.GITHUB_SECRET,
+    },
+    {
+      headers: {
+        accept: "application/json",
+      },
     }
-  })
-  response = await axios.get('https://api.github.com/user', {
+  );
+  response = await axios.get("https://api.github.com/user", {
     headers: {
-      Authorization: `Bearer ${response.data.access_token}`
-    }
-  })
-  const login = response.data.login
+      Authorization: `Bearer ${response.data.access_token}`,
+    },
+  });
+  const login = response.data.login;
   let SQL = `
   SELECT id 
   FROM users 
   WHERE username = $1
-  `
-  response = await client.query(SQL, [login])
-  if(!response.rows.length){
+  `;
+  response = await client.query(SQL, [login]);
+  if (!response.rows.length) {
     SQL = `
     INSERT INTO users (id, username, is_Oauth)
     VALUES ($1, $2, $3)
     RETURNING *
-    `
-    response = await client.query(SQL, [uuidv4(), login, true])
+    `;
+    response = await client.query(SQL, [uuidv4(), login, true]);
   }
 
   return jwt.sign({ id: response.rows[0].id }, process.env.JWT);
-
 };
-
-
-const authenticateGoogle = async(code) => {
-  let response = await axios.post('https://github.com/login/oauth/access_token', {
-    client_id: process.env.GOOGLE_CLIENT,
-    code,
-    client_secret: process.env.GOOGLE_SECRET
-  },{
-    headers: {
-      accept: 'application/json'
-    }
-  })
-  response = await axios.get('https://api.github.com/user', {
-    headers: {
-      Authorization: `Bearer ${response.data.access_token}`
-    }
-  })
-  const login = response.data.login
-  let SQL = `
-  SELECT id 
-  FROM users 
-  WHERE username = $1
-  `
-  response = await client.query(SQL, [login])
-  if(!response.rows.length){
-    SQL = `
-    INSERT INTO users (id, username, is_Oauth)
-    VALUES ($1, $2, $3)
-    RETURNING *
-    `
-    response = await client.query(SQL, [uuidv4(), login, true])
-  }
-
-  return jwt.sign({ id: response.rows[0].id }, process.env.JWT);
-
-};
-
-// Authorization: Bearer OAUTH-TOKEN
-// GET https://api.github.com/user
-
-
 
 const authenticate = async (credentials) => {
   const SQL = `
@@ -146,8 +108,8 @@ const createUser = async (user) => {
       user.Lname,
       user.email,
       user.phone,
-      user.is_admin || false, 
-      user.is_vip || false, 
+      user.is_admin || false,
+      user.is_vip || false,
     ]);
 
     return response.rows[0];

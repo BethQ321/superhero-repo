@@ -37,7 +37,7 @@ const Login = ({ login }) => {
     <div className={`form-container ${flash ? "flash-effect" : ""}`}>
       <form className="form-layout" onSubmit={_login}>
         <input
-        type="text"
+          type="text"
           className="form-input"
           placeholder="Username"
           value={username}
@@ -51,12 +51,14 @@ const Login = ({ login }) => {
           onChange={(ev) => setPassword(ev.target.value)}
         />
         {error && <div className="error">{error}</div>}
-        <button disabled={!username || !password}>
-          Login
-        </button>
-      <a className="nav-link"href={`https://github.com/login/oauth/authorize?client_id=${window.GITHUB_CLIENT}`}>Log in with Github</a>
+        <button disabled={!username || !password}>Login</button>
+        <a
+          className="nav-link"
+          href={`https://github.com/login/oauth/authorize?client_id=${window.GITHUB_CLIENT}`}
+        >
+          Log in with Github
+        </a>
       </form>
-      
     </div>
   );
 };

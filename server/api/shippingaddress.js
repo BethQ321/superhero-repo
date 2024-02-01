@@ -15,7 +15,6 @@ app.get("/", async (req, res, next) => {
   }
 });
 
-
 app.post("/", async (req, res, next) => {
   user_id = req.body.user_id;
   try {
