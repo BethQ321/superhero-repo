@@ -1,3 +1,9 @@
+
+Deployed link: https://shield-shop.onrender.com/
+
+
+
+
 # the store 
 
 - npm install

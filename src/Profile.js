@@ -68,77 +68,78 @@ const Profile = ({ auth, setAuth }) => {
 
   return (
     <>
-    <div className="profile-flexcontainer">
-      <div className="xprofile-image">
-        {editedUser.image ? (
-          <img src={editedUser.image} alt="Profile" />
-        ) : (
-          <img className="back-profimage" src="https://i.imgur.com/yoJLg9c.png"alt="Profile" />
-        )}
-      </div>
-      <div className="edituserbox">
-      <h1>Edit User Profile</h1>
-      
-
-      
-        <div className="profile-box">
-          <form className="form-layout" onSubmit={handleSave}>
-            <label>
-              First Name:
-              <input
-                type="text"
-                name="fname"
-                value={editedUser.fname}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-            <label>
-              Last Name:
-              <input
-                type="text"
-                name="lname"
-                value={editedUser.lname}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-            <label>
-              Email:
-              <input
-                type="email"
-                name="email"
-                value={editedUser.email}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-            <label>
-              Phone number:
-              <input
-                type="text"
-                name="phone"
-                value={editedUser.phone}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-            <label>
-              Profile Image:
-              <input
-                type="file"
-                accept="image/*"
-                ref={imageInputRef}
-                onChange={handleImageChange}
-              />
-            </label>
-            <button type="submit" className="save-button">
-              Save
-            </button>
-          </form>
+      <div className="profile-flexcontainer">
+        <div className="xprofile-image">
+          {editedUser.image ? (
+            <img src={editedUser.image} alt="Profile" />
+          ) : (
+            <img
+              className="back-profimage"
+              src="https://i.imgur.com/yoJLg9c.png"
+              alt="Profile"
+            />
+          )}
         </div>
-      
-      </div>
+        <div className="edituserbox">
+          <h1>Edit User Profile</h1>
+
+          <div className="profile-box">
+            <form className="form-layout" onSubmit={handleSave}>
+              <label>
+                First Name:
+                <input
+                  type="text"
+                  name="fname"
+                  value={editedUser.fname}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+              <label>
+                Last Name:
+                <input
+                  type="text"
+                  name="lname"
+                  value={editedUser.lname}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+              <label>
+                Email:
+                <input
+                  type="email"
+                  name="email"
+                  value={editedUser.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+              <label>
+                Phone number:
+                <input
+                  type="text"
+                  name="phone"
+                  value={editedUser.phone}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+              <label>
+                Profile Image:
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={imageInputRef}
+                  onChange={handleImageChange}
+                />
+              </label>
+              <button type="submit" className="save-button">
+                Save
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );

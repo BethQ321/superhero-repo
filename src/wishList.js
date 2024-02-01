@@ -85,58 +85,59 @@ const WishList = ({ cart, auth, products, lineItems, setLineItems }) => {
 
   return (
     <div className="product-container">
-      <h2 style={{marginBottom: "15px"}}>Wish List</h2>
+      <h2 style={{ marginBottom: "15px" }}>Wish List</h2>
       {isLoading ? (
         <p>Loading wish list...</p>
       ) : wishList.length === 0 ? (
         <p>No items in your wish list.</p>
       ) : (
-        <div style={{ overflowY:"auto", height: "calc(85vh)"}}>
-        <ul className="product-list" style={{ marginRight:"20px"}}>
-          {wishList.map((item) => (
-            <li className="product-box" key={item.wishlist_id}>
-              <Link to={`/products/${item.product_id}`} className="product-link">
-                <img
-                  className="productImage"
-                  src={item.product_image}
-                  alt={item.product_name}
-                />
-              </Link>
-              <br/>
-              <div className="product-description">
-                <Link to={`/products/${item.product_id}`}>
-                  {item.product_name}
+        <div style={{ overflowY: "auto", height: "calc(85vh)" }}>
+          <ul className="product-list" style={{ marginRight: "20px" }}>
+            {wishList.map((item) => (
+              <li className="product-box" key={item.wishlist_id}>
+                <Link
+                  to={`/products/${item.product_id}`}
+                  className="product-link"
+                >
+                  <img
+                    className="productImage"
+                    src={item.product_image}
+                    alt={item.product_name}
+                  />
                 </Link>
                 <br />
-                <br />
-                ${item.product_price}
-                <br />
-                
-              </div>
-              <div className="product-actions">
-                <button
-                  className="add-to-cart"
-                  onClick={() => handleAddToCartFromWishlist(item)}
-                  style={{border:"2px solid #373737"}}
-                >
-                  Add to Cart
-                </button>
-                <button
-                  className="remove-from-wishlist"
-                  onClick={() => handleRemove(item.wishlist_id)}
-                  style={{border:"2px solid #373737"}}
-                >
-                  Remove
-                </button>
-                {addToCartErrors && addToCartErrors[item.wishlist_id] && (
-                  <div className="wishlist-error">
-                    {addToCartErrors[item.wishlist_id]}
-                  </div>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className="product-description">
+                  <Link to={`/products/${item.product_id}`}>
+                    {item.product_name}
+                  </Link>
+                  <br />
+                  <br />${item.product_price}
+                  <br />
+                </div>
+                <div className="product-actions">
+                  <button
+                    className="add-to-cart"
+                    onClick={() => handleAddToCartFromWishlist(item)}
+                    style={{ border: "2px solid #373737" }}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    className="remove-from-wishlist"
+                    onClick={() => handleRemove(item.wishlist_id)}
+                    style={{ border: "2px solid #373737" }}
+                  >
+                    Remove
+                  </button>
+                  {addToCartErrors && addToCartErrors[item.wishlist_id] && (
+                    <div className="wishlist-error">
+                      {addToCartErrors[item.wishlist_id]}
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>

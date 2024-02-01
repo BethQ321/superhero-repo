@@ -57,23 +57,7 @@ app.get("/github", async (req, res, next) => {
   }
 });
 
-app.get("/google", async (req, res, next) => {
-  try {
-    const token = await authenticateGoogle(req.query.code);
-    res.send(`
-    <html>
-    <head>
-    <script>
-    window.localStorage.setItem('token', '${token}')
-    window.location = '/'
-    </script>
-    </head>
-    </html>
-    `)
-  } catch (ex) {
-    next(ex);
-  }
-});
+
 
 app.put("/:id", async (req, res, next) => {
   const id = req.params.id;

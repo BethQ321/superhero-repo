@@ -2,7 +2,7 @@ const client = require("./client");
 const { v4: uuidv4 } = require("uuid");
 
 async function addToWishlist(userId, productId) {
-  const id = uuidv4(); 
+  const id = uuidv4();
   const SQL = `INSERT INTO wishlist (id, user_id, product_id) VALUES ($1, $2, $3) RETURNING *;`;
   const response = await client.query(SQL, [id, userId, productId]);
   return response.rows[0];

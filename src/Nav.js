@@ -29,7 +29,6 @@ const Navigations = ({
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
-  
 
   const handleOutsideClick = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -51,15 +50,15 @@ const Navigations = ({
           <NavLink to="/">
             {auth.image ? (
               <img className="profile-image" src={auth.image} alt="Profile" />
-              ) : (
-                <img
+            ) : (
+              <img
                 className="profile-image"
                 src="https://i.imgur.com/yoJLg9c.png"
                 alt="Profile"
-                />
-                )}
+              />
+            )}
           </NavLink>
-                <span className="user-greeting">Welcome {auth.fname}!</span>
+          <span className="user-greeting">Welcome {auth.fname}!</span>
           <NavLink to="/products">Products ({vipProductsCount})</NavLink>
           <NavLink to="/cart">Cart ({cartCount})</NavLink>
           <NavLink to="/orders">
@@ -82,7 +81,7 @@ const Navigations = ({
               <NavLink to="/profile">Profile Settings</NavLink>
               <NavLink to="/Forums">Forums</NavLink>
               {auth.is_admin && <NavLink to="/admin">Admin</NavLink>}
-              
+
               <button onClick={logout}>Logout</button>
             </div>
           )}

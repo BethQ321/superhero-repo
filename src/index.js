@@ -28,7 +28,6 @@ import axios from "axios";
 import EditSingleProduct from "./EditSingleProduct";
 import Forums from "./Forums";
 
-
 const App = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -37,7 +36,7 @@ const App = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [vipProducts, setVipProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [wishList, setWishList] = useState([]); 
+  const [wishList, setWishList] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
   const userId = auth.id;
@@ -62,7 +61,6 @@ const App = () => {
       console.error("Error adding product to wishlist:", error);
     }
   };
-
 
   const [shipping, setShipping] = useState({
     user_id: userId,
@@ -131,7 +129,6 @@ const App = () => {
       fetchData();
     }
   }, [auth]);
-
 
   const createLineItem = async (product) => {
     await api.createLineItem({ product, cart, lineItems, setLineItems });
@@ -274,8 +271,8 @@ const App = () => {
                 handleShowAllClick={handleShowAllClick}
                 formatPrice={formatPrice}
                 addProductToWishlist={addProductToWishlist}
-                wishlistErrors={wishlistErrors} 
-                wishlistStatus={wishlistStatus} 
+                wishlistErrors={wishlistErrors}
+                wishlistStatus={wishlistStatus}
                 isDarkMode={isDarkMode}
               />
             }
@@ -293,8 +290,8 @@ const App = () => {
                 updateDownLineItem={updateDownLineItem}
                 updateLineItem={updateLineItem}
                 addProductToWishlist={addProductToWishlist}
-                wishlistErrors={wishlistErrors} 
-                wishlistStatus={wishlistStatus} 
+                wishlistErrors={wishlistErrors}
+                wishlistStatus={wishlistStatus}
               />
             }
           />

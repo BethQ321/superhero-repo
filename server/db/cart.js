@@ -53,7 +53,6 @@ const updateLineItem = async (lineItem) => {
   return response.rows[0];
 };
 
-
 const createLineItem = async (lineItem) => {
   await ensureCart(lineItem);
   const SQL = `
